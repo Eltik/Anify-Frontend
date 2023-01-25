@@ -156,7 +156,7 @@ export default function Info(props: any) {
                                                 }),
                                                 input: (baseStyles, state) => ({
                                                     ...baseStyles,
-                                                    color: "white",
+                                                    color: "rgba(var(--dark-pink-400), 0.9)",
                                                     backgroundColor: "rgb(var(--blue-300));",
                                                     border: "none"
                                                 }),
@@ -181,7 +181,7 @@ export default function Info(props: any) {
                                                 }),
                                                 singleValue: (baseStyles, state) => ({
                                                     ...baseStyles,
-                                                    color: "rgba(var(--grey-200))",
+                                                    color: "rgba(var(--dark-pink-400), 0.9)",
                                                     height: "100%",
                                                     position: "relative",
                                                     top: "50%",
@@ -327,10 +327,17 @@ export async function getServerSideProps(context: any) {
         content = json;
     }
 
+    /*
+    const relations = await fetch(`${config.api_server}/relations`, { method: "POST", body: JSON.stringify({ id: id }), headers: { "Content-Type": "application/json" }});
+    const relationsJSON = await relations.json();
+    */
+    const relationsJSON = [];
+
     return {
         props: {
             data,
-            content
+            content,
+            relations: relationsJSON
         },
     };
 }

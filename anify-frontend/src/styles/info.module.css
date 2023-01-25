@@ -84,6 +84,7 @@
 .stats_data_item p {
     font-family: "Roboto Mono", "sans-serif";
     font-size: small;
+    color: rgb(var(--grey-200));
 }
 
 .genres {
@@ -96,26 +97,24 @@
 }
 
 .genre {
-    background-color: rgb(var(--blue-400));
-    border: none;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-family: var(--text);
-    font-weight: 500;
-    font-size: 100%;
-    cursor: pointer;
-    border-radius: 5px;
-    line-height: 1.15;
+    color: rgb(var(--dark-pink-400));
+    line-height: 1rem;
+    font-weight: 600;
+    font-size: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    background-color: rgb(32, 30, 39);
+    border-radius: var(--radius-small);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
     transition: 0.2s all;
-    box-shadow: var(--global-shadow-soft);
-    padding: 5px 15px 5px 15px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
+    cursor: pointer;
     text-align: center;
 }
 
@@ -214,7 +213,7 @@
 
 .episode {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
     gap: 0.5rem;
     width: 100%;
@@ -225,15 +224,16 @@
     border-bottom: 1px solid rgb(var(--blue-300));
     cursor: pointer;
     transition: 0.2s all;
-    border-radius: var(--radius);
+    border-radius: var(--radius-smallest);
+    border: 2px solid transparent;
 }
 
 .episode_thumb {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
     border-radius: var(--radius-small);
     background-color: rgb(var(--grey-100));
     transition: 0.2s all;
@@ -246,11 +246,11 @@
 
 .episode:hover {
     background-color: rgb(var(--blue-300));
-    transform: translateY(-2px);
+    border: 2px solid rgb(var(--blue-400));
 }
 
 .episode:active {
-    transform: translateY(0.25px);
+    transform: translateY(3px);
 }
 
 .episode:hover .episode_thumb {
@@ -264,7 +264,7 @@
     padding: 5px 0px 5px 0px;
     cursor: pointer;
     transition: 0.2s all;
-    color: rgb(var(--grey-300));
+    color: rgb(var(--grey-200));
 }
 
 .description:hover .show_more {
