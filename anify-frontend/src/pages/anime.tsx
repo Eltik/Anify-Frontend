@@ -10,7 +10,6 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import Swiper from 'swiper';
 import 'swiper/css';
-import { BsFillPlayCircleFill } from "react-icons/bs";
 
 const Anime: NextPage = ({ data, season }) => {
     const [requesting, setRequesting] = useState(false);
