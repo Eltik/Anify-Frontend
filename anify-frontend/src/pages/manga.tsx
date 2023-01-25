@@ -1,4 +1,4 @@
-import styles from "./manga.module.css";
+import styles from "../styles/manga.module.css";
 import { type NextPage } from "next";
 import Head from "next/head";
 import Nav from "../components/navigation";
@@ -12,7 +12,6 @@ import Swiper from 'swiper';
 import 'swiper/css';
 
 const Manga: NextPage = ({ data, season }) => {
-    const [index, setIndex] = useState(0);
     const [requesting, setRequesting] = useState(false);
     const [searchData, setSearch] = useState(null);
 
@@ -74,9 +73,9 @@ const Manga: NextPage = ({ data, season }) => {
             <meta property="og:description" content="Browse an extensive library of manga to read." />
 
             <meta property="twitter:card" content="summary_large_image"/>
-            <meta property="twitter:url" content={`http://anify.tv/Manga`} />
+            <meta property="twitter:url" content={`http://anify.tv/manga`} />
             <meta property="twitter:title" content="Anify - Manga" />
-            <meta property="twitter:description" content="Browse an extzensive library of manga to read."/>
+            <meta property="twitter:description" content="Browse an extensive library of manga to read."/>
             <link rel="icon" href="/favicon.ico" />
         </Head>
         <Nav index={2} />

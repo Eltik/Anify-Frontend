@@ -1,5 +1,5 @@
 import Head from "next/head";
-import styles from "../../../watch.module.css";
+import styles from "../../../../styles/watch.module.css";
 import * as CryptoJS from "crypto-js"
 import { config } from "../../../../config";
 import { useEffect, useRef, useState } from "react";

@@ -43,21 +43,42 @@
     font-family: var(--title);
 }
 
-@media screen and (max-width: 640px) {
-    .title {
-        font-size: 3rem;
-    }
+.info_container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 15px;
 }
 
-@media screen and (max-width: 550px) {
+.info_item {
+    max-width: 20vw;
+}
+
+@media screen and (max-width: 700px) {
+    .title {
+        font-size: 4rem;
+    }
     .subtitle {
         font-size: 1.5rem;
     }
 }
 
-@media screen and (max-width: 470px) {
+@media screen and (max-width: 600px) {
+    .title {
+        font-size: 3.5rem;
+    }
+
     .subtitle {
-        font-size: 1.25rem;
+        font-size: 1.3rem;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .title {
+        font-size: 3rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
     }
 }
 
@@ -65,7 +86,18 @@
     .title {
         font-size: 2.5rem;
     }
+
     .subtitle {
         font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .title {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 0.75rem;
     }
 }

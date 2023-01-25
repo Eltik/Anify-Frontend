@@ -1,5 +1,5 @@
 import Head from "next/head";
-import styles from "../info.module.css";
+import styles from "../../styles/info.module.css";
 import Nav from "../../components/navigation";
 import { parse } from 'node-html-parser';
 import { useState } from "react";

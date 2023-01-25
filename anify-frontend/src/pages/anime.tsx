@@ -1,4 +1,4 @@
-import styles from "./anime.module.css";
+import styles from "../styles/anime.module.css";
 import { type NextPage } from "next";
 import Head from "next/head";
 import Nav from "../components/navigation";
@@ -60,6 +60,7 @@ const Anime: NextPage = ({ data, season }) => {
             console.error(err);
         })
     }
+
     return (
     <>
         <Head>

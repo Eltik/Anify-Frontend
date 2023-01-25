@@ -1,4 +1,4 @@
-import styles from "./404.module.css";
+import styles from "../styles/404.module.css";
 import { type NextPage } from "next";
 import Head from "next/head";
 import Nav from "../components/navigation";

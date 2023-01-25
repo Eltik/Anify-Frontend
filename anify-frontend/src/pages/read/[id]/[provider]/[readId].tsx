@@ -1,5 +1,5 @@
 import Head from "next/head";
-import styles from "../../../read.module.css";
+import styles from "../../../../styles/read.module.css";
 import * as CryptoJS from "crypto-js"
 import Nav from "../../../../components/navigation";
 import { useEffect, useState } from "react";
