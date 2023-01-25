@@ -10,9 +10,9 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import Swiper from 'swiper';
 import 'swiper/css';
+import { BsFillPlayCircleFill } from "react-icons/bs";
 
 const Anime: NextPage = ({ data, season }) => {
-    const [index, setIndex] = useState(0);
     const [requesting, setRequesting] = useState(false);
     const [searchData, setSearch] = useState(null);
 
@@ -81,7 +81,9 @@ const Anime: NextPage = ({ data, season }) => {
         </Head>
         <Nav index={1} />
         <main className={styles.main}>
-            <div className="swiper">
+            <div className="swiper" style={{
+                    maxWidth: "95%",
+                }}>
                 <div className="swiper-wrapper">
                     {data.map((item:any, i:number) => (
                         <div className={`swiper-slide`}>
@@ -112,29 +114,7 @@ const Anime: NextPage = ({ data, season }) => {
                 <div className="swiper-button-next"></div>
             </div>
             <div className={styles.bottom}>
-                <div className={styles.seasonal}>
-                    <h1>Seasonal Anime</h1>
-                    <div className={styles.seasonal_list}>
-                        {season.map((item:any) => (
-                            <a href={`/info/${item.anilist.id}`} className={styles.seasonal_item}>
-                                <img className={styles.seasonal_item_banner} src={item.anilist.bannerImage ? item.anilist.bannerImage : "https://cdn.wallpapersafari.com/41/44/6Q9Nwh.jpg"} />
-                                <div className={styles.seasonal_item_info}>
-                                    <h1>{item.anilist.title.romaji}</h1>
-                                    <div className={styles.seasonal_item_info_stats}>
-                                        <p>{item.anilist.averageScore ? item.anilist.averageScore : "0"}%</p>
-                                        <p>·</p>
-                                        <p>{item.anilist.episodes ? item.anilist.episodes : "0"} Episodes</p>
-                                        <p>·</p>
-                                        <p>{item.anilist.favourites ? item.anilist.favourites : "0"} favorites</p>
-                                    </div>
-                                    <p>{item.anilist.description ? parse(item.anilist.description).textContent : ""}</p>
-                                </div>
-                            </a>
-                        ))}
-                    </div>
-                </div>
-                <div className={styles.trending}>
-                    <div className={styles.search_wrapper}>
+                <div className={styles.search_wrapper}>
                         <Search text={"Search for anime..."} onKeyUp={search} />
                     </div>
                     {requesting ? (
@@ -147,67 +127,53 @@ const Anime: NextPage = ({ data, season }) => {
                     ) : ""}
                     {!requesting && searchData && searchData.length > 0 ? (
                         <div className={styles.search_results}>
-                            <div className={styles.first_row}>
-                                {searchData.map((item:any) => (
-                                    <div className={styles.trending_item_wrapper}>
-                                        <a href={`/info/${item.anilist.id}`} className={styles.trending_item}>
-                                            <img className={styles.trending_item_cover} src={item.anilist.coverImage.extraLarge ? item.anilist.coverImage.extraLarge : "/icon_logo.png"} />
-                                            <div className={styles.trending_item_info}>
-                                                <h1>{item.anilist.title.romaji}</h1>
-                                                <div className={styles.trending_item_info_stats}>
-                                                    <p>{item.anilist.averageScore ? item.anilist.averageScore : "0"}%</p>
-                                                    <p>·</p>
-                                                    <p>{item.anilist.episodes ? item.anilist.episodes : "0"} Episodes</p>
-                                                    <p>·</p>
-                                                    <p>{item.anilist.favourites ? item.anilist.favourites : "0"} favorites</p>
+                            {searchData.map((item:any, i:number) => (
+                                <div className={styles.search_result}>
+                                    <a href={`/info/${item.anilist.id}`} className={styles.search_result_link}>
+                                        <img className={styles.search_result_cover} src={item.anilist.coverImage.extraLarge} />
+                                        <div className={styles.gradient}></div>
+                                        <div className={styles.search_result_info}>
+                                            <h1>{item.anilist.title.romaji}</h1>
+                                            <div className={styles.search_result_info_stats}>
+                                                <p className={styles.seasonal_info_year}>{item.anilist.seasonYear ? item.anilist.seasonYear : "?"}</p>
+                                                <div className={styles.genres}>
+                                                    {item.anilist.genres.slice(0, 2).map((genre:any, i:number) => (
+                                                        <div className={styles.genre}>{genre}</div>
+                                                    ))}
                                                 </div>
-                                                <p>{item.anilist.description ? parse(item.anilist.description).textContent : ""}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            ))}
+                        </div>
+                    ) : ""}
+                    {!requesting && (!searchData || searchData.length === 0) ? (
+                        <div className={styles.seasonal_wrapper}>
+                            <h2>This Season</h2>
+                            <div className={styles.seasonal}>
+                                {season.map((item:any, i:number) => (
+                                    <div className={styles.seasonal_item}>
+                                        <a href={`/info/${item.anilist.id}`} className={styles.seasonal_link}>
+                                            <img className={styles.seasonal_banner} src={item.anilist.bannerImage ? item.anilist.bannerImage : "https://cdn.wallpapersafari.com/41/44/6Q9Nwh.jpg"} />
+                                            <div className={styles.gradient}></div>
+                                            <div className={styles.seasonal_info}>
+                                                <h1>{item.anilist.title.english ? item.anilist.title.english : item.anilist.title.romaji}</h1>
+                                                <div className={styles.seasonal_info_stats}>
+                                                    <p className={styles.seasonal_info_year}>{item.anilist.seasonYear ? item.anilist.seasonYear : "?"}</p>
+                                                    <div className={styles.genres}>
+                                                        {item.anilist.genres.slice(0, 3).map((genre:any, i:number) => (
+                                                            <div className={styles.genre}>{genre}</div>
+                                                        ))}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </a>
                                     </div>
                                 ))}
                             </div>
                         </div>
-                    ) : (
-                    <div className={styles.trending_list}>
-                        <div className={styles.first_row}>
-                            {data.map((item:any, i:number) => (
-                                <div className={styles.trending_item_wrapper}>
-                                    <a href={`/info/${item.anilist.id}`} className={styles.trending_item}>
-                                        <img className={styles.trending_item_cover} src={item.anilist.coverImage.extraLarge ? item.anilist.coverImage.extraLarge : "/icon_logo.png"} />
-                                        <div className={styles.trending_item_info}>
-                                            <h1>{item.anilist.title.romaji}</h1>
-                                            <div className={styles.trending_item_info_stats}>
-                                                <p>{item.anilist.averageScore ? item.anilist.averageScore : "0"}%</p>
-                                                <p>·</p>
-                                                <p>{item.anilist.episodes ? item.anilist.episodes : "0"} Episodes</p>
-                                                <p>·</p>
-                                                <p>{item.anilist.favourites ? item.anilist.favourites : "0"} favorites</p>
-                                            </div>
-                                            <p>{item.anilist.description ? parse(item.anilist.description).textContent : ""}</p>
-                                        </div>
-                                    </a>
-                                </div>                                
-                            ))}
-
-                            <a href={`/info/${data[1].anilist.id}`} className={styles.trending_item_long}>
-                                <img className={styles.trending_item_banner} src={data[1].anilist.bannerImage ? data[1].anilist.bannerImage : "https://cdn.wallpapersafari.com/41/44/6Q9Nwh.jpg"} />
-                                <div className={styles.trending_item_info}>
-                                    <h1>{data[1].anilist.title.romaji}</h1>
-                                    <div className={styles.trending_item_info_stats}>
-                                        <p>{data[1].anilist.averageScore ? data[1].anilist.averageScore : "0"}%</p>
-                                        <p>·</p>
-                                        <p>{data[1].anilist.episodes ? data[1].anilist.episodes : "0"} Episodes</p>
-                                        <p>·</p>
-                                        <p>{data[1].anilist.favourites ? data[1].anilist.favourites : "0"} favorites</p>
-                                    </div>
-                                    <p>{data[1].anilist.description ? parse(data[1].anilist.description).textContent : ""}</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    )}
-                </div>
+                    ) : ""}
             </div>
         </main>
     </>

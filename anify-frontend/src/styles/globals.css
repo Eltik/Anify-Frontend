@@ -32,6 +32,7 @@
 
     --radius: .75em; /* radius of boxes */
     --radius-small: .5em; /* radius of small boxes */
+    --radius-smallest: .25em; /* radius of smallest boxes */
 
     /*--title: "Heebo", "sans-serif";*/
     --title: "Arial", "sans-serif";
