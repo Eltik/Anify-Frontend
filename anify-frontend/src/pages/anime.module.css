@@ -422,31 +422,28 @@
     }
 }
 
-@media screen and (max-width: 500px) {
-    .search_results {
-        grid-template-columns: auto;
+@media screen and (max-width: 1100px) {
+    .seasonal {
+        grid-template-columns: auto auto auto;
     }
-    .search_result {
-        width: 80vw;
+
+    .seasonal_item {
+        width: 25vw;
     }
 }
 
 @media screen and (max-width: 1000px) {
+    .seasonal_item {
+        width: 30vw;
+    }
+}
+
+@media screen and (max-width: 600px) {
     .seasonal {
         grid-template-columns: auto auto;
     }
 
     .seasonal_item {
         width: 45vw;
-    }
-}
-
-@media screen and (max-width: 550px) {
-    .seasonal {
-        grid-template-columns: auto;
-    }
-
-    .seasonal_item {
-        width: 90vw;
     }
 }
