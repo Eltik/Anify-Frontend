@@ -1,0 +1,301 @@
+/* PARALLAX */
+.main {
+    grid-area: main;
+    grid-column: 2;
+    grid-row: 4/5;
+
+    display: grid;
+    grid-template-columns: min(20%, 200px) 1fr;
+    gap: 1.5rem;
+    background-color: transparent;
+    grid-template-areas: "sidebar info";
+}
+
+.wrapper {
+    overflow-x: hidden;
+    height: 100vh;
+
+    display: grid;
+    grid-template-columns: 15vw 70vw 15vw;
+    grid-template-rows: 2vh 8vh 25vh 25vh 40vh 20vh 5vh;
+
+    background-color: transparent;
+
+    perspective: 10px;
+    grid-template-areas: 
+        "navbar navbar navbar"
+        "banner banner banner"
+        "banner banner banner"
+        "gradient gradient gradient"
+        "main main main"
+        "main main main"
+        "footer footer footer";
+}
+
+/* BANNER AND GRADIENT */
+
+.banner {
+    grid-area: banner;
+    grid-column: 1/4;
+    grid-row: 1/6;
+    z-index: -1;
+
+    transform-style: preserve-3d;
+    background-color: transparent;
+}
+
+.bannerimage {
+    object-fit: cover;
+    height: 100%;
+    position: absolute;
+    transform: translateZ(-5px) scale(1.5);
+}
+
+.gradient {
+    grid-column: 2/5;
+    grid-row: 6;
+    background-color: rgb(var(--black));
+    box-shadow: 0 0 50vh 60vh rgb(var(--black));
+}
+
+/* MAIN CONTENT */
+
+/* INFO */
+.showtitle {
+    font-size: 3rem;
+    color: rgb(var(--grey-300));
+    text-shadow: var(--global-shadow);
+}
+
+.showsubtitle {
+    color: rgb(var(--grey-200));
+    text-shadow: var(--global-shadow);
+}
+
+.showdescription {
+    margin-top: 1rem;
+    color: rgb(var(--grey-100));
+    text-shadow: var(--global-shadow);
+    margin-bottom: 1rem;
+}
+
+.player {
+    width: 100%;
+    margin: 0;
+    position: relative;
+    padding-right: 0;
+}
+
+.videoplayer {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.responsive_player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/*
+.episodelist {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(var(--blue-200));
+    overflow-y: scroll;
+    max-height: 50vh;
+    border-radius: var(--radius);
+}
+*/
+
+.episodelist {
+    max-height: 50vh;
+    overflow-y: scroll;
+    background-color: rgb(var(--blue-200));
+    border-radius: 5px;
+}
+
+.episode {
+    padding: 15px;
+    transition: 0.2s all;
+    cursor: pointer;
+    color: rgb(var(--grey-100));
+    text-decoration: none;
+}
+
+.episode:hover {
+    background-color: rgb(var(--blue-300));
+}
+
+/* SIDEBAR */
+.sidebar {
+    grid-area: sidebar;
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-rows: auto auto auto 1fr;
+    grid-template-areas:
+        "cover"
+        "genres"
+        "stats"
+        ".";
+}
+
+.cover {
+    grid-area: cover;
+    aspect-ratio: 2/3;
+    width: 100%;
+    height: 100%;
+    box-shadow: var(--global-shadow);
+}
+
+.coverimage {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius);
+}
+
+.genres {
+    display: flex;
+    flex-direction: row;
+    grid-area: genres;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.genre {
+    font-size: .8rem;
+    background-color: rgb(var(--blue-300));
+    border-radius: var(--radius);
+    box-shadow: 0 0 0.7rem black;
+    color: rgb(var(--grey-300));
+    padding: 0.3rem 1rem;
+    cursor: pointer;
+    margin: 0.3rem;
+    transition: 0.2s all;
+}
+
+.genre:hover {
+    background-color: rgb(var(--blue-400));
+}
+
+.stats {
+    background-color: rgb(var(--blue-200));
+    padding: 15px;
+    border-radius: var(--radius);
+    display: grid;
+    grid-template-columns: auto;
+    gap: 0.3rem;
+}
+
+.statbox {
+    color: rgb(var(--grey-200));
+}
+
+.stattext {
+    color: rgb(var(--color-text-600));
+}
+
+.staticon {
+    height: 1.3rem;
+    width: 1.3rem;
+    object-fit: contain;
+    vertical-align: middle;
+    margin-right: 0.1rem;
+}
+
+@media screen and (max-width: 1000px) {
+    body {
+        overflow-y: hidden;
+    }
+
+    .wrapper {
+        grid-template-rows: 2vh 8vh 8vh 25vh 40vh 20vh 5vh;
+        overflow-y: scroll;
+    }
+
+    .bannerimage {
+        height: 25%;
+        transform: translateZ(-2px) scale(2);
+    }
+
+    .main {
+        display: flex;
+        flex-direction: column;
+        grid-column: 1/4;
+        max-width: 95%;
+        margin: 0 auto;
+    }
+
+    .sidebar {
+        grid-template-columns: 1fr;
+    }
+
+    .staticon {
+        height: 2rem;
+        width: 2rem;
+    }
+
+    .cover {
+        width: 50%;
+    }
+
+    .stattitle, .stattext {
+        font-size: 1rem;
+    }
+
+    .showtitle {
+        font-size: 3rem;
+    }
+
+    .showsubtitle {
+        font-size: 1.5rem;
+    }
+
+    .showdescription {
+        font-size: 0.7rem;
+    }
+
+    .player {
+        display: inline-block;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .videoplayer {
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+    }
+
+    .episodelist {
+        position: relative;
+        margin-top: 0;
+        max-height: 35vh;
+    }
+
+    .coverimage {
+        height: auto;
+    }
+
+    .genre {
+        font-size: 1.75rem;
+    }
+
+    .episode {
+        font-size: 2rem;
+    }
+
+    .footer {
+        display: none;
+    }
+}

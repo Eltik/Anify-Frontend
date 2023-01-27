@@ -1,0 +1,270 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    overflow-x: hidden;
+    height: 100vh;
+    width: 100vw;
+    background-color: transparent;
+    perspective: 10px;
+
+    display: grid;
+    grid-template-columns: 15vw 70vw 15vw;
+    grid-template-rows: 10vh 40vh 25vh auto auto auto 5vh;
+    grid-template-areas: 
+        "navbar navbar navbar"
+        "banner banner banner"
+        "banner banner banner"
+        "gradient gradient gradient"
+        "main main main"
+        "main main main"
+        "footer footer footer";
+}
+
+.navbar {
+    grid-column: 1/4;
+    grid-row: 1;
+    grid-area: navbar;
+}
+
+.gradient {
+    grid-row: 4/8;
+    grid-column: 1/4;
+    background-color: rgb(var(--blue-100));
+    box-shadow: 0 0 30vh 35vh rgb(var(--blue-100));
+    z-index: 1;
+    grid-area: gradient;
+}
+
+.bannerImage {
+    filter: brightness(0.7);
+}
+
+.banner {
+    grid-row: 1/4;
+    grid-column: 1/4;
+    z-index: -5;
+    transform-style: preserve-3d;
+    background-color: rgb(var(--blue-300));
+    grid-area: banner;
+}
+
+.banner1 {
+    object-fit: cover;
+    position: absolute;
+    transform: translateZ(-2px) scale(1.2);
+    width: 100%;
+}
+
+.banner2 {
+    object-fit: cover;
+    position: absolute;
+    transform: translateZ(-4px) scale(1.4);
+    width: 100%;
+    opacity: 70%;
+}
+
+.banner3 {
+    object-fit: cover;
+    position: absolute;
+    transform: translateZ(-7px) scale(1.7);
+    width: 100%;
+    opacity: 70%;
+}
+
+.banner4 {
+    object-fit: cover;
+    position: absolute;
+    transform: translateZ(-10px) scale(2.1);
+    object-position: 5px;
+    width: 100%;
+    opacity: 70%;
+}
+
+.banner5 {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(transparent, rgb(var(--black))), rgb(var(--blue-200));
+    position: absolute;
+    transform: translateZ(0px) scale(1);
+}
+
+/* Main Content */
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    height: 100%;
+    grid-area: main;
+    z-index: 10;
+    margin: 0 auto;
+}
+
+.arrow_down {
+    position: relative;
+    margin-bottom: 10%;
+}
+
+.arrow_down_button {
+    background: none;
+    border: none;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+}
+
+.arrow_down_icon {
+    fill: rgb(var(--dark-pink-400));
+}
+
+.header {
+    width: auto;
+    height: 100%;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 15rem;
+    color: rgb(var(--dark-pink-400));
+    text-shadow: 0 0 .6em rgba(var(--pink-500), 0.2);
+    font-family: "Kanit";
+    font-weight: 600;
+    line-height: 5rem;
+}
+
+.box_grid {
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    justify-content: center;
+    align-items: center;
+    grid-gap: 1rem;
+    gap: 1rem;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.box {
+    width: 100%;
+    max-width: 20rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    font-size: 1.25rem;
+    border-radius: 0.75rem;
+    color: rgb(var(--grey-200));
+    text-shadow: var(--global-shadow);
+    background-color: hsla(0,0%,100%,.1);
+    transition: all .3s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0.3em 0.3em 0.6em rgba(0, 0, 0, 0.438);
+}
+
+.box:hover {
+    background-color: hsla(0,0%,100%,.2);
+}
+
+.boxtitle {
+    font-size: 2.5rem;
+    text-align: right;
+    color: rgb(var(--pink-500))
+}
+
+.strip_wrapper {
+    position: absolute;
+    width: 30%;
+    transform: rotate(135deg);
+}
+
+.strip {
+    position: absolute;
+    border-radius: var(--radius);
+    width: 300px;
+    height: 75px;
+    background-color: rgb(var(--dark-pink-400));
+}
+
+.subheader {
+    font-size: 1.5rem;
+    text-align: center;
+    color: rgb(var(--grey-200));
+    font-family: "Kanit";
+    font-weight: 600;
+    line-height: 5rem;
+    text-shadow: var(--global-shadow);
+}
+
+.red {
+    color: rgb(var(--dark-pink-400));
+}
+
+.footer {
+    margin-top: 0;
+    grid-area: footer;
+    margin-top: 26.25%;
+}
+
+/* For AnimeJS */
+.header {
+    opacity: 0;
+    transform: translateY(-50px);
+}
+
+.box_grid {
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+.subheader h1, .subheader h2 {
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+@media screen and (max-width: 1000px) {
+    body {
+        overflow-y: hidden;
+    }
+    
+    .wrapper {
+        grid-template-rows: 0vh 0vh 0vh auto auto auto 5vh;
+    }
+
+    .bannerImage, .banner1, .gradient {
+        display: none;
+    }
+    
+    .header h1 {
+        font-size: 20rem;
+    }
+
+    .box_grid {
+        display: flex;
+        flex-direction: column;
+        margin-top: 3vh;
+    }
+
+    .box {
+        max-width: 70vw;
+        font-size: 2rem;
+    }
+
+    .boxtitle {
+        font-size: 4rem;
+    }
+
+    .strip {
+        height: 100px;
+    }
+
+    .subheader {
+        font-size: 2.35rem;
+        margin-top: 3vh;
+    }
+}

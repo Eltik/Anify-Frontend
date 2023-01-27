@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+    <head>
+        <title>Anime</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="./styles/anime.css">
+        <link rel="stylesheet" href="./styles/global.css">
+        <link rel="stylesheet" href="./scripts/libraries/swiper-bundle.css"/>
+        <link rel="stylesheet" href="./scripts/libraries/skeleton.css"/>
+        <link rel="icon" href="./images/favicon.ico" />
+        <meta charset="utf-8">
+
+        <meta name="title" content="Anime" />
+        <meta name="description" content="Browse anime at HD quality with customizable subtitles." />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://anify.club/anime" />
+        <meta property="og:title" content="Anime" />
+        <meta property="og:description" content="Browse anime at HD quality with customizable subtitles." />
+        <meta property="og:image" content="" />
+
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://anify.club/anime" />
+        <meta property="twitter:title" content="Anime"/>
+        <meta property="twitter:description" content="Browse anime at HD quality with customizable subtitles." />
+        <meta property="twitter:image" content="" />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+        <script src="./scripts/libraries/base64.min.js"></script>
+        <script src="./scripts/libraries/numeral.min.js"></script>
+        <script src="./scripts/libraries/anime.min.js"></script>
+        <script src="./scripts/libraries/cryptojs.min.js"></script>
+        <script src="./scripts/libraries/swiper-bundle.min.js"></script>
+        <script src="./scripts/libraries/skeleton.min.js"></script>
+        <script src="./scripts/global.min.js"></script>
+        <script src="./scripts/anime.min.js"></script>
+        <script>
+            setTimeout(() => {
+                loadSkeleton(".popular_list");
+                loadSkeleton(".slideshow_grid");
+                
+                fetchTrending().then((trending) => {
+                    displayTrending(trending);
+                    unloadSkeleton(".popular_list", ".skeleton_slide");
+                }).catch((err) => {
+                    handleError(err);
+                    alert("Could not fetch trending anime! Contact Eltik via Discord.");
+                })
+
+                fetchPopular().then((popular) => {
+                    displayPopular(popular);
+                    unloadSkeleton(".slideshow_grid", ".skeleton_result");
+                }).catch((err) => {
+                    handleError(err);
+                    alert("Could not fetch popular anime! Contact Eltik via Discord.")
+                })
+            }, 100);
+        </script>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="navbar">
+                <button type="button" id="navbutton" class="navbutton" onclick="displayNav()">
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                </button>
+                <div class="anify">
+                    <span class="anify">Anify</span>
+                </div>  
+                <img class="navlogo" src="./images/anify_logo.png"> 
+                <div class="navlinks">
+                    <a href="/" class="navtext">Home</a>
+                    <a class="navtext">Anime</a>
+                    <a href="/manga" class="navtext">Manga</a>
+                    <a href="/novels" class="navtext">Novels</a>
+                    <a href="/discord" class="navtext">Discord</a>
+                </div>
+            </div>
+            <div class="main">
+                <div class="header">
+                    <div class="popular_items">
+                        <div class="swiper">
+                            <div class="swiper-wrapper popular_list">
+                                <div class="swiper-slide skeleton_slide">
+                                    <div class="skeleton_div"></div>
+                                </div>
+                                <div class="swiper-slide skeleton_slide">
+                                    <div class="skeleton_div"></div>
+                                </div>
+                                <div class="swiper-slide skeleton_slide">
+                                    <div class="skeleton_div"></div>
+                                </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                            
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                        </div>
+                    </div>
+                    <form id="search_form" action="/anime/search" method="GET" class="search_wrapper">
+                        <input class="search" placeholder="Search for anime..." type="search" onkeyup="checkIfEmpty()" />
+                        <button class="submit" type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+                    <div class="latest_items">
+                        <h2>Popular</h2>
+                        <div class="slideshow_grid">
+                            <div class="skeleton_result">
+                                <div class="skeleton_div"></div>
+                            </div>
+                            <div class="skeleton_result">
+                                <div class="skeleton_div"></div>
+                            </div>
+                            <div class="skeleton_result">
+                                <div class="skeleton_div"></div>
+                            </div>
+                            <div class="skeleton_result">
+                                <div class="skeleton_div"></div>
+                            </div>
+                            <div class="skeleton_result">
+                                <div class="skeleton_div"></div>
+                            </div>
+                            <div class="skeleton_result">
+                                <div class="skeleton_div"></div>
+                            </div>
+                            <div class="skeleton_result">
+                                <div class="skeleton_div"></div>
+                            </div>
+                            <div class="skeleton_result">
+                                <div class="skeleton_div"></div>
+                            </div>
+                            <div class="skeleton_result">
+                                <div class="skeleton_div"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search_items">
+                        <h2>Search Results</h2>
+                        <p style="color:rgb(var(--grey-100))">Missing a series? Join our Discord to make a suggestion or try searching by the romaji name.</p>
+                        <div class="slideshow_grid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span class="foottext"><a href="/tos">Terms of Service</a></span>
+                <span class="foottext"><a href="/dmca">DMCA</a></span>
+                <span class="foottext"><a href="/contact">Contact</a></span>
+                <span class="foottext"><a href="/discord">Discord</a></span>
+                <span class="foottext"><a href="https://ko-fi.com/anify" target="_blank">Donate</a></span>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $('#search_form').submit(function(e){
+                e.preventDefault();
+                const searchValue = document.getElementsByClassName("search")[0]["value"];
+                const searchButton = document.getElementsByClassName("submit")[0];
+                searchButton.disabled = true;
+
+                const args = {
+                    query: searchValue
+                };
+                fetch(api_server + "/search/anime", { method: "POST", body: JSON.stringify(args), headers: { "Content-Type": "application/json" }}).then(async(res) => {
+                    let data = await res.json();
+
+                    searchButton.disabled = false;
+                    // Handle search results
+                    handleSearch(data);
+                }).catch((err) => {
+                    console.error(err);
+                })
+            });
+        </script>
+    </body>
+</html>

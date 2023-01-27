@@ -1,0 +1,47 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+    gap: 3rem;
+    padding: 4rem 1rem;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header h1 {
+    font-size: 5rem;
+    color: rgb(var(--pink-500));
+    text-shadow: var(--global-shadow);
+}
+
+.search_wrapper {
+    margin-top: 30px;
+}
+
+/* For animeJS */
+.result_item {
+    opacity: 0;
+    filter: blur(1.5px);
+    transform: translateY(-20px);
+}
+
+@media screen and (max-width: 1000px) {
+    .header h1 {
+        font-size: 7rem;
+    }
+}

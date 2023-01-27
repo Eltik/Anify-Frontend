@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+    <head>
+        <title>Admin Panel</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="./styles/global.css">
+        <link rel="stylesheet" href="./styles/admin.css">
+        <link rel="icon" href="./images/favicon.ico" />
+        <meta charset="utf-8">
+        <script src="https://cdn.jsdelivr.net/npm/js-base64@3.7.3/base64.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+        <script src="./scripts/libraries/numeral.min.js"></script>
+        <script src="./scripts/libraries/anime.min.js"></script>
+        <script src="./scripts/libraries/cryptojs.min.js"></script>
+        <script src="./scripts/global.min.js"></script>
+        <script src="./scripts/admin.min.js"></script>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="navbar">
+                <button type="button" id="navbutton" class="navbutton" onclick="displayNav()">
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                </button>
+                <div class="anify">
+                    <span class="anify">Anify</span>
+                </div>  
+                <img class="navlogo" src="./images/anify_logo.png"> 
+                <div class="navlinks">
+                    <a href="/" class="navtext">Home</a>
+                    <a href="/anime" class="navtext">Anime</a>
+                    <a href="/manga" class="navtext">Manga</a>
+                    <a href="/novels" class="navtext">Novels</a>
+                    <a href="/discord" class="navtext">Discord</a>
+                </div>
+            </div>
+            <div class="main">
+                <div class="header">
+                    <h1>Admin Panel</h1>
+                    <div class="search_wrapper">
+                        <input class="search" id="password" placeholder="Password..." type="password" />
+                        <button class="submit" type="submit" onclick="insertPanel()"><i class="fa fa-plus-circle"></i></button>
+                        <button class="submit submit_end" type="submit" onclic="directoryPanel()"><i class="fa fa-folder"></i></button>
+                    </div>
+                </div>
+                <div class="content">
+
+                </div>
+            </div>
+            <div class="footer">
+                <span class="foottext">Terms of Service</span>
+                <span class="foottext">DMCA</span>
+                <span class="foottext">Contact</span>
+                <span class="foottext">Discord</span>
+                <span class="foottext">About</span>
+                <span class="foottext">Donate</span>
+            </div>
+        </div>
+    </body>
+</html>
