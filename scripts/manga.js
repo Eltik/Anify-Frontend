@@ -130,7 +130,7 @@ function displayPopular(data) {
             description = description.length > 200 ? description.substring(0, 200) + "..." : description;
         }
 
-        const cover = manga.coverImage.large;
+        const bannerImage = manga.bannerImage ? manga.bannerImage : manga.coverImage.extraLarge;
 
         const genres = manga.genres;
         
@@ -147,14 +147,12 @@ function displayPopular(data) {
         <div class="result">
             <a href="/info/${id}" class="result_item_link">
                 <div class="result_item_content">
-                    <img src="${cover}" alt="${title}" class="cover">
+                    <img src="${bannerImage}" alt="${title}" class="bannerImage">
+                    <div class="result_item_gradient"></div>
                     <div class="result_item_text">
                         <div class="result_item_title">${title}</div>
                         <div class="result_slideshow_genres">
                             ${genresText}
-                        </div>
-                        <div class="result_item_description">
-                            ${description}
                         </div>
                     </div>
                 </div>

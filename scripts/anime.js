@@ -124,20 +124,18 @@ async function displayPopular(data) {
     for (let i = 0; i < data.length; i++) {
         const promise = new Promise(async(resolve, reject) => {
             const show = data[i].anilist;
+
             const id = show.id;
             const title = show.title.english ? show.title.english : show.title.romaji;
             let description = show.description && show.description.length > 250 ? show.description.substring(0, 250) + "..." : (show.description && show.description.length > 0 ? show.description : "No description");
-            
-            const cover = show.coverImage.large;
-            const duration = show.duration;
-            const favorites = show.favourites > 1000 ? numeral(show.favourites).format("0.0a") : numeral(show.favourites).format("0a");
 
             if (x.matches) {
                 description = description.length > 200 ? description.substring(0, 200) + "..." : description;
             }
 
+            const bannerImage = show.bannerImage ? show.bannerImage : show.coverImage.extraLarge;
             const genres = show.genres;
-            
+
             let genresText = "";
             genres.map((genre, index) => {
                 if (index < 3) {
@@ -152,18 +150,12 @@ async function displayPopular(data) {
             <div class="result">
                 <a href="/info/${id}" class="result_item_link">
                     <div class="result_item_content">
-                        <img src="${cover}" alt="${title}" class="cover">
+                        <img src="${bannerImage}" alt="${title}" class="bannerImage">
+                        <div class="result_item_gradient"></div>
                         <div class="result_item_text">
                             <div class="result_item_title">${title}</div>
-                            <div class="result_slideshow_stats">
-                                <span class="result_slideshow_stat">~${duration} minutes</span>
-                                <span class="result_slideshow_stat">${favorites} favorites</span>
-                            </div>
                             <div class="result_slideshow_genres">
                                 ${genresText}
-                            </div>
-                            <div class="result_item_description">
-                                ${description}
                             </div>
                         </div>
                     </div>
