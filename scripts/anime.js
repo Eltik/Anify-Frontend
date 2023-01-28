@@ -192,7 +192,7 @@ async function handleSearch(data) {
 
     document.querySelector(".search_items").style = "display:block";
     document.querySelector(".search_items").style = "opacity: 1";
-    document.querySelector(".search_items .slideshow_grid").innerHTML = "";
+    document.querySelector(".search_items .search_grid").innerHTML = "";
     anime({
         targets:[".popular_items", ".latest_items"],
         opacity: 0,
@@ -207,7 +207,7 @@ async function handleSearch(data) {
 
     const promises = [];
 
-    const popularDOM = document.querySelector(".search_items .slideshow_grid");
+    const popularDOM = document.querySelector(".search_items .search_grid");
     for (let i = 0; i < data.length; i++) {
         const promise = new Promise(async(resolve, reject) => {
             const show = data[i].anilist;
@@ -227,7 +227,7 @@ async function handleSearch(data) {
             
             let genresText = "";
             genres.map((genre, index) => {
-                if (index < 4) {
+                if (index < 3) {
                     genresText += `<span class="result_slideshow_genre">${genre}</span>`;
                 }
             });
@@ -237,21 +237,16 @@ async function handleSearch(data) {
             mangaDOM.classList.add("search_item");
             
             mangaDOM.innerHTML = `
-            <div class="result">
-                <a href="/info/${id}" class="result_item_link">
-                    <div class="result_item_content">
-                        <img src="${cover}" alt="${title}" class="cover">
-                        <div class="result_item_text">
-                            <div class="result_item_title">${title}</div>
-                            <div class="result_slideshow_stats">
-                                <span class="result_slideshow_stat">~${duration} minutes</span>
-                                <span class="result_slideshow_stat">${favorites} favorites</span>
-                            </div>
+            <div class="result_search">
+                <a href="/info/${id}" class="result_search_link">
+                    <div class="result_search_content">
+                        <div class="result_search_image">
+                            <img src="${cover}" alt="${title}" class="cover">
+                        </div>
+                        <div class="result_search_text">
+                            <div class="result_search_title">${title}</div>
                             <div class="result_slideshow_genres">
                                 ${genresText}
-                            </div>
-                            <div class="result_item_description">
-                                ${description}
                             </div>
                         </div>
                     </div>

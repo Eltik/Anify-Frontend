@@ -6,9 +6,9 @@ function handleSearch(data) {
     
     document.querySelector(".search_items").style = "display:block";
     document.querySelector(".search_items").style = "opacity: 1";
-    document.querySelector(".search_items .slideshow_grid").innerHTML = "";
+    document.querySelector(".search_items .search_grid").innerHTML = "";
     
-    const popularDOM = document.querySelector(".search_items .slideshow_grid");
+    const popularDOM = document.querySelector(".search_items .search_grid");
     for (let i = 0; i < data.length; i++) {
         const manga = data[i];
         const id = manga.id;
@@ -16,14 +16,16 @@ function handleSearch(data) {
         const cover = manga.cover;
 
         const mangaDOM = document.createElement("div");
-        mangaDOM.classList.add("reuslt_item");
+        mangaDOM.classList.add("result_item");
+        mangaDOM.classList.add("search_item");
+        
         mangaDOM.innerHTML = `
-        <div class="result">
-            <a href="${api_server}/pdf/${id}" target="_blank" class="result_item_link">
-                <div class="result_item_content">
+        <div class="result_search">
+            <a href="${api_server}/pdf/${id}" class="result_search_link">
+                <div class="result_search_content">
                     <img src="${api_server}/cover/${cover}" alt="${title}" class="cover">
-                    <div class="result_item_text">
-                        <div class="result_item_title">${title}</div>
+                    <div class="result_search_text">
+                        <div class="result_search_title">${title}</div>
                         <div class="result_item_description">
                             English
                         </div>

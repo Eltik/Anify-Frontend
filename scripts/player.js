@@ -708,18 +708,27 @@ setTimeout(() => {
 
         setTimeout(() => {
             /* Menu-Related */
-
             const qualityItems = [];
             for (let i = 0; i < allSources.length; i++) {
-                let selected = i === (allSources.length - 1) ? true : false;
-                const item = {
-                    text: allSources[i].name,
-                    callback: () => changeQuality(allSources[i].url),
-                    highlightable: true,
-                    id: allSources[i].name,
-                    selected: selected
-                };
-                qualityItems.push(item);
+                const selected = i === (allSources.length - 1) ? true : false;
+                let canPush = true;
+
+                for (let j = 0; j < qualityItems.length; j++) {
+                    if (qualityItems[j].text === allSources[i].name) {
+                        canPush = false;
+                    }
+                }
+
+                if (canPush) {
+                    const item = {
+                        text: allSources[i].name,
+                        callback: () => changeQuality(allSources[i].url),
+                        highlightable: true,
+                        id: allSources[i].name,
+                        selected: selected
+                    };
+                    qualityItems.push(item);
+                }
             }
             menuCon = document.querySelector(".menuCon");
             DMenu = new dropDownMenu(

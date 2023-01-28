@@ -105,7 +105,6 @@ function load(id) {
             const chaptersList = document.querySelector(".chapterslist");
             if (content.length > 0) {
                 const button = document.createElement("button")
-                // <button type="button" class="button" onclick="fetchAniList()">Fetch AniList Data</button>
                 button.type = "button";
                 button.className = "button";
                 button.id = "switchProvider";
@@ -131,7 +130,7 @@ function load(id) {
                 const header = document.createElement("div");
                 header.className = "chaptersheader";
                 const headerSpan = document.createElement("span");
-                headerSpan.textContent = content[i].provider + " - " + content[i].provider_data.title;
+                headerSpan.textContent = content[i].provider + " - " + (content[i].provider_data.title ? content[i].provider_data.title : content[i].provider_data.romaji);
                 header.append(headerSpan);
                 provider.appendChild(header);
 
