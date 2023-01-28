@@ -97,18 +97,14 @@ app.get("/tos*", (req, res) => {
     res.sendFile("./tos.txt", { root: __dirname });
 })
 
-app.get("/subtitles/:url", async(req, res) => {
-    const url = req.params.url;
+app.get("/subtitles", async(req, res) => {
+    const url = req.query.url;
     if (!url) {
         res.status(400).json("Bad request").end();
     }
-
-    const b64 = CryptoJS.enc.Hex.parse(url);
-    const bytes = b64.toString(CryptoJS.enc.Base64);
-    const decrypted = CryptoJS.AES.decrypt(bytes, "myheroacademia");
-    const decodedString = Buffer.from(decrypted.toString(CryptoJS.enc.Utf8), "base64");
     
-    const { data } = await axios.get(decodedString.toString());
+    const { data } = await axios.get(url);
+    //res.header("Content-Type", "text/vtt");
     res.send(data).end();
 });
 

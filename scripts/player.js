@@ -605,7 +605,7 @@ setTimeout(() => {
             }
 
             const promise = new Promise((resolve, reject) => {
-                fetch("/subtitles/" + encrypt(subtitleSrc)).then(async(data) => {
+                fetch("/subtitles?url=" + (subtitleSrc)).then(async(data) => {
                     const subtitle = await data.text();
                     const parser = new WebVTTParser();
                     const tree = parser.parse(subtitle, 'metadata');
@@ -629,7 +629,7 @@ setTimeout(() => {
                 <vds-hls poster="${info.anilist.bannerImage ? info.anilist.bannerImage : "https://mcdn.wallpapersafari.com/medium/4/95/HSYiKZ.jpg"}">
                     <video class="main_video" preload="none" src="${allSources[allSources.length - 1].url ? allSources[allSources.length - 1].url : allSources[allSources.length - 1].file}"></video>
                     ${subtitles.map((element, index) => {
-                        return `<track src="${"/subtitles/" + encrypt(element.src)}" label="${element.label}"></track>`;
+                        return `<track src="${"/subtitles?url=" + (element.url)}" label="${element.label}"></track>`;
                     })}
                 </vds-hls>
             </vds-aspect-ratio>
@@ -852,8 +852,7 @@ setTimeout(() => {
             // The current subtitle.
             let sub = subs[currentSubtitle];
             if (!sub) {
-                console.log(subs);
-                console.log(currentSubtitle);
+                sub = subs[0];
             }
 
             // You need to fetch the video, then add event listeners.
@@ -908,6 +907,9 @@ setTimeout(() => {
 
             // Video timeupdate.
             video.addEventListener('timeupdate', (event) => {
+                if (!sub) {
+                    return;
+                }
                 // Get the subtitle container
                 const subtitleDOM = document.querySelector(".subtitles");
 
