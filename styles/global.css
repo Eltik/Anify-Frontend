@@ -130,17 +130,20 @@ a {
 
 .navtext {
     margin-block: auto;
-    margin-inline: 2vw;
+    margin-inline: 1.5vw;
     cursor: pointer;
     transition: 0.2s all;
     font-size: 1rem;
     color: rgb(var(--pink-400));
     text-decoration: none;
     transition: 0.2s all;
+    font-family: "Kanit" "sans-serif";
+    font-weight: 600;
+    font-size: 1.15rem;
 }
 
 .navtext:hover {
-    color: rgb(var(--pink-100));
+    color: rgb(var(--dark-pink-400));
     cursor: pointer;
 }
 

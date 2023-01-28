@@ -25,7 +25,7 @@ async function fetchTrending() {
 
 async function fetchPopular() {
     const args = {
-        season: "popular"
+        season: "season"
     };
     const req = await fetch(api_server + "/seasonal/anime", { method: "POST", body: JSON.stringify(args), headers: { "Content-Type": "application/json" }}).catch((err) => {
         handleError(err);

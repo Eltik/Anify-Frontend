@@ -8,7 +8,7 @@ let observer = new IntersectionObserver(function(entries) {
         });
         anime({
             targets: [".header h1", ".box_grid", ".subheader h1", ".subheader h2"],
-            translateY: "50px",
+            translateY: "70px",
             opacity: 1,
             duration: 1000,
             easing: "easeInOutQuad",

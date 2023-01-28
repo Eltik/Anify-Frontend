@@ -104,7 +104,7 @@ app.get("/subtitles", async(req, res) => {
     }
     
     const { data } = await axios.get(url);
-    //res.header("Content-Type", "text/vtt");
+    res.header("Content-Type", "text/vtt");
     res.send(data).end();
 });
 
