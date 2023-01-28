@@ -512,6 +512,8 @@ class dropDownMenu {
 
 /* Player Settings */
 let skipOp = true;
+let opStart = intro.start ? intro.start : 0;
+let opEnd = intro.end ? intro.end : 0;
 
 /* Subtitles */
 let isAnimated = false;
@@ -603,7 +605,7 @@ setTimeout(() => {
             }
 
             const promise = new Promise((resolve, reject) => {
-                fetch("https://cors.proxy.consumet.org/" + subtitleSrc).then(async(data) => {
+                fetch("/subtitles/" + encrypt(subtitleSrc)).then(async(data) => {
                     const subtitle = await data.text();
                     const parser = new WebVTTParser();
                     const tree = parser.parse(subtitle, 'metadata');
@@ -624,10 +626,10 @@ setTimeout(() => {
         const toAppend = `
         <vds-media class="videoplayer">
             <vds-aspect-ratio ratio="16/9">
-                <vds-hls poster="https://api.consumet.org/utils/image-proxy?url=https://wallpapercave.com/wp/wp1892089.jpg&referer=https://wallpapercave.com">
+                <vds-hls poster="${info.anilist.bannerImage ? info.anilist.bannerImage : "https://mcdn.wallpapersafari.com/medium/4/95/HSYiKZ.jpg"}">
                     <video class="main_video" preload="none" src="${allSources[allSources.length - 1].url ? allSources[allSources.length - 1].url : allSources[allSources.length - 1].file}"></video>
                     ${subtitles.map((element, index) => {
-                        return `<track src="${element.src}" label="${element.label}"></track>`;
+                        return `<track src="${"/subtitles/" + encrypt(element.src)}" label="${element.label}"></track>`;
                     })}
                 </vds-hls>
             </vds-aspect-ratio>

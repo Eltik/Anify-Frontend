@@ -1,4 +1,5 @@
 const api_server = "https://api.anify.tv";
+//const api_server = "http://localhost:3060";
 
 var Base64 = {
     _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",

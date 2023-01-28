@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require("axios");
 
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -8,6 +9,7 @@ const { join } = require("path");
 
 const colors = require("colors");
 
+const CryptoJS = require("crypto-js");
 const config = require("./config.json");
 const port = config.port;
 
@@ -95,10 +97,25 @@ app.get("/tos*", (req, res) => {
     res.sendFile("./tos.txt", { root: __dirname });
 })
 
+app.get("/subtitles/:url", async(req, res) => {
+    const url = req.params.url;
+    if (!url) {
+        res.status(400).json("Bad request").end();
+    }
+
+    const b64 = CryptoJS.enc.Hex.parse(url);
+    const bytes = b64.toString(CryptoJS.enc.Base64);
+    const decrypted = CryptoJS.AES.decrypt(bytes, "myheroacademia");
+    const decodedString = Buffer.from(decrypted.toString(CryptoJS.enc.Utf8), "base64");
+    
+    const { data } = await axios.get(decodedString.toString());
+    res.send(data).end();
+});
+
 app.get("/*", (req, res) => {
     res.send("404.").end();
 })
 
 app.listen(port, () => {
     console.log('Frontend server started '.green + "on port ".gray + port + "".white + '.'.gray);
-})
+});

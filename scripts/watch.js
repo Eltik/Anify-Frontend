@@ -51,6 +51,7 @@ function load(id, provider, watchId) {
         }
         fetch(api_server + "/info", { method: "POST", body: JSON.stringify(infoArgs), headers: { "Content-Type": "application/json" }}).then(async(res) => {
             const data = await res.json();
+            info = data;
 
             const show = data.anilist;
 
