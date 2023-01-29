@@ -118,7 +118,7 @@ async function displayTrending(data) {
     await Promise.all(promises);
 }
 
-async function displayPopular(data) {
+async function displayPopular(data, listData) {
     const popularDOM = document.getElementsByClassName("slideshow_grid")[0];
     const promises = [];
     for (let i = 0; i < data.length; i++) {
@@ -126,6 +126,19 @@ async function displayPopular(data) {
             const show = data[i].anilist;
 
             const id = show.id;
+
+            const list = {
+                name: ""
+            };
+            for (let j = 0; j < listData.length; j++) {
+                const currentList = listData[j];
+                for (let k = 0; k < currentList.media.length; k++) {
+                    if (currentList.media[k].id === id) {
+                        list.name = currentList.name;
+                    }
+                }
+            }
+            
             const title = show.title.english ? show.title.english : show.title.romaji;
             let description = show.description && show.description.length > 250 ? show.description.substring(0, 250) + "..." : (show.description && show.description.length > 0 ? show.description : "No description");
 
@@ -150,6 +163,7 @@ async function displayPopular(data) {
             <div class="result">
                 <a href="/info/${id}" class="result_item_link">
                     <div class="result_item_content">
+                        ${list.name ? `<div class="result_item_status ${list.name === "Completed" ? "status_green" : list.name === "Watching" ? "status_blue" : list.name === "Dropped" ? "status_red" : "status_orange"}"></div>` : ""}
                         <img src="${bannerImage}" alt="${title}" class="bannerImage">
                         <div class="result_item_gradient"></div>
                         <div class="result_item_text">
@@ -180,11 +194,7 @@ async function displayPopular(data) {
     }, 100);
 }
 
-function slideshowHover() {
-
-}
-
-async function handleSearch(data) {
+async function handleSearch(data, listData) {
     if (!data || data.length === 0) {
         // Need to update
         alert("No results.");
@@ -212,12 +222,23 @@ async function handleSearch(data) {
         const promise = new Promise(async(resolve, reject) => {
             const show = data[i].anilist;
             const id = show.id;
+
+            const list = {
+                name: ""
+            };
+            for (let j = 0; j < listData.length; j++) {
+                const currentList = listData[j];
+                for (let k = 0; k < currentList.media.length; k++) {
+                    if (currentList.media[k].id === id) {
+                        list.name = currentList.name;
+                    }
+                }
+            }
+
             const title = show.title.english ? show.title.english : show.title.romaji;
             let description = show.description && show.description.length > 250 ? show.description.substring(0, 250) + "..." : (show.description && show.description.length > 0 ? show.description : "No description");
             
             const cover = show.coverImage.large;
-            const duration = show.duration;
-            const favorites = show.favourites > 1000 ? numeral(show.favourites).format("0.0a") : numeral(show.favourites).format("0a");
 
             if (x.matches) {
                 description = description.length > 200 ? description.substring(0, 200) + "..." : description;
@@ -245,6 +266,7 @@ async function handleSearch(data) {
                         </div>
                         <div class="result_search_text">
                             <div class="result_search_title">${title}</div>
+                            ${list.name ? `<div class="result_item_status ${list.name === "Completed" ? "status_green" : list.name === "Watching" ? "status_blue" : list.name === "Dropped" ? "status_red" : "status_orange"}"></div>` : ""}
                             <div class="result_slideshow_genres">
                                 ${genresText}
                             </div>

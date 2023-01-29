@@ -35,9 +35,13 @@
         <script src="./scripts/global.min.js"></script>
         <script src="./scripts/anime.min.js"></script>
         <script>
-            setTimeout(() => {
+            let listData = [];
+            setTimeout(async() => {
                 loadSkeleton(".popular_list");
                 loadSkeleton(".slideshow_grid");
+
+                const currentList = await getList("anime");
+                listData = currentList;
                 
                 fetchTrending().then((trending) => {
                     displayTrending(trending);
@@ -48,7 +52,7 @@
                 })
 
                 fetchPopular().then((popular) => {
-                    displayPopular(popular);
+                    displayPopular(popular, currentList);
                     unloadSkeleton(".slideshow_grid", ".skeleton_result");
                 }).catch((err) => {
                     handleError(err);
@@ -168,7 +172,7 @@
 
                     searchButton.disabled = false;
                     // Handle search results
-                    handleSearch(data);
+                    handleSearch(data, listData);
                 }).catch((err) => {
                     console.error(err);
                 })

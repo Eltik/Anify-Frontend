@@ -22,11 +22,16 @@
     --blue-400: 46, 48, 71; /**/
     --blue-500: 68, 71, 105; /**/
  
+    --status-green: 165, 240, 165; /* green */
+    --status-red: 232,93,117; /* red */
+    --status-blue: 61,180,242; /* blue */
+    --status-orange: 247,154,99; /* orange */
 
     --white: 255, 255, 255; /* titles */
     --black: 0, 0, 0; /* literally nothing unless it needs to be black */
 
     --global-shadow: 0 0 .5em rgb(var(--black), 1); /* shadows */
+    --global-shadow-soft: 0 0 .5em rgb(var(--black), 0.5); /* shadows */
 
     --radius: .5em;
     --radius-small: .35em;
@@ -582,6 +587,33 @@ a {
     left: 0;
 }
 
+.result_item_status {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 5px;
+    left: 5px;
+    border-radius: 50%;
+    box-shadow: var(--global-shadow-soft);
+    z-index: 10;
+}
+
+.status_green {
+    background-color: rgb(var(--status-green));
+}
+
+.status_blue {
+    background-color: rgb(var(--status-blue));
+}
+
+.status_orange {
+    background-color: rgb(var(--status-orange));
+}
+
+.status_red {
+    background-color: rgb(var(--status-red));
+}
+
 .result_item .result_slideshow_genre {
     font-size: 0.8rem;
 }
@@ -612,11 +644,7 @@ a {
 
 .result_search:hover .result_search_link {
     background: rgb(var(--blue-300));
-    transform: translateY(-10px);
-}
-
-.result_search:active .result_search_link {
-    transform: translateY(5px);
+    border: 3px solid rgba(var(--dark-pink-400), 0.8);
 }
 
 .result_search_link {
@@ -632,6 +660,12 @@ a {
     cursor: pointer;
     transition: all 0.3s ease-in-out 0s;
     background: rgb(var(--blue-200));
+    border: 3px solid transparent;
+}
+
+.result_search .result_item_status {
+    left: 25px;
+    top: 25px;
 }
 
 .result_search_image {
@@ -807,6 +841,11 @@ a {
     .avatar {
         height: 100px;
         width: 100px;
+    }
+
+    .result_item_status {
+        width: 50px;
+        height: 50px;
     }
 
     .chevron {

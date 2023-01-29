@@ -35,9 +35,13 @@
         <script src="./scripts/global.min.js"></script>
         <script src="./scripts/manga.min.js"></script>
         <script>
-            setTimeout(() => {
+            let listData = [];
+            setTimeout(async() => {
                 loadSkeleton(".popular_list");
                 loadSkeleton(".slideshow_grid");
+
+                const currentList = await getList("manga");
+                listData = currentList;
 
                 fetchTrending().then((popular) => {
                     displayTrending(popular);
@@ -49,7 +53,7 @@
                 });
 
                 fetchPopular().then((latest) => {
-                    displayPopular(latest);
+                    displayPopular(latest, currentList);
                     unloadSkeleton(".slideshow_grid", ".skeleton_result");
                 }).catch((err) => {
                     // Handle error
@@ -170,7 +174,7 @@
                     const data = await res.json();
                     searchButton.disabled = false;
                     // Handle search results
-                    handleSearch(data);
+                    handleSearch(data, listData);
                 }).catch((err) => {
                     console.error(err);
                 })

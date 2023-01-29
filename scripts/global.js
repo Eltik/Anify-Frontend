@@ -1,5 +1,5 @@
-//const api_server = "https://api.anify.tv";
-const api_server = "http://localhost:3060";
+const api_server = "https://api.anify.tv";
+//const api_server = "http://localhost:3060";
 
 var Base64 = {
     _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
@@ -305,12 +305,24 @@ async function getLogin() {
     return data;
 }
 
+async function getList(type) {
+    const user = await getLogin();
+    if (!user || user.error) {
+        return;
+    }
+    if (type.toLowerCase() != "anime" && type.toLowerCase() != "manga") {
+        return { error: "Invalid type provided." };
+    }
+    const req = await fetch(api_server + "/list/" + user.data.Viewer.id + "/" + type.toLowerCase(), { method: "GET", headers: { "Content-Type": "application/json" }});
+    const data = await req.json();
+    return data;
+}
+
 async function loadNav() {
     const nav = document.querySelector(".navlinks");
     const login = document.querySelector(".navlinks .login");
     
     const data = await getLogin();
-    console.log(data);
     if (!data || data.error) {
         return;
     }

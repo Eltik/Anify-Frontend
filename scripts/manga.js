@@ -118,11 +118,23 @@ function displayTrending(data) {
     }
 }
 
-function displayPopular(data) {
+function displayPopular(data, listData) {
     const popularDOM = document.getElementsByClassName("slideshow_grid")[0];
     for (let i = 0; i < data.length; i++) {
         const manga = data[i].anilist;
         const id = manga.id;
+        const list = {
+            name: ""
+        };
+        for (let j = 0; j < listData.length; j++) {
+            const currentList = listData[j];
+            for (let k = 0; k < currentList.media.length; k++) {
+                if (currentList.media[k].id === id) {
+                    list.name = currentList.name;
+                }
+            }
+        }
+
         const title = manga.title.english ? manga.title.english : manga.title.romaji;
         let description = manga.description.length > 250 ? manga.description.substring(0, 250) + "..." : manga.description;
         
@@ -147,6 +159,7 @@ function displayPopular(data) {
         <div class="result">
             <a href="/info/${id}" class="result_item_link">
                 <div class="result_item_content">
+                    ${list.name ? `<div class="result_item_status ${list.name === "Completed" ? "status_green" : list.name === "Watching" ? "status_blue" : list.name === "Dropped" ? "status_red" : "status_orange"}"></div>` : ""}
                     <img src="${bannerImage}" alt="${title}" class="bannerImage">
                     <div class="result_item_gradient"></div>
                     <div class="result_item_text">
@@ -173,7 +186,7 @@ function displayPopular(data) {
     }, 100);
 }
 
-function handleSearch(data) {
+function handleSearch(data, listData) {
     if (!data || data.length === 0) {
         // Need to update
         alert("No results.");
@@ -197,6 +210,19 @@ function handleSearch(data) {
     for (let i = 0; i < data.length; i++) {
         const manga = data[i].anilist;
         const id = manga.id;
+
+        const list = {
+            name: ""
+        };
+        for (let j = 0; j < listData.length; j++) {
+            const currentList = listData[j];
+            for (let k = 0; k < currentList.media.length; k++) {
+                if (currentList.media[k].id === id) {
+                    list.name = currentList.name;
+                }
+            }
+        }
+
         const title = manga.title.english ? manga.title.english : manga.title.romaji;
         let description = manga.description?.length > 250 ? manga.description.substring(0, 250) + "..." : manga.description;
         
@@ -224,6 +250,8 @@ function handleSearch(data) {
             <a href="/info/${id}" class="result_search_link">
                 <div class="result_search_content">
                     <img src="${cover}" alt="${title}" class="cover">
+                    <div class="result_search_title">${title}</div>
+                    ${list.name ? `<div class="result_item_status ${list.name === "Completed" ? "status_green" : list.name === "Watching" ? "status_blue" : list.name === "Dropped" ? "status_red" : "status_orange"}"></div>` : ""}
                     <div class="result_search_text">
                         <div class="result_search_title">${title}</div>
                         <div class="result_slideshow_genres">
