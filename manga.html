@@ -3,10 +3,10 @@
         <title>Manga</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="./styles/manga.css">
+        <link rel="stylesheet" href="./scripts/libraries/skeleton.css"/>
         <link rel="stylesheet" href="./styles/global.css">
         <link rel="icon" href="./images/favicon.ico" />
         <link rel="stylesheet" href="./scripts/libraries/swiper-bundle.css"/>
-        <link rel="stylesheet" href="./scripts/libraries/skeleton.css"/>
         <meta charset="utf-8">
         
         <meta name="title" content="Manga" />
@@ -56,6 +56,8 @@
                     handleError(err);
                     alert("Couldn't fetch popular manga! Please contact Eltik via Discord.");
                 });
+
+                loadNav();
             }, 100);
         </script>
     </head>
@@ -77,6 +79,7 @@
                     <a class="navtext">Manga</a>
                     <a href="/novels" class="navtext">Novels</a>
                     <a href="/discord" class="navtext">Discord</a>
+                    <a href="/login" class="navtext login">Login</a>
                 </div>
             </div>
             <div class="main">

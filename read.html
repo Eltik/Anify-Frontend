@@ -1,9 +1,9 @@
 <!DOCTYPE html>
     <head>
         <title>Reading Manga</title>
+        <link rel="stylesheet" href="../../../scripts/libraries/skeleton.css"/>
         <link rel="stylesheet" href="../../../styles/global.css">
         <link rel="stylesheet" href="../../../styles/read.css">
-        <link rel="stylesheet" href="../../../scripts/libraries/skeleton.css"/>
         <link rel="icon" href="../../../images/favicon.ico" />
         <meta charset="utf-8">
 
@@ -38,6 +38,7 @@
                 const provider = window.location.pathname.split("/")[3];
                 const readId = window.location.pathname.split("/")[4];
                 load(id, provider, readId, true);
+                loadNav();
             }, 100);
         </script>
     </head>
@@ -60,6 +61,7 @@
                     <a href="/manga" class="navtext">Manga</a>
                     <a href="/novels" class="navtext">Novels</a>
                     <a href="/discord" class="navtext">Discord</a>
+                    <a href="/login" class="navtext login">Login</a>
                 </div>
             </div>
             <div class="gradient">

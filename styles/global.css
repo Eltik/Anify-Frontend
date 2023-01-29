@@ -683,18 +683,22 @@ a {
     position: relative;
 }
 
+.dropdown:hover .chevron {
+    opacity: 1;
+}
+
 .avatar {
     background-size: cover;
     border-radius: 3px;
-    height: 38px;
-    width: 38px;
+    height: 50px;
+    width: 50px;
     transition: .8s;
 }
 
-.avatar_icon {
+.chevron {
     color: #777a9e;
     font-size: 1.2rem;
-    left: 45px;
+    left: 50px;
     opacity: .5;
     position: absolute;
     top: 14px;
@@ -709,19 +713,20 @@ a {
 
 .dropdown_content {
     background: rgb(21,31,46);
-    border-radius: 6px;
+    border-radius: var(--radius);
     box-shadow: 0 14px 30px rgba(0,5,15,.25),0 4px 4px rgba(0,5,15,.15);
     font-family: Overpass,-apple-system,BlinkMacSystemFont,Segoe UI,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
     opacity: 0;
     pointer-events: none;
     position: absolute;
-    top: 50px;
+    top: 60px;
     transition: opacity .2s ease;
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
     width: 200px;
     right: -80px;
+    z-index: 9999;
 }
 
 .dropdown_show {
@@ -753,9 +758,9 @@ a {
 
 .primary-link, .secondary-link {
     align-items: center;
-    color: rgb(var(--grey-300));
+    color: rgb(139,160,178);
     display: grid;
-    font-size: 1.4rem;
+    font-size: 1rem;
     font-weight: 600;
     grid-column-gap: 10px;
     grid-template-columns: 20px auto;
@@ -767,8 +772,12 @@ a {
 .primary-link .icon, .secondary-link .icon {
     color: rgb(173,192,210);
     position: relative;
-    font-size: 1.4rem;
+    font-size: 1rem;
     transition: color .2s ease;
+}
+
+.primary-link:hover, .secondary-link:hover {
+    color: rgb(173,192,210);
 }
 
 @media screen and (max-width: 1800px) {
@@ -795,10 +804,32 @@ a {
 }
 
 @media screen and (max-width: 1000px) {
+    .avatar {
+        height: 100px;
+        width: 100px;
+    }
+
+    .chevron {
+        font-size: 3rem;
+        left: 115px;
+        top: 25px;
+    }
+
+    .dropdown_content {
+        width: 270px;
+        right: -140px;
+        top: 120px;
+    }
+
+    .primary-link .icon, .secondary-link .icon {
+        width: 2rem;
+    }
+
     .button {
         padding: 20px;
         font-size: 1.75rem;
     }
+
     .navbar {
         position: fixed;
         left: 0;
