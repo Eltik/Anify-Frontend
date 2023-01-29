@@ -669,6 +669,108 @@ a {
     margin: 0;
 }
 
+.navavatar {
+    align-items: center;
+    display: inline-flex;
+    height: 55px;
+    justify-content: center;
+    width: 65px;
+    cursor: pointer;
+    position: relative;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.avatar {
+    background-size: cover;
+    border-radius: 3px;
+    height: 38px;
+    width: 38px;
+    transition: .8s;
+}
+
+.avatar_icon {
+    color: #777a9e;
+    font-size: 1.2rem;
+    left: 45px;
+    opacity: .5;
+    position: absolute;
+    top: 14px;
+    transition: opacity .3s ease;
+    overflow: visible;
+    width: 1.25em;
+    text-align: center;
+    display: inline-block;
+    vertical-align: -0.125em;
+    height: 1em;
+}
+
+.dropdown_content {
+    background: rgb(21,31,46);
+    border-radius: 6px;
+    box-shadow: 0 14px 30px rgba(0,5,15,.25),0 4px 4px rgba(0,5,15,.15);
+    font-family: Overpass,-apple-system,BlinkMacSystemFont,Segoe UI,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 50px;
+    transition: opacity .2s ease;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    width: 200px;
+    right: -80px;
+}
+
+.dropdown_show {
+    opacity: 1;
+    animation: dropdown-in-data-v-62eacfff .25s;
+    opacity: 1;
+    pointer-events: auto;
+    -webkit-user-select: auto;
+    -ms-user-select: auto;
+    user-select: auto;
+}
+
+.dropdown_primary {
+    padding: 21px 27px;
+    margin-bottom: -18px;
+}
+
+.dropdown_footer {
+    background: rgb(11,22,34);
+    border-radius: 0 0 6px 6px;
+    color: rgb(139,160,178);
+    display: grid;
+    font-size: 1.1rem;
+    font-weight: 600;
+    grid-gap: 14px 12px;
+    grid-template-columns: 72px auto;
+    padding: 16px 27px;
+}
+
+.primary-link, .secondary-link {
+    align-items: center;
+    color: rgb(var(--grey-300));
+    display: grid;
+    font-size: 1.4rem;
+    font-weight: 600;
+    grid-column-gap: 10px;
+    grid-template-columns: 20px auto;
+    letter-spacing: .03rem;
+    margin-bottom: 18px;
+    transition: color .2s ease;
+}
+
+.primary-link .icon, .secondary-link .icon {
+    color: rgb(173,192,210);
+    position: relative;
+    font-size: 1.4rem;
+    transition: color .2s ease;
+}
+
 @media screen and (max-width: 1800px) {
     .result_search_link {
         width: 15vw;

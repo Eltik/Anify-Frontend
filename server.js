@@ -9,7 +9,6 @@ const { join } = require("path");
 
 const colors = require("colors");
 
-const CryptoJS = require("crypto-js");
 const config = require("./config.json");
 const port = config.port;
 
@@ -107,6 +106,36 @@ app.get("/subtitles", async(req, res) => {
     res.header("Content-Type", "text/vtt");
     res.send(data).end();
 });
+
+app.get("/login", (req, res) => {
+    if (req.cookies.token) {
+        res.redirect("/");
+    } else {
+        res.redirect(config.api + "/login");
+    }
+})
+
+app.get("/auth", (req, res) => {
+    const token = req.query.token;
+    if (!token) {
+        res.status(400).json({ error: "No token provided." }).end();
+    }
+    res.cookie("token", token, { maxAge: 1000 * 60 * 60 * 24 * 7, httpOnly: true });
+    res.redirect("/");
+})
+
+app.get("/logout", (req, res) => {
+    res.clearCookie("token");
+    res.redirect("/");
+})
+
+app.get("/token", (req, res) => {
+    const token = req.cookies.token;
+    if (!token) {
+        res.status(400).json({ error: "No token found." }).end();
+    }
+    res.send({ token: token }).end();
+})
 
 app.get("/*", (req, res) => {
     res.send("404.").end();
