@@ -41,7 +41,7 @@
                 loadSkeleton(".slideshow_grid");
 
                 const currentList = await getList("anime");
-                listData = currentList;
+                listData = currentList ? currentList : [];
                 
                 fetchTrending().then((trending) => {
                     displayTrending(trending);
@@ -52,7 +52,7 @@
                 })
 
                 fetchPopular().then((popular) => {
-                    displayPopular(popular, currentList);
+                    displayPopular(popular, listData);
                     unloadSkeleton(".slideshow_grid", ".skeleton_result");
                 }).catch((err) => {
                     handleError(err);
