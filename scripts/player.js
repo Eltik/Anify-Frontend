@@ -594,9 +594,11 @@ function toggleChapters() {
     if (chapterMenu) {
         chapterMenu = false;
         menu.style.opacity = "0";
+        menu.style.pointerEvents = "none";
     } else {
         chapterMenu = true;
         menu.style.opacity = "1";
+        menu.style.pointerEvents = "all";
     }
 }
 
@@ -677,11 +679,13 @@ setTimeout(() => {
             <div class="media-controls-container">
                 <div class="media-controls-group title">
                     <div class="media-header">
-                        <div class="media-header-left">
-                            Anify
+                        <div class="media-header-left ui">
+                            <div class="back-button" onclick="window.location.replace('/info/' + ${id})">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" class="transition-all decoration-neutral-150 ease-linear"><path stroke="inherit" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3" d="M15 19.92L8.48 13.4c-.77-.77-.77-2.03 0-2.8L15 4.08"></path></svg>
+                            </div>
                         </div>
-                        <div class="media-title">${info.anilist.title.english ? info.anilist.title.english : info.anilist.title.romaji}</div>
-                        <div class="media-header-right">
+                        <div class="media-title ui">${info.anilist.title.english ? info.anilist.title.english : info.anilist.title.romaji}</div>
+                        <div class="media-header-right ui">
                             <div class="chapters-panel">
                                 <div class="chapters-panel-button" onclick="toggleChapters()">
                                     <svg class="icon" width="20" height="18" viewBox="0 0 20 18" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M10.6061 17.1678C10.284 17.1678 10.0228 16.9066 10.0228 16.5844L10.0228 1.41778C10.0228 1.09561 10.284 0.834442 10.6061 0.834442L12.3561 0.834442C12.6783 0.834442 12.9395 1.09561 12.9395 1.41778L12.9395 16.5844C12.9395 16.9066 12.6783 17.1678 12.3561 17.1678H10.6061Z"></path><path d="M17.0228 17.1678C16.7006 17.1678 16.4395 16.9066 16.4395 16.5844L16.4395 1.41778C16.4395 1.09561 16.7006 0.834442 17.0228 0.834442L18.7728 0.834442C19.095 0.834442 19.3561 1.09561 19.3561 1.41778V16.5844C19.3561 16.9066 19.095 17.1678 18.7728 17.1678H17.0228Z"></path><path d="M0.796022 15.9481C0.71264 16.2593 0.897313 16.5791 1.2085 16.6625L2.89887 17.1154C3.21006 17.1988 3.52992 17.0141 3.61331 16.703L7.53873 2.05308C7.62211 1.74189 7.43744 1.42203 7.12625 1.33865L5.43588 0.885715C5.12469 0.802332 4.80483 0.987005 4.72144 1.29819L0.796022 15.9481Z"></path></svg>

@@ -338,6 +338,11 @@ vds-media:not([can-play]) .media-buffering-icon, vds-media[waiting] .media-buffe
     pointer-events: auto;
 }
 
+.ui {
+    transition: 0.2s all;
+    pointer-events: initial;
+}
+
 vds-media[hide-ui] .ui, vds-media[user-idle] .ui, vds-media:not([can-play]) .ui {
     opacity: 0;
     visibility: hidden;
@@ -382,7 +387,19 @@ vds-media[hide-ui] .subtitles, vds-media[user-idle] .subtitles, vds-media:not([c
 }
 
 .media-header-left {
-    opacity: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.back-button {
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    margin-top: 5px;
+    cursor: pointer;
+    stroke: rgb(var(--white));
 }
 
 .chapters-panel-button {
@@ -433,6 +450,7 @@ vds-media[hide-ui] .subtitles, vds-media[user-idle] .subtitles, vds-media:not([c
     top: 50px;
     right: 20px;
     padding: 15px;
+    pointer-events: none;
 
     /* For transitions */
     opacity: 0;
