@@ -89,7 +89,7 @@ app.get("/admin*", (req, res) => {
 })
 
 app.get("/dmca*", (req, res) => {
-    res.sendFile("./dmca.txt", { root: __dirname });
+    res.sendFile("./dmca.html", { root: __dirname });
 })
 
 app.get("/tos*", (req, res) => {

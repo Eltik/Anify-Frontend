@@ -180,7 +180,7 @@ a {
     padding: 30px;
     background-color: rgb(var(--blue-200));
     grid-area: footer;
-    margin-top: 56.25%;
+    margin-top: 10%;
 }
 
 .foottext a {
