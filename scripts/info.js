@@ -14,12 +14,6 @@ function load(id) {
             return;
         }
 
-        // Unload skeleton.
-        const coverImage = document.createElement("img");
-        coverImage.classList.add("coverimage");
-
-        document.querySelector(".cover .pending_el").replaceWith(coverImage);
-
         const info = data.anilist;
         const connectors = data.connectors;
 
@@ -31,10 +25,18 @@ function load(id) {
         const averageScore = info.averageScore;
         const favorites = info.favourites;
         const licensed = info.isLicensed;
-        const nextAiring = info.nextAiringEpisode ? info.nextAiringEpisode.airingAt : null;
-
-        document.querySelector(".views .stattext").textContent = averageScore;
-        document.querySelector(".popularity .stattext").textContent = favorites;
+        const status = info.status;
+        const episodes = info.episodes;
+        const chapters = info.chapters;
+        const volumes = info.volumes;
+        const format = info.format;
+        const source = info.source;
+        const season = info.season;
+        const seasonYear = info.seasonYear;
+        const countryOfOrigin = info.countryOfOrigin;
+        const isAdult = info.isAdult;
+        const startDate = info.startDate;
+        const endDate = info.endDate;
 
         const rawDesc = info.description.length > 500 ? info.description.substring(0, 500) + "..." : info.description;
         const cover = info.coverImage.extraLarge;
@@ -42,9 +44,9 @@ function load(id) {
         const parser = new DOMParser();
         const description = parser.parseFromString(rawDesc,"text/html").body.textContent;
     
-        document.getElementsByClassName("mangatitle")[0].textContent = englishTitle;
-        document.getElementsByClassName("coverimage")[0].src = cover;
-        document.getElementsByClassName("mangadescription")[0].querySelector("span").textContent = description;
+        document.querySelector(".mangatitle").textContent = englishTitle;
+        document.querySelector(".cover").src = cover;
+        document.querySelector(".mangadescription").querySelector("span").textContent = description;
     
         let bannerImage = info.bannerImage;
         let tmdbId = null;
@@ -65,9 +67,9 @@ function load(id) {
         }
 
         const genres = info.genres;
-        document.getElementsByClassName("bannerimage")[0].src = bannerImage;
+        document.querySelector(".bannerimage").style = `background-image: url("${bannerImage}");`;
         
-        const genresList = document.getElementsByClassName("genres")[0];
+        const genresList = document.querySelector(".genres");
         for (let i = 0; i < genres.length; i++) {
             const genreDOM = document.createElement("span");
             genreDOM.className = "genre";
@@ -76,29 +78,21 @@ function load(id) {
             genresList.append(genreDOM);
         }
 
-        document.getElementsByClassName("mangatitle")[0].textContent = romajiTitle;
-        document.getElementsByClassName("native")[0].textContent = nativeTitle;
-        document.getElementsByClassName("english")[0].textContent = englishTitle;
+        document.querySelector(".mangatitle").textContent = romajiTitle;
+        document.querySelector(".native").textContent = nativeTitle;
+        document.querySelector(".english").textContent = englishTitle;
 
         let content = null;
         if (info.type === "ANIME") {
             const req = await fetch(api_server + "/episodes", { method: "POST", body: JSON.stringify({ id: id }), headers: { "Content-Type": "application/json" }});
             const json = await req.json();
-            unloadSkeleton(".chapterslist", ".skeleton_result", true);
             content = json;
             document.querySelector(".chaptersheader span").textContent = "Episodes";
-            document.querySelector(".lastUpdate .stattitle").textContent = "Airing In";
-
-            let next = nextAiring ? (nextAiring * 1000) : Date.now();
-            const time = timeSince(new Date(next));
-            document.querySelector(".lastUpdate .stattext").textContent = time;
         } else if (info.type === "MANGA") {
             const req = await fetch(api_server + "/chapters", { method: "POST", body: JSON.stringify({ id: id }), headers: { "Content-Type": "application/json" }});
             const json = await req.json();
-            unloadSkeleton(".chapterslist", ".skeleton_result", true);
             content = json;
             document.querySelector(".chaptersheader span").textContent = "Chapters";
-            document.querySelector(".lastUpdate .stattext").textContent = licensed;
         }
 
         if (content != null) {

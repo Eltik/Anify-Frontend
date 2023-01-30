@@ -1,7 +1,6 @@
 <!DOCTYPE html>
     <head>
         <title>Info</title>
-        <link rel="stylesheet" href="../scripts/libraries/skeleton.css"/>
         <link rel="stylesheet" href="../styles/global.css">
         <link rel="stylesheet" href="../styles/info.css">
         <link rel="icon" href="../images/favicon.ico" />
@@ -28,14 +27,10 @@
         <script src="../scripts/libraries/numeral.min.js"></script>
         <script src="../scripts/libraries/anime.min.js"></script>
         <script src="../scripts/libraries/cryptojs.min.js"></script>
-        <script src="../scripts/libraries/skeleton.min.js"></script>
         <script src="../scripts/global.min.js"></script>
         <script src="../scripts/info.min.js"></script>
         <script>
             setTimeout(() => {
-                loadSkeleton(".cover");
-                loadSkeleton(".chapterslist");
-
                 const id = window.location.pathname.split("/")[2];
                 load(id, true);
                 loadNav();
@@ -64,70 +59,46 @@
                     <a href="/login" class="navtext login">Login</a>
                 </div>
             </div>
-            <div class="gradient">
-            </div>
-            <div class="banner">
-                <img class="bannerimage" src="../images/skeleton_banner.png">
-            </div>
-            <div class="main" data-scheletrone="true">
-                <div class="sidebar">
-                    <div class="cover">
-                        <img class="coverimage" src="../images/skeleton_cover.png">
+            <div class="header_wrap">
+                <div class="bannerimage" style="background-image: url('../images/skeleton_banner.png');">
+                    <div class="gradient">
                     </div>
-                    <div class="genres">
-                    </div>
-                    <div class="stats">
-                        <div class="statbox views">
-                            <span class="staticon">
-                                <img class="staticon" src="../images/view_icon.png" alt="">
-                            </span>
-                            <span class="stattitle">Score:</span>
-                            <span class="stattext">N/A</span>
+                </div>
+                <div class="header">
+                    <div class="header_wrapper">
+                        <div class="cover_wrapper">
+                            <div class="cover_wrapper_inner">
+                                <img src="../images/skeleton_cover.png" class="cover">
+                                <div class="actions">
+                                    
+                                </div>
+                            </div>
                         </div>
-                        <div class="statbox popularity">
-                            <span class="staticon">
-                                <img class="staticon" src="../images/like_icon.png" alt="">
-                            </span>
-                            <span class="stattitle">Favorites:</span>
-                            <span class="stattext">N/A</span>
-                        </div>
-                        <div class="statbox lastUpdate">
-                            <span class="staticon">
-                                <img class="staticon" src="../images/bar_icon.png" alt="">
-                            </span>
-                            <span class="stattitle">Licensed:</span>
-                            <span class="stattext">N/A</span>
+                        <div class="header_content">
+                            <div class="mangatitle">Loading...</div>
+                            <div class="mangasubtitle"><span class="native"></span><br><span class="english"></span></div>
+                            <div class="mangadescription">
+                                <span></span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="info">
-                    <div class="details">
-                        <div class="mangatitle">Loading...</div>
-                        <div class="mangasubtitle"><span class="native"></span><br><span class="english"></span></div>
-                        <div class="mangadescription">
-                            <span></span>
-                        </div>
+            </div>
+            <div class="content">
+                <div class="sidebar">
+                    <div class="genres">
+                        
                     </div>
+                    <div class="stats">
+
+                    </div>
+                </div>
+                <div class="main_content">
                     <div class="chapters">
                         <div class="chaptersheader">
                             <span class="chaptersheader">...</span>
                         </div>
                         <div class="chapterslist">
-                            <div class="skeleton_result" style="min-height:5vh;padding:5px;">
-                                <div class="skeleton_div" style="min-height:5vh;width:98%;"></div>
-                            </div>
-                            <div class="skeleton_result" style="min-height:5vh;padding:5px;">
-                                <div class="skeleton_div" style="min-height:5vh;width:98%;"></div>
-                            </div>
-                            <div class="skeleton_result" style="min-height:5vh;padding:5px;">
-                                <div class="skeleton_div" style="min-height:5vh;width:98%;"></div>
-                            </div>
-                            <div class="skeleton_result" style="min-height:5vh;padding:5px;">
-                                <div class="skeleton_div" style="min-height:5vh;width:98%;"></div>
-                            </div>
-                            <div class="skeleton_result" style="min-height:5vh;padding:5px;">
-                                <div class="skeleton_div" style="min-height:5vh;width:98%;"></div>
-                            </div>
                         </div>
                     </div>
                 </div>
