@@ -29,7 +29,7 @@
         <script src="../../../scripts/libraries/cryptojs.min.js"></script>
         <script src="../../../scripts/libraries/skeleton.min.js"></script>
         <script src="../../../scripts/global.min.js"></script>
-        <script src="../../../scripts/read.js"></script>
+        <script src="../../../scripts/read.min.js"></script>
         <script>
             setTimeout(() => {
                 loadSkeleton(".pages_temp");
@@ -44,78 +44,71 @@
     </head>
 
     <body>
-        <div class="wrapper">
-            <div class="navbar">
-                <button type="button" id="navbutton" class="navbutton" onclick="displayNav()">
-                    <div class="bar1"></div>
-                    <div class="bar2"></div>
-                    <div class="bar3"></div>
-                </button>
-                <div class="anify">
-                    <span class="anify">Anify</span>
-                </div>  
-                <img class="navlogo" src="../../../images/anify_logo.png"> 
-                <div class="navlinks">
-                    <a href="/" class="navtext">Home</a>
-                    <a href="/anime" class="navtext">Anime</a>
-                    <a href="/manga" class="navtext">Manga</a>
-                    <a href="/novels" class="navtext">Novels</a>
-                    <a href="/discord" class="navtext">Discord</a>
-                    <a href="/login" class="navtext login">Login</a>
-                </div>
+        <div class="navbar">
+            <button type="button" id="navbutton" class="navbutton" onclick="displayNav()">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+            </button>
+            <div class="anify">
+                <span class="anify">Anify</span>
+            </div>  
+            <img class="navlogo" src="../../../images/anify_logo.png"> 
+            <div class="navlinks">
+                <a href="/" class="navtext">Home</a>
+                <a href="/anime" class="navtext">Anime</a>
+                <a href="/manga" class="navtext">Manga</a>
+                <a href="/novels" class="navtext">Novels</a>
+                <a href="/discord" class="navtext">Discord</a>
+                <a href="/login" class="navtext login">Login</a>
             </div>
-            <div class="gradient">
-            </div>
-            <div class="banner">
-                <img class="bannerimage" src="../../../images/skeleton_banner.png">
-            </div>
-            <div class="main">
-                <div class="pages">
-                    <div class="top_bar">
-                        <div class="top_bar_left">
-                            <div class="top_bar_left_title bar">
-                                <a class="title_href"><span class="top_bar_left_title_text">Title</span></a>
-                            </div>
-                            <div class="top_bar_left_chapter bar">
-                                <span class="top_bar_left_chapter_text">Chapter</span>
-                            </div>
+        </div>
+        <div class="main">
+            <div class="pages">
+                <div class="top_bar">
+                    <div class="top_bar_left">
+                        <div class="top_bar_left_title bar">
+                            <a class="title_href"><span class="top_bar_left_title_text">Title</span></a>
                         </div>
-                        <div class="top_bar_right">
-                            <div class="top_bar_right_prev bar">
-                                <a class="prev_href"><span class="top_bar_right_prev_text">Prev</span></a>
-                            </div>
-                            <div class="top_bar_right_next bar">
-                                <a class="next_href"><span class="top_bar_right_next_text">Next</span></a>
-                            </div>
+                        <div class="top_bar_left_chapter bar">
+                            <span class="top_bar_left_chapter_text">Chapter</span>
                         </div>
                     </div>
+                    <div class="top_bar_right">
+                        <div class="top_bar_right_prev bar">
+                            <a class="prev_href"><span class="top_bar_right_prev_text">Prev</span></a>
+                        </div>
+                        <div class="top_bar_right_next bar">
+                            <a class="next_href"><span class="top_bar_right_next_text">Next</span></a>
+                        </div>
+                    </div>
+                </div>
 
-                    <div class="pages_temp" style="height:100vh;">
-                        <div class="skeleton_result" style="min-height:10vh;padding:5px;">
-                            <div class="skeleton_div" style="min-height:10vh;width:98%;"></div>
-                        </div>
-                        <div class="skeleton_result" style="min-height:10vh;padding:5px;">
-                            <div class="skeleton_div" style="min-height:10vh;width:98%;"></div>
-                        </div>
-                        <div class="skeleton_result" style="min-height:10vh;padding:5px;">
-                            <div class="skeleton_div" style="min-height:10vh;width:98%;"></div>
-                        </div>
-                        <div class="skeleton_result" style="min-height:10vh;padding:5px;">
-                            <div class="skeleton_div" style="min-height:10vh;width:98%;"></div>
-                        </div>
-                        <div class="skeleton_result" style="min-height:10vh;padding:5px;">
-                            <div class="skeleton_div" style="min-height:10vh;width:98%;"></div>
-                        </div>
+                <div class="pages_temp" style="height:100vh;">
+                    <div class="skeleton_result" style="min-height:10vh;padding:5px;">
+                        <div class="skeleton_div" style="min-height:10vh;width:98%;"></div>
+                    </div>
+                    <div class="skeleton_result" style="min-height:10vh;padding:5px;">
+                        <div class="skeleton_div" style="min-height:10vh;width:98%;"></div>
+                    </div>
+                    <div class="skeleton_result" style="min-height:10vh;padding:5px;">
+                        <div class="skeleton_div" style="min-height:10vh;width:98%;"></div>
+                    </div>
+                    <div class="skeleton_result" style="min-height:10vh;padding:5px;">
+                        <div class="skeleton_div" style="min-height:10vh;width:98%;"></div>
+                    </div>
+                    <div class="skeleton_result" style="min-height:10vh;padding:5px;">
+                        <div class="skeleton_div" style="min-height:10vh;width:98%;"></div>
                     </div>
                 </div>
             </div>
-            <div class="footer">
-                <span class="foottext"><a href="/tos">Terms of Service</a></span>
-                <span class="foottext"><a href="/dmca">DMCA</a></span>
-                <span class="foottext"><a href="/contact">Contact</a></span>
-                <span class="foottext"><a href="/discord">Discord</a></span>
-                <span class="foottext"><a href="https://ko-fi.com/anify" target="_blank">Donate</a></span>
-            </div>
+        </div>
+        <div class="footer">
+            <span class="foottext"><a href="/tos">Terms of Service</a></span>
+            <span class="foottext"><a href="/dmca">DMCA</a></span>
+            <span class="foottext"><a href="/contact">Contact</a></span>
+            <span class="foottext"><a href="/discord">Discord</a></span>
+            <span class="foottext"><a href="https://ko-fi.com/anify" target="_blank">Donate</a></span>
         </div>
     </body>
 </html>

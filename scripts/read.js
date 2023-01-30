@@ -20,7 +20,7 @@ function load(id, provider, readId) {
         } else {
             pages.map((element, index) => {
                 const page = document.createElement("img");
-                page.src = /*api_server + "/proxy/image/" + */element.url;
+                page.src = element.url;
                 page.className = "page";
                 page.loading = "lazy";
                 page.alt = "Page " + (index + 1);
@@ -71,8 +71,6 @@ function load(id, provider, readId) {
                         }
                     }
                 });
-        
-                document.getElementsByClassName("bannerimage")[0].src = manga.bannerImage;
             }).catch((err) => {
                 handleError(err);
             });
