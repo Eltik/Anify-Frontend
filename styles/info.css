@@ -42,7 +42,7 @@
 }
 
 .gradient {
-    background: linear-gradient(180deg,rgba(var(--color-shadow-dark),0) 40%,rgba(var(--color-shadow-dark),.6));
+    background: linear-gradient(180deg,rgba(6,13,34,0) 40%,rgba(6,13,34,.6));
     height: 100%;
     width: 100%;
 }

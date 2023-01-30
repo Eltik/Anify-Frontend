@@ -84,6 +84,10 @@ app.get("/discord*", (req, res) => {
     res.redirect("https://discord.gg/zBCvFken5W");
 })
 
+app.get("/profile*", (req, res) => {
+    res.sendFile("./profile.html", { root: __dirname });
+})
+
 app.get("/admin*", (req, res) => {
     res.sendFile("./admin.html", { root: __dirname });
 })

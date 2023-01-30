@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+    <head>
+        <title>Profile</title>
+        <link rel="stylesheet" href="../styles/global.css">
+        <link rel="stylesheet" href="../styles/profile.css">
+        <link rel="icon" href="../images/favicon.ico" />
+        <meta charset="utf-8">
+        <script src="https://cdn.jsdelivr.net/npm/js-base64@3.7.3/base64.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+        <script src="../scripts/libraries/anime.min.js"></script>
+        <script src="../scripts/libraries/cryptojs.min.js"></script>
+        <script src="../scripts/global.js"></script>
+        <script src="../scripts/profile.js"></script>
+
+        <meta name="title" content="Profile" />
+        <meta name="description" content="Loading..." />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://anify.tv/" />
+        <meta property="og:title" content="Profile" />
+        <meta property="og:description" content="Loading..." />
+        <meta property="og:image" content="" />
+
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://anify.tv/" />
+        <meta property="twitter:title" content="Profile"/>
+        <meta property="twitter:description" content="Loading..." />
+        <meta property="twitter:image" content="" />
+    </head>
+    <script>
+        const username = window.location.pathname.split("/")[2];
+        setTimeout(() => {
+            loadNav();
+            load(username);
+        }, 100);
+    </script>
+    <body>
+        <div class="navbar">
+            <button type="button" id="navbutton" class="navbutton" onclick="displayNav()">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+            </button>
+            <div class="anify">
+                <span class="anify">Anify</span>
+            </div>
+            <img class="navlogo" src="../images/anify_logo.png">
+            <div class="navlinks">
+                <a href="/" class="navtext">Home</a>
+                <a href="/anime" class="navtext">Anime</a>
+                <a href="/manga" class="navtext">Manga</a>
+                <a href="/novels" class="navtext">Novels</a>
+                <a href="/discord" class="navtext">Discord</a>
+                <a href="/login" class="navtext login">Login</a>
+            </div>
+        </div>
+        <div class="footer">
+            <span class="foottext"><a href="/tos">Terms of Service</a></span>
+            <span class="foottext"><a href="/dmca">DMCA</a></span>
+            <span class="foottext"><a href="/contact">Contact</a></span>
+            <span class="foottext"><a href="/discord">Discord</a></span>
+            <span class="foottext"><a href="https://ko-fi.com/anify" target="_blank">Donate</a></span>
+        </div>
+    </body>
+</html>
