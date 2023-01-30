@@ -3,6 +3,7 @@
 let menuCon;
 let isOpen = false;
 let temp = false;
+let chapterMenu = false;
 
 let DMenu;
 
@@ -584,6 +585,21 @@ body.append(vdsGesture);
 body.append(vdsToggle);
 body.append(webVttParser);
 
+function changeEpisode(provider, episodeId) {
+    window.location.replace("/watch/" + id + "/" + provider + "/" + episodeId);
+}
+
+function toggleChapters() {
+    const menu = document.querySelector(".chapters-panel-content");
+    if (chapterMenu) {
+        chapterMenu = false;
+        menu.style.opacity = "0";
+    } else {
+        chapterMenu = true;
+        menu.style.opacity = "1";
+    }
+}
+
 setTimeout(() => {
     setTimeout(async() => {
         /**
@@ -623,6 +639,21 @@ setTimeout(() => {
 
         await Promise.all(promises);
 
+        let chapters = "";
+        episodes.map((element, index) => {
+            const provider = element;
+            let a = `<div class="chapter-item-header">${provider.provider}</div>`;
+            provider.episodes.map((element, index) => {
+                const episode = element;
+                a += `
+                <div class="chapter-item" onclick="changeEpisode('${provider.provider}', '${encrypt(episode.id)}')">
+                    <div class="chapter-item-title"><h1>${episode.title}</h1></div>
+                </div>
+                `;
+            });
+            chapters += `<div class="chapter-item-wrapper">` + a + `</div>`;
+        })
+
         const toAppend = `
         <vds-media class="videoplayer">
             <vds-aspect-ratio ratio="16/9">
@@ -644,7 +675,29 @@ setTimeout(() => {
                 </svg>
             </div>
             <div class="media-controls-container">
-                <div class="media-controls-group title"><h1></h1></div>
+                <div class="media-controls-group title">
+                    <div class="media-header">
+                        <div class="media-header-left">
+                            Anify
+                        </div>
+                        <div class="media-title">${info.anilist.title.english ? info.anilist.title.english : info.anilist.title.romaji}</div>
+                        <div class="media-header-right">
+                            <div class="chapters-panel">
+                                <div class="chapters-panel-button" onclick="toggleChapters()">
+                                    <svg class="icon" width="20" height="18" viewBox="0 0 20 18" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M10.6061 17.1678C10.284 17.1678 10.0228 16.9066 10.0228 16.5844L10.0228 1.41778C10.0228 1.09561 10.284 0.834442 10.6061 0.834442L12.3561 0.834442C12.6783 0.834442 12.9395 1.09561 12.9395 1.41778L12.9395 16.5844C12.9395 16.9066 12.6783 17.1678 12.3561 17.1678H10.6061Z"></path><path d="M17.0228 17.1678C16.7006 17.1678 16.4395 16.9066 16.4395 16.5844L16.4395 1.41778C16.4395 1.09561 16.7006 0.834442 17.0228 0.834442L18.7728 0.834442C19.095 0.834442 19.3561 1.09561 19.3561 1.41778V16.5844C19.3561 16.9066 19.095 17.1678 18.7728 17.1678H17.0228Z"></path><path d="M0.796022 15.9481C0.71264 16.2593 0.897313 16.5791 1.2085 16.6625L2.89887 17.1154C3.21006 17.1988 3.52992 17.0141 3.61331 16.703L7.53873 2.05308C7.62211 1.74189 7.43744 1.42203 7.12625 1.33865L5.43588 0.885715C5.12469 0.802332 4.80483 0.987005 4.72144 1.29819L0.796022 15.9481Z"></path></svg>
+                                </div>
+                                <div class="chapters-panel-content">
+                                    <div class="chapters-panel-content-header">
+                                        <div class="chapters-panel-content-header-title">Episodes</div>
+                                    </div>
+                                    <div class="chapters-panel-content-body">
+                                        ${chapters}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="media-controls-group"><!-- Middle --></div>
                 <div class="media-controls-group controls">
                     <div class="left ui">
@@ -652,7 +705,6 @@ setTimeout(() => {
                             <svg class="media-play-icon" aria-hidden="true" viewBox="0 0 384 512">
                                 <path fill="currentColor" d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z" />
                             </svg>
-
                             <svg class="media-pause-icon" aria-hidden="true" viewBox="0 0 320 512">
                                 <path fill="currentColor" d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z"></path>
                             </svg>
