@@ -175,7 +175,69 @@
     display: none;
 }
 
+.relations {
+    margin-top: 15px;
+    padding: 0 1em;
+}
+
+.relation {
+    background: rgb(var(--blue-200));
+    border-radius: 3px;
+    display: block;
+    padding: 8px 12px;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.relation_wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.relation_text {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    text-transform: capitalize;
+    width: calc(100% - 20px);
+    transition: 0.2s all;
+}
+
+.icon {
+    position: relative;
+    font-size: 1rem;
+    transition: color .2s ease;
+    stroke: rgb(var(--dark-pink-400));
+}
+
+.relation_wrapper:hover .relation_text {
+    color: rgb(61,180,242);
+}
+
+@media screen and (max-width: 1600px) {
+    .bannerimage {
+        height: 300px;
+    }
+}
+
 @media screen and (max-width: 1000px) {
+    .relation {
+        padding: 16px 24px;
+    }
+
+    .relation_text, .icon {
+        font-size: 1.75rem;
+    }
+
+    .icon {
+        width: 50px;
+        height: 50px;
+    }
+
     .header_wrap {
         margin-top: 0;
     }
