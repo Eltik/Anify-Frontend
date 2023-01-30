@@ -17,7 +17,7 @@ let observer = new IntersectionObserver(function(entries) {
 
         anime({
             targets: ".header h1",
-            translateY: "20px",
+            translateY: "5px",
             opacity: 1,
             duration: 1500,
             easing: "easeInOutQuad",
