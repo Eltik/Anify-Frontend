@@ -662,7 +662,7 @@ setTimeout(() => {
                 <vds-hls poster="${info.anilist.bannerImage ? info.anilist.bannerImage : "https://mcdn.wallpapersafari.com/medium/4/95/HSYiKZ.jpg"}">
                     <video class="main_video" preload="none" src="${allSources[allSources.length - 1].url ? allSources[allSources.length - 1].url : allSources[allSources.length - 1].file}"></video>
                     ${subtitles.map((element, index) => {
-                        return `<track src="${"/subtitles?url=" + (element.url)}" label="${element.label}"></track>`;
+                        return `<track src="${"/subtitles?url=" + (element.url)}" label="${element.lang}"></track>`;
                     })}
                 </vds-hls>
             </vds-aspect-ratio>
