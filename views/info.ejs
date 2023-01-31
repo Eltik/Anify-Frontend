@@ -1,25 +1,11 @@
 <!DOCTYPE html>
     <head>
-        <title>Info</title>
         <link rel="stylesheet" href="../styles/global.css">
         <link rel="stylesheet" href="../styles/info.css">
         <link rel="icon" href="../images/favicon.ico" />
         <meta charset="utf-8">
 
-        <meta name="title" content="Info" />
-        <meta name="description" content="Loading info..." />
-
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://anify.tv/" />
-        <meta property="og:title" content="Info" />
-        <meta property="og:description" content="Loading info..." />
-        <meta property="og:image" content="" />
-
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://anify.tv/" />
-        <meta property="twitter:title" content="Info"/>
-        <meta property="twitter:description" content="Loading info..." />
-        <meta property="twitter:image" content="" />
+        <%- header %>
 
         <script src="https://cdn.jsdelivr.net/npm/js-base64@3.7.3/base64.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -32,7 +18,7 @@
         <script>
             setTimeout(() => {
                 const id = window.location.pathname.split("/")[2];
-                load(id, true);
+                load(id, "<%- info.type %>");
                 loadNav();
             }, 100);
         </script>
@@ -59,7 +45,7 @@
             </div>
         </div>
         <div class="header_wrap">
-            <div class="bannerimage" style="background-image: url('../images/skeleton_banner.png');">
+            <div class="bannerimage" style="background-image: url('<%- info.bannerImage %>');">
                 <div class="gradient">
                 </div>
             </div>
@@ -67,17 +53,17 @@
                 <div class="header_wrapper">
                     <div class="cover_wrapper">
                         <div class="cover_wrapper_inner">
-                            <img src="../images/skeleton_cover.png" class="cover">
+                            <img src="<%- info.coverImage.extraLarge %>" class="cover">
                             <div class="actions">
                                 
                             </div>
                         </div>
                     </div>
                     <div class="header_content">
-                        <div class="mangatitle">Loading...</div>
-                        <div class="mangasubtitle"><span class="native"></span><br><span class="english"></span></div>
+                        <div class="mangatitle"><%- info.title.romaji %></div>
+                        <div class="mangasubtitle"><span class="native"><%- info.title.native %></span><br><span class="english"><%- info.title.english %></span></div>
                         <div class="mangadescription">
-                            <span></span>
+                            <span><%- info.description.length > 500 ? info.description.substring(0, 500) + "..." : info.description %></span>
                         </div>
                     </div>
                 </div>
@@ -85,7 +71,9 @@
         </div>
         <div class="content">
             <div class="sidebar">
-                <div class="relations"></div>
+                <div class="relations">
+                    <%- relations %>
+                </div>
                 <div class="stats">
 
                 </div>
