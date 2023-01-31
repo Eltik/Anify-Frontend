@@ -59,6 +59,8 @@
                     alert("Could not fetch popular anime! Contact Eltik via Discord.")
                 })
 
+                displayWatching(listData);
+
                 loadNav();
             }, 100);
         </script>
@@ -109,6 +111,11 @@
                         <input class="search" placeholder="Search for anime..." type="search" onkeyup="checkIfEmpty()" />
                         <button class="submit" type="submit"><i class="fa fa-search"></i></button>
                     </form>
+                    <div class="watching_items hidden">
+                        <h2>Currently Watching</h2>
+                        <div class="slideshow_grid">
+                        </div>
+                    </div>
                     <div class="latest_items">
                         <h2>This Season</h2>
                         <div class="slideshow_grid">

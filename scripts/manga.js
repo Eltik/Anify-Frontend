@@ -249,11 +249,12 @@ function handleSearch(data, listData) {
         <div class="result_search">
             <a href="/info/${id}" class="result_search_link">
                 <div class="result_search_content">
-                    <img src="${cover}" alt="${title}" class="cover">
-                    <div class="result_search_title">${title}</div>
-                    ${list.name ? `<div class="result_item_status ${list.name === "Completed" ? "status_green" : list.name === "Watching" ? "status_blue" : list.name === "Dropped" ? "status_red" : "status_orange"}"></div>` : ""}
+                    <div class="result_search_image">
+                        <img src="${cover}" alt="${title}" class="cover">
+                    </div>
                     <div class="result_search_text">
                         <div class="result_search_title">${title}</div>
+                        ${list.name ? `<div class="result_item_status ${list.name === "Completed" ? "status_green" : list.name === "Watching" ? "status_blue" : list.name === "Dropped" ? "status_red" : "status_orange"}"></div>` : ""}
                         <div class="result_slideshow_genres">
                             ${genresText}
                         </div>

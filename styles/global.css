@@ -245,7 +245,7 @@ a {
     cursor: not-allowed;
 }
 
-.popular_items, .latest_items, .search_items {
+.popular_items, .latest_items, .search_items, .watching_items {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -260,11 +260,11 @@ a {
     margin-top: initial;
 }
 
-.search_items, .latest_items {
+.search_items, .latest_items, .watching_items {
     width: 80%;
 }
 
-.popular_items h2, .latest_items h2, .search_items h2 {
+.popular_items h2, .latest_items h2, .search_items h2, .watching_items h2 {
     font-size: 2rem;
     color: rgb(var(--grey-300));
     text-shadow: var(--global-shadow);
@@ -647,9 +647,21 @@ a {
     cursor: not-allowed;
 }
 
+.result_search {
+    transition: 0.2s all;
+}
+
 .result_search:hover .result_search_link {
     background: rgb(var(--blue-300));
     border: 3px solid rgba(var(--dark-pink-400), 0.8);
+}
+
+.result_search:active {
+    transform: translateY(4px);
+}
+
+.result_search:active .result_search_link {
+    border: 3px solid rgba(var(--dark-pink-300), 0.8);
 }
 
 .result_search_link {
@@ -819,6 +831,10 @@ a {
     color: rgb(173,192,210);
 }
 
+.watching_items {
+    display: flex;
+}
+
 @media screen and (max-width: 1800px) {
     .result_search_link {
         width: 15vw;
@@ -966,7 +982,7 @@ a {
         font-size: 1.5rem;
     }
 
-    .popular_items h2, .latest_items h2, .search_items h2 {
+    .popular_items h2, .latest_items h2, .search_items h2, .watching_items h2 {
         font-size: 4rem;
     }
 
@@ -1055,12 +1071,30 @@ a {
         font-size: 2.3rem;
     }
 
-    .search_items, .latest_items {
+    .search_items, .latest_items, .watching_items {
         width: 85%;
     }
 
     .result_slideshow_text {
         padding: 0rem 2.5rem 0rem 2.5rem;
+    }
+
+    .watching_items {
+        position: relative;
+        margin: auto;
+        display: initial;
+    }
+
+    .watching_items h2 {
+        line-height: normal;
+    }
+
+    .watching_items .slideshow_grid {
+        display: flex;
+        flex-direction: row;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
     }
 }
 

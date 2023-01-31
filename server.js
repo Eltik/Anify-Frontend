@@ -73,23 +73,6 @@ app.get("/novels*", (req, res) => {
 
 app.get("/info/:id", async(req, res) => {
     const id = req.params["id"];
-    /*
-    <title>Info</title>
-    <meta name="title" content="Info" />
-    <meta name="description" content="Loading info..." />
-
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://anify.tv/" />
-    <meta property="og:title" content="Info" />
-    <meta property="og:description" content="Loading info..." />
-    <meta property="og:image" content="" />
-
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://anify.tv/" />
-    <meta property="twitter:title" content="Info"/>
-    <meta property="twitter:description" content="Loading info..." />
-    <meta property="twitter:image" content="" />
-    */
     const { data } = await axios.post(config.api + "/info", { id: id })
     const connectors = data.connectors;
 
