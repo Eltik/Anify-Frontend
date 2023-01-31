@@ -96,6 +96,10 @@ app.get("/dmca*", (req, res) => {
     res.sendFile("./dmca.html", { root: __dirname });
 })
 
+app.get("/contact*", (req, res) => {
+    res.sendFile("./contact.html", { root: __dirname });
+})
+
 app.get("/tos*", (req, res) => {
     res.sendFile("./tos.txt", { root: __dirname });
 })
