@@ -225,6 +225,26 @@
 }
 
 @media screen and (max-width: 1000px) {
+    .header_wrapper {
+        grid-template-columns: 250px auto;
+    }
+
+    .bannerimage {
+        height: 400px;
+        margin-top: 0;
+    }
+
+    .cover_wrapper {
+        margin-top: -145px;
+    }
+
+    .cover_wrapper_inner {
+        margin-left: 30px;
+    }
+    .cover {
+        max-height: 500px;
+        margin-top: 0;
+    }
     .relation {
         padding: 16px 24px;
     }
@@ -241,17 +261,9 @@
     .header_wrap {
         margin-top: 0;
     }
-    .bannerimage {
-        height: 210px;
-        margin-top: 0;
-    }
 
     .header_content {
         grid-template-columns: 1fr;
-    }
-
-    .cover_wrapper {
-        margin-top: -110px;
     }
 
     .content {

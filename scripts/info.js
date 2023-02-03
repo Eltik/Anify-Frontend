@@ -48,7 +48,7 @@ async function load(id, type) {
             header.append(headerSpan);
             provider.appendChild(header);
 
-            if (i != 0 && maxProviders > 1) {
+            if (i != 0 && maxProviders > 0) {
                 provider.classList.add("hidden");
             }
 

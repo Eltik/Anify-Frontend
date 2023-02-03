@@ -308,7 +308,7 @@ async function handleSearch(data, listData) {
     const popularDOM = document.querySelector(".search_items .search_grid");
     for (let i = 0; i < data.length; i++) {
         const promise = new Promise(async(resolve, reject) => {
-            const show = data[i].anilist;
+            const show = data[i].data;
             const id = show.id;
 
             const list = {
