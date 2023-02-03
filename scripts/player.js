@@ -647,6 +647,7 @@ setTimeout(() => {
             let a = `<div class="chapter-item-header">${provider.provider}</div>`;
             provider.episodes.map((element, index) => {
                 const episode = element;
+                episode.title = episode.number ? episode.number + " - " + episode.title : episode.title;
                 a += `
                 <div class="chapter-item" onclick="changeEpisode('${provider.provider}', '${encrypt(episode.id)}')">
                     <div class="chapter-item-title"><h1>${episode.title}</h1></div>
@@ -659,7 +660,7 @@ setTimeout(() => {
         const toAppend = `
         <vds-media class="videoplayer">
             <vds-aspect-ratio ratio="16/9">
-                <vds-hls poster="${info.anilist.bannerImage ? info.anilist.bannerImage : "https://mcdn.wallpapersafari.com/medium/4/95/HSYiKZ.jpg"}">
+                <vds-hls poster="${info.data.bannerImage ? info.data.bannerImage : "https://mcdn.wallpapersafari.com/medium/4/95/HSYiKZ.jpg"}">
                     <video class="main_video" preload="none" src="${allSources[allSources.length - 1].url ? allSources[allSources.length - 1].url : allSources[allSources.length - 1].file}"></video>
                     ${subtitles.map((element, index) => {
                         return `<track src="${"/subtitles?url=" + (element.url)}" label="${element.lang}" kind="captions"></track>`;
@@ -684,7 +685,7 @@ setTimeout(() => {
                                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" class="transition-all decoration-neutral-150 ease-linear"><path stroke="inherit" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3" d="M15 19.92L8.48 13.4c-.77-.77-.77-2.03 0-2.8L15 4.08"></path></svg>
                             </div>
                         </div>
-                        <div class="media-title ui">${info.anilist.title.english ? info.anilist.title.english : info.anilist.title.romaji}</div>
+                        <div class="media-title ui">${info.data.title.english ? info.data.title.english : info.data.title.romaji}</div>
                         <div class="media-header-right ui">
                             <div class="chapters-panel">
                                 <div class="chapters-panel-button" onclick="toggleChapters()">

@@ -44,11 +44,11 @@ async function load(id, type) {
             const header = document.createElement("div");
             header.className = "chaptersheader";
             const headerSpan = document.createElement("span");
-            headerSpan.textContent = content[i].provider + " - " + (content[i].provider_data.title ? content[i].provider_data.title : content[i].provider_data.romaji);
+            headerSpan.textContent = content[i].provider;
             header.append(headerSpan);
             provider.appendChild(header);
 
-            if (i != 0) {
+            if (i != 0 && maxProviders > 1) {
                 provider.classList.add("hidden");
             }
 
@@ -60,6 +60,7 @@ async function load(id, type) {
                     const item = content[i].episodes[j];
         
                     item.title = item.title && item.title.length > 0 ? item.title : "Ep. " + j;
+                    item.title = item.number ? item.number + " - " + item.title : item.title;
         
                     const chapter = document.createElement("a");
                     const readingId = `/watch/${id}/${content[i].provider}/${encrypt(item.id)}`;

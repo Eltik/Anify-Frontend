@@ -76,18 +76,21 @@ app.get("/info/:id", async(req, res) => {
     const { data } = await axios.post(config.api + "/info", { id: id })
     const connectors = data.connectors;
 
-    const info = data.anilist;
+    const info = data.data;
     const title = info.title.english || info.title.romaji || info.title.native;
     const description = info.description.replace(/<br>/g, "");
     const cover = info.coverImage.large;
 
-    const relations = await axios.post(config.api + "/relations", { id: id });
+    //const relations = await axios.post(config.api + "/relations", { id: id });
+    const relations = {
+        data: []
+    };
 
     let relationsData = "";
     for (let i = 0; i < relations.data.length; i++) {
         relationsData += `
         <div class="relation">
-            <a href="/info/${relations.data[i].data.anilist.id}" class="relation_wrapper">
+            <a href="/info/${relations.data[i].data.data.id}" class="relation_wrapper">
                 ${relations.data[i].type === "MANGA" ? `
                 <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="transition-all decoration-neutral-150 ease-linear"><path d="M22 16.74V4.67c0-1.2-.98-2.09-2.17-1.99h-.06c-2.1.18-5.29 1.25-7.07 2.37l-.17.11c-.29.18-.77.18-1.06 0l-.25-.15C9.44 3.9 6.26 2.84 4.16 2.67 2.97 2.57 2 3.47 2 4.66v12.08c0 .96.78 1.86 1.74 1.98l.29.04c2.17.29 5.52 1.39 7.44 2.44l.04.02c.27.15.7.15.96 0 1.92-1.06 5.28-2.17 7.46-2.46l.33-.04c.96-.12 1.74-1.02 1.74-1.98ZM12 5.49v15M7.75 8.49H5.5M8.5 11.49h-3" stroke="inherit" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>` : 
                 relations.data[i].type === "ANIME" ? `<svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="transition-all decoration-neutral-150 ease-linear"><path d="M11.97 22c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10Z" stroke="inherit" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8.74 12.23v-1.67c0-2.08 1.47-2.93 3.27-1.89l1.45.84 1.45.84c1.8 1.04 1.8 2.74 0 3.78l-1.45.84-1.45.84c-1.8 1.04-3.27.19-3.27-1.89v-1.69Z" stroke="inherit" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg>` :

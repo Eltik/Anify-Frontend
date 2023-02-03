@@ -74,7 +74,7 @@ function displayTrending(data) {
     });
 
     for (let i = 0; i < data.length; i++) {
-        const manga = data[i].anilist;
+        const manga = data[i].data;
         const id = manga.id;
         const title = manga.title.english;
         const romaji = manga.title.romaji;
@@ -121,7 +121,7 @@ function displayTrending(data) {
 function displayPopular(data, listData) {
     const popularDOM = document.getElementsByClassName("slideshow_grid")[0];
     for (let i = 0; i < data.length; i++) {
-        const manga = data[i].anilist;
+        const manga = data[i].data;
         const id = manga.id;
         const list = {
             name: ""
@@ -208,7 +208,7 @@ function handleSearch(data, listData) {
     })
     const popularDOM = document.querySelector(".search_items .search_grid");
     for (let i = 0; i < data.length; i++) {
-        const manga = data[i].anilist;
+        const manga = data[i].data;
         const id = manga.id;
 
         const list = {

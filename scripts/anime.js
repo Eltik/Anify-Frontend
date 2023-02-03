@@ -54,7 +54,7 @@ async function displayTrending(data) {
 
     for (let i = 0; i < data.length; i++) {
         const promise = new Promise(async(resolve, reject) => {
-            const show = data[i].anilist;
+            const show = data[i].data;
 
             let tmdbId = null;
             for (let j = 0; j < data[i].connectors.length; j++) {
@@ -64,7 +64,7 @@ async function displayTrending(data) {
                 }
             }
 
-            const id = show.id;
+            const id = data[i].id;
             const title = show.title.english;
             const romaji = show.title.romaji;
             const native = show.title.native;
@@ -123,7 +123,7 @@ async function displayPopular(data, listData) {
     const promises = [];
     for (let i = 0; i < data.length; i++) {
         const promise = new Promise(async(resolve, reject) => {
-            const show = data[i].anilist;
+            const show = data[i].data;
 
             const id = show.id;
 
@@ -210,7 +210,7 @@ async function displayWatching(list) {
     const promises = [];
     for (let i = 0; i < watching.length; i++) {
         const promise = new Promise(async(resolve, reject) => {
-            const show = watching[i].anilist;
+            const show = watching[i].data;
             const id = show.id;
 
             const list = {
@@ -269,7 +269,6 @@ async function displayWatching(list) {
     }
 
     await Promise.all(promises).then(() => {
-        console.log("Finished fetching episodes.");
         setTimeout(() => {
             anime({
                 targets:[".search_item"],
