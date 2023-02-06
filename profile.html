@@ -31,8 +31,10 @@
     <script>
         const username = window.location.pathname.split("/")[2];
         setTimeout(() => {
-            loadNav();
-            load(username);
+            init().then(async() => {
+                loadNav();
+                load(username);
+            });
         }, 100);
     </script>
     <body>

@@ -602,450 +602,451 @@ function toggleChapters() {
     }
 }
 
-setTimeout(() => {
-    setTimeout(async() => {
-        /**
-         * Get Sources and Subtitles
-        */
+async function loadPlayer() {
+    /**
+     * Get Sources and Subtitles
+    */
         sources.map((element, index) => {
-            allSources.push({
-                name: element.quality,
-                url: element.url,
-            });
-        })
+        allSources.push({
+            name: element.quality,
+            url: element.url,
+        });
+    })
 
-        const promises = [];
-        for (let i = 0; i < subtitles.length; i++) {
-            const subtitleSrc = subtitles[i].url;
-            const subtitleLabel = subtitles[i].lang;
-            if (!subtitleLabel || !subtitleSrc) {
-                continue;
-            }
-
-            const promise = new Promise((resolve, reject) => {
-                fetch("/subtitles?url=" + (subtitleSrc)).then(async(data) => {
-                    const subtitle = await data.text();
-                    const parser = new WebVTTParser();
-                    const tree = parser.parse(subtitle, 'metadata');
-                    subs.push({
-                        tree: tree,
-                        name: subtitleLabel
-                    })
-                    resolve();
-                }).catch((err) => {
-                    reject(err);
-                })
-            });
-            promises.push(promise);
+    const promises = [];
+    for (let i = 0; i < subtitles.length; i++) {
+        const subtitleSrc = subtitles[i].url;
+        const subtitleLabel = subtitles[i].lang;
+        if (!subtitleLabel || !subtitleSrc) {
+            continue;
         }
 
-        await Promise.all(promises);
+        const promise = new Promise((resolve, reject) => {
+            fetch("/subtitles?url=" + (subtitleSrc)).then(async(data) => {
+                const subtitle = await data.text();
+                const parser = new WebVTTParser();
+                const tree = parser.parse(subtitle, 'metadata');
+                subs.push({
+                    tree: tree,
+                    name: subtitleLabel
+                })
+                resolve();
+            }).catch((err) => {
+                reject(err);
+            })
+        });
+        promises.push(promise);
+    }
 
-        let chapters = "";
-        episodes.map((element, index) => {
-            const provider = element;
-            let a = `<div class="chapter-item-header">${provider.provider}</div>`;
-            provider.episodes.map((element, index) => {
-                const episode = element;
-                episode.title = episode.number ? episode.number + " - " + episode.title : episode.title;
-                a += `
-                <div class="chapter-item" onclick="changeEpisode('${provider.provider}', '${encrypt(episode.id)}')">
-                    <div class="chapter-item-title"><h1>${episode.title}</h1></div>
+    await Promise.all(promises);
+
+    let chapters = "";
+    episodes.map((element, index) => {
+        const provider = element;
+        let a = `<div class="chapter-item-header">${provider.provider}</div>`;
+        provider.episodes.map((element, index) => {
+            const episode = element;
+            episode.title = episode.number ? episode.number + " - " + episode.title : episode.title;
+            a += `
+            <div class="chapter-item" onclick="changeEpisode('${provider.provider}', '${encrypt(episode.id)}')">
+                <div class="chapter-item-title"><h1>${episode.title}</h1></div>
+            </div>
+            `;
+        });
+        chapters += `<div class="chapter-item-wrapper">` + a + `</div>`;
+    })
+
+    const toAppend = `
+    <vds-media class="videoplayer">
+        <vds-aspect-ratio ratio="16/9">
+            <vds-hls poster="${info.data.bannerImage ? info.data.bannerImage : "https://mcdn.wallpapersafari.com/medium/4/95/HSYiKZ.jpg"}">
+                <video class="main_video" preload="none" src="${allSources[allSources.length - 1].url ? allSources[allSources.length - 1].url : allSources[allSources.length - 1].file}"></video>
+                ${subtitles.map((element, index) => {
+                    return `<track src="${"/subtitles?url=" + (element.url)}" label="${element.lang}" kind="captions"></track>`;
+                })}
+            </vds-hls>
+        </vds-aspect-ratio>
+        <vds-gesture type="click" action="toggle:paused"></vds-gesture>
+        <vds-gesture type="click" repeat="1" priority="1" action="toggle:fullscreen"></vds-gesture>
+        <vds-gesture class="seek-gesture left" type="click" repeat="1" priority="0" action="seek:-10"></vds-gesture>
+        <vds-gesture class="seek-gesture right" type="click" repeat="1" priority="0" action="seek:10"></vds-gesture>
+        <div class="media-buffering-container">
+            <svg class="media-buffering-icon" fill="none" viewBox="0 0 120 120" aria-hidden="true">
+                <circle class="media-buffering-track" cx="60" cy="60" r="54" stroke="currentColor" stroke-width="8"></circle>
+                <circle class="media-buffering-track-fill" cx="60" cy="60" r="54" stroke="currentColor" stroke-width="10" pathLength="100"></circle>
+            </svg>
+        </div>
+        <div class="media-controls-container">
+            <div class="media-controls-group title">
+                <div class="media-header">
+                    <div class="media-header-left ui">
+                        <div class="back-button" onclick="window.location.replace('/info/' + ${id})">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" class="transition-all decoration-neutral-150 ease-linear"><path stroke="inherit" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3" d="M15 19.92L8.48 13.4c-.77-.77-.77-2.03 0-2.8L15 4.08"></path></svg>
+                        </div>
+                    </div>
+                    <div class="media-title ui">${info.data.title.english ? info.data.title.english : info.data.title.romaji}</div>
+                    <div class="media-header-right ui">
+                        <div class="chapters-panel">
+                            <div class="chapters-panel-button" onclick="toggleChapters()">
+                                <svg class="icon" width="20" height="18" viewBox="0 0 20 18" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M10.6061 17.1678C10.284 17.1678 10.0228 16.9066 10.0228 16.5844L10.0228 1.41778C10.0228 1.09561 10.284 0.834442 10.6061 0.834442L12.3561 0.834442C12.6783 0.834442 12.9395 1.09561 12.9395 1.41778L12.9395 16.5844C12.9395 16.9066 12.6783 17.1678 12.3561 17.1678H10.6061Z"></path><path d="M17.0228 17.1678C16.7006 17.1678 16.4395 16.9066 16.4395 16.5844L16.4395 1.41778C16.4395 1.09561 16.7006 0.834442 17.0228 0.834442L18.7728 0.834442C19.095 0.834442 19.3561 1.09561 19.3561 1.41778V16.5844C19.3561 16.9066 19.095 17.1678 18.7728 17.1678H17.0228Z"></path><path d="M0.796022 15.9481C0.71264 16.2593 0.897313 16.5791 1.2085 16.6625L2.89887 17.1154C3.21006 17.1988 3.52992 17.0141 3.61331 16.703L7.53873 2.05308C7.62211 1.74189 7.43744 1.42203 7.12625 1.33865L5.43588 0.885715C5.12469 0.802332 4.80483 0.987005 4.72144 1.29819L0.796022 15.9481Z"></path></svg>
+                            </div>
+                            <div class="chapters-panel-content">
+                                <div class="chapters-panel-content-header">
+                                    <div class="chapters-panel-content-header-title">Episodes</div>
+                                </div>
+                                <div class="chapters-panel-content-body">
+                                    ${chapters}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                `;
-            });
-            chapters += `<div class="chapter-item-wrapper">` + a + `</div>`;
+            </div>
+            <div class="media-controls-group"><!-- Middle --></div>
+            <div class="media-controls-group controls">
+                <div class="left ui">
+                    <vds-play-button>
+                        <svg class="media-play-icon" aria-hidden="true" viewBox="0 0 384 512">
+                            <path fill="currentColor" d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z" />
+                        </svg>
+                        <svg class="media-pause-icon" aria-hidden="true" viewBox="0 0 320 512">
+                            <path fill="currentColor" d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z"></path>
+                        </svg>
+                    </vds-play-button>
+                    <vds-mute-button>
+                        <svg class="media-mute-icon" aria-hidden="true" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M5.889 16H2a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h3.889l5.294-4.332a.5.5 0 0 1 .817.387v15.89a.5.5 0 0 1-.817.387L5.89 16zm14.525-4l3.536 3.536l-1.414 1.414L19 13.414l-3.536 3.536l-1.414-1.414L17.586 12L14.05 8.464l1.414-1.414L19 10.586l3.536-3.536l1.414 1.414L20.414 12z" />
+                        </svg>
+                        <svg class="media-unmute-icon" aria-hidden="true" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M5.889 16H2a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h3.889l5.294-4.332a.5.5 0 0 1 .817.387v15.89a.5.5 0 0 1-.817.387L5.89 16zm13.517 4.134l-1.416-1.416A8.978 8.978 0 0 0 21 12a8.982 8.982 0 0 0-3.304-6.968l1.42-1.42A10.976 10.976 0 0 1 23 12c0 3.223-1.386 6.122-3.594 8.134zm-3.543-3.543l-1.422-1.422A3.993 3.993 0 0 0 16 12c0-1.43-.75-2.685-1.88-3.392l1.439-1.439A5.991 5.991 0 0 1 18 12c0 1.842-.83 3.49-2.137 4.591z" />
+                        </svg>
+                    </vds-mute-button>
+                </div>
+                <div class="center">
+                    <div class="subtitles">
+                    </div>
+                    <div class="slider ui">
+                        <vds-time-slider>
+                            <div class="slider-track"></div>
+                            <div class="slider-track fill"></div>
+                            <div class="slider-thumb-container">
+                                <div class="slider-thumb"></div>
+                            </div>
+                            <div class="media-time-container">
+                                <vds-slider-value-text type="pointer" format="time"></vds-slider-value-text>
+                            </div>
+                        </vds-time-slider>
+                    </div>
+                </div>
+                <div class="right ui">
+                    <vds-toggle-button aria-label="settings" classname="media-settings-button">
+                        <svg class="media-settings-icon" viewBox="0 0 512 512" style="transform:rotate(0deg);transition:0.3s all ease" class="not-pressed" onclick="openSettings()">
+                            <path fill="white" d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336c44.2 0 80-35.8 80-80s-35.8-80-80-80s-80 35.8-80 80s35.8 80 80 80z"></path>
+                        </svg>
+                    </vds-toggle-button>
+                    <div class="menu_wrapper">
+                        <div class="menuCon"></div>
+                    </div>
+                    <vds-fullscreen-button>
+                        <svg class="media-enter-fs-icon" aria-hidden="true" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M16 3h6v6h-2V5h-4V3zM2 3h6v2H4v4H2V3zm18 16v-4h2v6h-6v-2h4zM4 19h4v2H2v-6h2v4z" />
+                        </svg>
+                        <svg class="media-exit-fs-icon" aria-hidden="true" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M18 7h4v2h-6V3h2v4zM8 9H2V7h4V3h2v6zm10 8v4h-2v-6h6v2h-4zM8 15v6H6v-4H2v-2h6z" />
+                        </svg>
+                    </vds-fullscreen-button>
+                </div>
+            </div>
+        </div>
+    </vds-media>
+    `;
+    player.innerHTML = toAppend;
+
+    setTimeout(() => {
+        /* Menu-Related */
+        const qualityItems = [];
+        for (let i = 0; i < allSources.length; i++) {
+            const selected = i === (allSources.length - 1) ? true : false;
+            let canPush = true;
+
+            for (let j = 0; j < qualityItems.length; j++) {
+                if (qualityItems[j].text === allSources[i].name) {
+                    canPush = false;
+                }
+            }
+
+            if (canPush) {
+                const item = {
+                    text: allSources[i].name,
+                    callback: () => changeQuality(allSources[i].url),
+                    highlightable: true,
+                    id: allSources[i].name,
+                    selected: selected
+                };
+                qualityItems.push(item);
+            }
+        }
+        menuCon = document.querySelector(".menuCon");
+        DMenu = new dropDownMenu(
+        [
+            {
+                "id": "initial",
+                "items": [
+                    {
+                        "text": "Quality",
+                        "iconID": "qualIcon",
+                        "open": "quality",
+                    },
+
+                    {
+                        "text": "Sources",
+                        "iconID": "sourceIcon",
+                        "open": "source"
+                    },
+                    {
+                        "text": "Subtitles",
+                        "iconID": "fillIcon",
+                        "open": "subtitles"
+                    },
+                    {
+                        "text": "Config",
+                        "iconID": "configIcon",
+                        "open": "config"
+                    }
+                ]
+            },
+            {
+                "id": "quality",
+                "selectableScene": true,
+                "heading": {
+                    "text": "Quality",
+                },
+                "items": qualityItems
+            },
+
+            {
+                "id": "source",
+                "selectableScene": true,
+                "heading": {
+                    "text": "Sources",
+                },
+                "items": [
+                    {
+                        "text": "HLS#sub",
+                        "highlightable": true,
+                        "selected": true,
+                    },
+                    {
+                        "text": "HLS#dub",
+                        "highlightable": true
+                    }
+                ]
+            },
+
+            {
+                "id": "subtitles",
+                "heading": {
+                    "text": "Subtitles",
+                },
+                "items": [
+                    {
+                        "text": "Font Family",
+                        "textBox": true,
+                        "value": "Kanit",
+                        "onInput": function (value) {
+                            const font = value.target.value;
+                            updateSubtitleFont(font);
+                        }
+                    },
+                    {
+                        "text": "Color Changer",
+                        "textBox": true,
+                        "value": "rgb(255, 255, 255)",
+                        "onInput": function (value) {
+                            const color = value.target.value;
+                            updateSubtitleColor(color);
+                        }
+                    }
+                ]
+            },
+
+            {
+                "id": "config",
+                "heading": {
+                    "text": "Configuration",
+                    "back": true
+                },
+                "items": [
+                    {
+                        "text": "Subtitles",
+                        "iconID": "fillIcon",
+                        "open": "subtitles"
+                    },
+                    {
+                        "text": "Subtitle Background",
+                        "toggle": true,
+                        "toggleOn": () => updateSubtitleBackground("rgb(var(--black), 0.3)"),
+                        "toggleOff": () => updateSubtitleBackground("none"),
+                    },
+                    {
+                        "text": "Animate Subtitles",
+                        "toggle": true,
+                        "toggleOn": () => updateSubtitleAnimation(true),
+                        "toggleOff": () => updateSubtitleAnimation(false),
+                    },
+                    {
+                        "text": "Auto-Skip Intro",
+                        "toggle": true,
+                        "toggled": true,
+                        "toggleOn": () => skipOp = true,
+                        "toggleOff": () => skipOp = false,
+                    }
+                ]
+            }
+        ], menuCon);
+
+        /* Subtitle Related */DMenu
+        // The subtitle index. Checks all subtitles for which one is English.
+        let currentSubtitle = 0;
+        for (let i = 0; i < subs.length; i++) {
+            if (subs[i].name.toLowerCase() === "english" || subs[i].name.toLowerCase() === "en" || subs[i].name.toLowerCase() === "en-us") {
+                currentSubtitle = i;
+            }
+        }
+
+        // The current subtitle.
+        let sub = subs[currentSubtitle];
+        if (!sub) {
+            sub = subs[0];
+        }
+
+        // You need to fetch the video, then add event listeners.
+        const provider = document.querySelector("vds-hls");
+        const video = document.querySelector("vds-hls video");
+
+        // Media functions, such as seeking via arrow keys and playing/pausing
+        function mediaKeys(event) {
+            if (!isFocused) {
+                // Playing/pausing via spacebar
+                if (event.key === " ") {
+                    if (provider.paused) {
+                        provider.play();
+                    } else {
+                        provider.pause();
+                    }
+                } else if (event.key === "f") {
+                    if (provider != null) {
+                        if (provider.fullscreen) {
+                            provider.exitFullscreen();
+                        } else {
+                            provider.requestFullscreen();
+                        }
+                    }
+                } else if (event.key === "m") {
+                    if (provider != null) {
+                        if (video.muted) {
+                            video.muted = false;
+                        } else {
+                            video.muted = true;
+                        }
+                    }
+                } else if (event.key === "ArrowUp") {
+                    //video.changeVolume(video.volume + 0.1)
+                } else if (event.key === "ArrowDown") {
+                    //video.changeVolume(video.volume - 0.1)
+                }else if (event.key === "ArrowRight") {
+                    //video.seek(video.currentTime + 15)
+                    video.currentTime = video.currentTime + 15;
+                } else if (event.key === "ArrowLeft") {
+                    //video.seek(video.currentTime - 15)
+                    video.currentTime = video.currentTime - 15;
+                }
+            }
+        }
+        document.addEventListener("keydown", mediaKeys);
+
+        provider.addEventListener("vds-play", (event) => {
+            const playRequestEvent = event.requestEvent;
+            console.log("Now playing.");
         })
 
-        const toAppend = `
-        <vds-media class="videoplayer">
-            <vds-aspect-ratio ratio="16/9">
-                <vds-hls poster="${info.data.bannerImage ? info.data.bannerImage : "https://mcdn.wallpapersafari.com/medium/4/95/HSYiKZ.jpg"}">
-                    <video class="main_video" preload="none" src="${allSources[allSources.length - 1].url ? allSources[allSources.length - 1].url : allSources[allSources.length - 1].file}"></video>
-                    ${subtitles.map((element, index) => {
-                        return `<track src="${"/subtitles?url=" + (element.url)}" label="${element.lang}" kind="captions"></track>`;
-                    })}
-                </vds-hls>
-            </vds-aspect-ratio>
-            <vds-gesture type="click" action="toggle:paused"></vds-gesture>
-            <vds-gesture type="click" repeat="1" priority="1" action="toggle:fullscreen"></vds-gesture>
-            <vds-gesture class="seek-gesture left" type="click" repeat="1" priority="0" action="seek:-10"></vds-gesture>
-            <vds-gesture class="seek-gesture right" type="click" repeat="1" priority="0" action="seek:10"></vds-gesture>
-            <div class="media-buffering-container">
-                <svg class="media-buffering-icon" fill="none" viewBox="0 0 120 120" aria-hidden="true">
-                    <circle class="media-buffering-track" cx="60" cy="60" r="54" stroke="currentColor" stroke-width="8"></circle>
-                    <circle class="media-buffering-track-fill" cx="60" cy="60" r="54" stroke="currentColor" stroke-width="10" pathLength="100"></circle>
-                </svg>
-            </div>
-            <div class="media-controls-container">
-                <div class="media-controls-group title">
-                    <div class="media-header">
-                        <div class="media-header-left ui">
-                            <div class="back-button" onclick="window.location.replace('/info/' + ${id})">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" class="transition-all decoration-neutral-150 ease-linear"><path stroke="inherit" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3" d="M15 19.92L8.48 13.4c-.77-.77-.77-2.03 0-2.8L15 4.08"></path></svg>
-                            </div>
-                        </div>
-                        <div class="media-title ui">${info.data.title.english ? info.data.title.english : info.data.title.romaji}</div>
-                        <div class="media-header-right ui">
-                            <div class="chapters-panel">
-                                <div class="chapters-panel-button" onclick="toggleChapters()">
-                                    <svg class="icon" width="20" height="18" viewBox="0 0 20 18" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M10.6061 17.1678C10.284 17.1678 10.0228 16.9066 10.0228 16.5844L10.0228 1.41778C10.0228 1.09561 10.284 0.834442 10.6061 0.834442L12.3561 0.834442C12.6783 0.834442 12.9395 1.09561 12.9395 1.41778L12.9395 16.5844C12.9395 16.9066 12.6783 17.1678 12.3561 17.1678H10.6061Z"></path><path d="M17.0228 17.1678C16.7006 17.1678 16.4395 16.9066 16.4395 16.5844L16.4395 1.41778C16.4395 1.09561 16.7006 0.834442 17.0228 0.834442L18.7728 0.834442C19.095 0.834442 19.3561 1.09561 19.3561 1.41778V16.5844C19.3561 16.9066 19.095 17.1678 18.7728 17.1678H17.0228Z"></path><path d="M0.796022 15.9481C0.71264 16.2593 0.897313 16.5791 1.2085 16.6625L2.89887 17.1154C3.21006 17.1988 3.52992 17.0141 3.61331 16.703L7.53873 2.05308C7.62211 1.74189 7.43744 1.42203 7.12625 1.33865L5.43588 0.885715C5.12469 0.802332 4.80483 0.987005 4.72144 1.29819L0.796022 15.9481Z"></path></svg>
-                                </div>
-                                <div class="chapters-panel-content">
-                                    <div class="chapters-panel-content-header">
-                                        <div class="chapters-panel-content-header-title">Episodes</div>
-                                    </div>
-                                    <div class="chapters-panel-content-body">
-                                        ${chapters}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="media-controls-group"><!-- Middle --></div>
-                <div class="media-controls-group controls">
-                    <div class="left ui">
-                        <vds-play-button>
-                            <svg class="media-play-icon" aria-hidden="true" viewBox="0 0 384 512">
-                                <path fill="currentColor" d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z" />
-                            </svg>
-                            <svg class="media-pause-icon" aria-hidden="true" viewBox="0 0 320 512">
-                                <path fill="currentColor" d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z"></path>
-                            </svg>
-                        </vds-play-button>
-                        <vds-mute-button>
-                            <svg class="media-mute-icon" aria-hidden="true" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M5.889 16H2a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h3.889l5.294-4.332a.5.5 0 0 1 .817.387v15.89a.5.5 0 0 1-.817.387L5.89 16zm14.525-4l3.536 3.536l-1.414 1.414L19 13.414l-3.536 3.536l-1.414-1.414L17.586 12L14.05 8.464l1.414-1.414L19 10.586l3.536-3.536l1.414 1.414L20.414 12z" />
-                            </svg>
-                            <svg class="media-unmute-icon" aria-hidden="true" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M5.889 16H2a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h3.889l5.294-4.332a.5.5 0 0 1 .817.387v15.89a.5.5 0 0 1-.817.387L5.89 16zm13.517 4.134l-1.416-1.416A8.978 8.978 0 0 0 21 12a8.982 8.982 0 0 0-3.304-6.968l1.42-1.42A10.976 10.976 0 0 1 23 12c0 3.223-1.386 6.122-3.594 8.134zm-3.543-3.543l-1.422-1.422A3.993 3.993 0 0 0 16 12c0-1.43-.75-2.685-1.88-3.392l1.439-1.439A5.991 5.991 0 0 1 18 12c0 1.842-.83 3.49-2.137 4.591z" />
-                            </svg>
-                        </vds-mute-button>
-                    </div>
-                    <div class="center">
-                        <div class="subtitles">
-                        </div>
-                        <div class="slider ui">
-                            <vds-time-slider>
-                                <div class="slider-track"></div>
-                                <div class="slider-track fill"></div>
-                                <div class="slider-thumb-container">
-                                    <div class="slider-thumb"></div>
-                                </div>
-                                <div class="media-time-container">
-                                    <vds-slider-value-text type="pointer" format="time"></vds-slider-value-text>
-                                </div>
-                            </vds-time-slider>
-                        </div>
-                    </div>
-                    <div class="right ui">
-                        <vds-toggle-button aria-label="settings" classname="media-settings-button">
-                            <svg class="media-settings-icon" viewBox="0 0 512 512" style="transform:rotate(0deg);transition:0.3s all ease" class="not-pressed" onclick="openSettings()">
-                                <path fill="white" d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336c44.2 0 80-35.8 80-80s-35.8-80-80-80s-80 35.8-80 80s35.8 80 80 80z"></path>
-                            </svg>
-                        </vds-toggle-button>
-                        <div class="menu_wrapper">
-                            <div class="menuCon"></div>
-                        </div>
-                        <vds-fullscreen-button>
-                            <svg class="media-enter-fs-icon" aria-hidden="true" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M16 3h6v6h-2V5h-4V3zM2 3h6v2H4v4H2V3zm18 16v-4h2v6h-6v-2h4zM4 19h4v2H2v-6h2v4z" />
-                            </svg>
-                            <svg class="media-exit-fs-icon" aria-hidden="true" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M18 7h4v2h-6V3h2v4zM8 9H2V7h4V3h2v6zm10 8v4h-2v-6h6v2h-4zM8 15v6H6v-4H2v-2h6z" />
-                            </svg>
-                        </vds-fullscreen-button>
-                    </div>
-                </div>
-            </div>
-        </vds-media>
-        `;
-        player.innerHTML = toAppend;
-
-        setTimeout(() => {
-            /* Menu-Related */
-            const qualityItems = [];
-            for (let i = 0; i < allSources.length; i++) {
-                const selected = i === (allSources.length - 1) ? true : false;
-                let canPush = true;
-
-                for (let j = 0; j < qualityItems.length; j++) {
-                    if (qualityItems[j].text === allSources[i].name) {
-                        canPush = false;
-                    }
-                }
-
-                if (canPush) {
-                    const item = {
-                        text: allSources[i].name,
-                        callback: () => changeQuality(allSources[i].url),
-                        highlightable: true,
-                        id: allSources[i].name,
-                        selected: selected
-                    };
-                    qualityItems.push(item);
-                }
-            }
-            menuCon = document.querySelector(".menuCon");
-            DMenu = new dropDownMenu(
-            [
-                {
-                    "id": "initial",
-                    "items": [
-                        {
-                            "text": "Quality",
-                            "iconID": "qualIcon",
-                            "open": "quality",
-                        },
-
-                        {
-                            "text": "Sources",
-                            "iconID": "sourceIcon",
-                            "open": "source"
-                        },
-                        {
-                            "text": "Subtitles",
-                            "iconID": "fillIcon",
-                            "open": "subtitles"
-                        },
-                        {
-                            "text": "Config",
-                            "iconID": "configIcon",
-                            "open": "config"
-                        }
-                    ]
-                },
-                {
-                    "id": "quality",
-                    "selectableScene": true,
-                    "heading": {
-                        "text": "Quality",
-                    },
-                    "items": qualityItems
-                },
-
-                {
-                    "id": "source",
-                    "selectableScene": true,
-                    "heading": {
-                        "text": "Sources",
-                    },
-                    "items": [
-                        {
-                            "text": "HLS#sub",
-                            "highlightable": true,
-                            "selected": true,
-                        },
-                        {
-                            "text": "HLS#dub",
-                            "highlightable": true
-                        }
-                    ]
-                },
-
-                {
-                    "id": "subtitles",
-                    "heading": {
-                        "text": "Subtitles",
-                    },
-                    "items": [
-                        {
-                            "text": "Font Family",
-                            "textBox": true,
-                            "value": "Kanit",
-                            "onInput": function (value) {
-                                const font = value.target.value;
-                                updateSubtitleFont(font);
-                            }
-                        },
-                        {
-                            "text": "Color Changer",
-                            "textBox": true,
-                            "value": "rgb(255, 255, 255)",
-                            "onInput": function (value) {
-                                const color = value.target.value;
-                                updateSubtitleColor(color);
-                            }
-                        }
-                    ]
-                },
-
-                {
-                    "id": "config",
-                    "heading": {
-                        "text": "Configuration",
-                        "back": true
-                    },
-                    "items": [
-                        {
-                            "text": "Subtitles",
-                            "iconID": "fillIcon",
-                            "open": "subtitles"
-                        },
-                        {
-                            "text": "Subtitle Background",
-                            "toggle": true,
-                            "toggleOn": () => updateSubtitleBackground("rgb(var(--black), 0.3)"),
-                            "toggleOff": () => updateSubtitleBackground("none"),
-                        },
-                        {
-                            "text": "Animate Subtitles",
-                            "toggle": true,
-                            "toggleOn": () => updateSubtitleAnimation(true),
-                            "toggleOff": () => updateSubtitleAnimation(false),
-                        },
-                        {
-                            "text": "Auto-Skip Intro",
-                            "toggle": true,
-                            "toggled": true,
-                            "toggleOn": () => skipOp = true,
-                            "toggleOff": () => skipOp = false,
-                        }
-                    ]
-                }
-            ], menuCon);
-
-            /* Subtitle Related */DMenu
-            // The subtitle index. Checks all subtitles for which one is English.
-            let currentSubtitle = 0;
-            for (let i = 0; i < subs.length; i++) {
-                if (subs[i].name.toLowerCase() === "english" || subs[i].name.toLowerCase() === "en" || subs[i].name.toLowerCase() === "en-us") {
-                    currentSubtitle = i;
-                }
-            }
-
-            // The current subtitle.
-            let sub = subs[currentSubtitle];
+        // Video timeupdate.
+        video.addEventListener('timeupdate', (event) => {
             if (!sub) {
-                sub = subs[0];
+                return;
+            }
+            // Get the subtitle container
+            const subtitleDOM = document.querySelector(".subtitles");
+
+            if (!subtitleDOM) {
+                return;
+            }
+            // Add styles based on the config
+            subtitleDOM.style = `background-color: ${backgroundColor};font-family: "${fontFamily}";opacity:1;`;
+
+            const time = video.currentTime;
+
+            const tree = sub.tree;
+            const cues = tree.cues;
+
+            let hasSub = false;
+
+            // Skip anime opening
+            if (skipOp) {
+                if (time > opStart && time < opEnd) {
+                    // Seek to the end of the opening
+                    video.currentTime = opEnd;
+                }
             }
 
-            // You need to fetch the video, then add event listeners.
-            const provider = document.querySelector("vds-hls");
-            const video = document.querySelector("vds-hls video");
+            // Loop through all subtitle cues
+            for (let i = 0; i < cues.length; i++) {
+                const cue = cues[i];
+                const startTime = cue.startTime;
+                const endTime = cue.endTime;
+                const text = cue.text;
 
-            // Media functions, such as seeking via arrow keys and playing/pausing
-            function mediaKeys(event) {
-                if (!isFocused) {
-                    // Playing/pausing via spacebar
-                    if (event.key === " ") {
-                        if (provider.paused) {
-                            provider.play();
-                        } else {
-                            provider.pause();
-                        }
-                    } else if (event.key === "f") {
-                        if (provider != null) {
-                            if (provider.fullscreen) {
-                                provider.exitFullscreen();
-                            } else {
-                                provider.requestFullscreen();
-                            }
-                        }
-                    } else if (event.key === "m") {
-                        if (provider != null) {
-                            if (video.muted) {
-                                video.muted = false;
-                            } else {
-                                video.muted = true;
-                            }
-                        }
-                    } else if (event.key === "ArrowUp") {
-                        //video.changeVolume(video.volume + 0.1)
-                    } else if (event.key === "ArrowDown") {
-                        //video.changeVolume(video.volume - 0.1)
-                    }else if (event.key === "ArrowRight") {
-                        //video.seek(video.currentTime + 15)
-                        video.currentTime = video.currentTime + 15;
-                    } else if (event.key === "ArrowLeft") {
-                        //video.seek(video.currentTime - 15)
-                        video.currentTime = video.currentTime - 15;
-                    }
-                }
-            }
-            document.addEventListener("keydown", mediaKeys);
+                const alignment = cue.alignment;
+                
+                // If the time is between the start and end time, then show the subtitle.
+                if (time >= startTime && time <= endTime) {
+                    hasSub = true;
+                    subtitleDOM.innerHTML = "";
 
-            provider.addEventListener("vds-play", (event) => {
-                const playRequestEvent = event.requestEvent;
-                console.log("Now playing.");
-            })
-
-            // Video timeupdate.
-            video.addEventListener('timeupdate', (event) => {
-                if (!sub) {
-                    return;
-                }
-                // Get the subtitle container
-                const subtitleDOM = document.querySelector(".subtitles");
-
-                // Add styles based on the config
-                subtitleDOM.style = `background-color: ${backgroundColor};font-family: "${fontFamily}";opacity:1;`;
-
-                const time = video.currentTime;
-
-                const tree = sub.tree;
-                const cues = tree.cues;
-
-                let hasSub = false;
-
-                // Skip anime opening
-                if (skipOp) {
-                    if (time > opStart && time < opEnd) {
-                        // Seek to the end of the opening
-                        video.currentTime = opEnd;
-                    }
-                }
-
-                // Loop through all subtitle cues
-                for (let i = 0; i < cues.length; i++) {
-                    const cue = cues[i];
-                    const startTime = cue.startTime;
-                    const endTime = cue.endTime;
-                    const text = cue.text;
-
-                    const alignment = cue.alignment;
-                    
-                    // If the time is between the start and end time, then show the subtitle.
-                    if (time >= startTime && time <= endTime) {
-                        hasSub = true;
-                        subtitleDOM.innerHTML = "";
-
-                        // Parsing \n
-                        if (text.includes("\n")) {
-                            const lines = text.split("\n");
-                            subtitleDOM.style = `background-color: ${backgroundColor};font-family: "${fontFamily}";opacity:1;line-height:10px`;
-                            
-                            let stringedText = "";
-                            for (let i = 0; i < lines.length; i++) {
-                                const p = document.createElement("p");
-                                // line-height will be 10px if there are multiple breaks
-                                p.style = `color: ${subtitleColor};text-align:${alignment};line-height:10px;font-family:${fontFamily};`;
-                                p.innerHTML = lines[i];
-                                stringedText += p.outerHTML;
-                            }
-                            subtitleDOM.innerHTML = stringedText;
-                        } else {
+                    // Parsing \n
+                    if (text.includes("\n")) {
+                        const lines = text.split("\n");
+                        subtitleDOM.style = `background-color: ${backgroundColor};font-family: "${fontFamily}";opacity:1;line-height:10px`;
+                        
+                        let stringedText = "";
+                        for (let i = 0; i < lines.length; i++) {
                             const p = document.createElement("p");
-                            p.style = `color: ${subtitleColor};text-align:${alignment};line-height:0;font-family:${fontFamily};`;
-                            p.innerHTML = text;
-                            subtitleDOM.innerHTML = p.outerHTML;
+                            // line-height will be 10px if there are multiple breaks
+                            p.style = `color: ${subtitleColor};text-align:${alignment};line-height:10px;font-family:${fontFamily};`;
+                            p.innerHTML = lines[i];
+                            stringedText += p.outerHTML;
                         }
-                    }
-                }
-
-                if (!hasSub && removeSub) {
-                    if (!isAnimated) {
-                        subtitleDOM.innerHTML = "";
+                        subtitleDOM.innerHTML = stringedText;
                     } else {
-                        // Basic opacity transition
-                        subtitleDOM.style = `background-color: ${backgroundColor};font-family: "${fontFamily}";opacity: 0;`;
+                        const p = document.createElement("p");
+                        p.style = `color: ${subtitleColor};text-align:${alignment};line-height:0;font-family:${fontFamily};`;
+                        p.innerHTML = text;
+                        subtitleDOM.innerHTML = p.outerHTML;
                     }
                 }
-            });
-        }, 200);
-    }, 1000);
-}, 200);
+            }
+
+            if (!hasSub && removeSub) {
+                if (!isAnimated) {
+                    subtitleDOM.innerHTML = "";
+                } else {
+                    // Basic opacity transition
+                    subtitleDOM.style = `background-color: ${backgroundColor};font-family: "${fontFamily}";opacity: 0;`;
+                }
+            }
+        });
+    }, 200);
+}
 
 // Settings Menu
 function openSettings() {

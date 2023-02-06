@@ -42,6 +42,10 @@ function load(id, provider, watchId) {
                 styles.href = "../../../styles/player.css";
                 document.querySelector("body").append(script);
                 document.querySelector("head").append(styles);
+                
+                setTimeout(() => {
+                    loadPlayer();
+                }, 1200);
             }).catch((err) => {
                 handleError(err);
             })

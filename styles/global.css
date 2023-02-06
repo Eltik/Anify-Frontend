@@ -782,7 +782,7 @@ a {
 
 .dropdown_show {
     opacity: 1;
-    animation: dropdown-in-data-v-62eacfff .25s;
+    animation: dropdown-in-data .25s;
     opacity: 1;
     pointer-events: auto;
     -webkit-user-select: auto;
@@ -1109,5 +1109,16 @@ a {
     100% {
         opacity: 1;
         transform: rotateX(0deg);
+    }
+}
+
+@keyframes dropdown-in-data {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
     }
 }

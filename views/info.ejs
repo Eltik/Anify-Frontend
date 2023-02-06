@@ -17,9 +17,11 @@
         <script src="../scripts/info.min.js"></script>
         <script>
             setTimeout(() => {
-                const id = window.location.pathname.split("/")[2];
-                load(id, "<%- info.type %>");
-                loadNav();
+                init().then(() => {
+                    const id = window.location.pathname.split("/")[2];
+                    load(id, "<%- info.type %>");
+                    loadNav();
+                })
             }, 100);
         </script>
     </head>

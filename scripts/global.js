@@ -1,5 +1,9 @@
-const api_server = "https://api.anify.tv";
-//const api_server = "http://localhost:3060";
+let api_server = "";
+async function init() {
+    const data = await fetch("/api", { headers: { "Content-Type": "application/json" }});
+    const json = await data.json();
+    api_server = json.api;
+}
 
 var Base64 = {
     _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",

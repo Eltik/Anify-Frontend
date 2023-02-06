@@ -1,0 +1,6 @@
+.alternative {
+    position: absolute;
+    z-index: 999;
+    top: 50px;
+    left: 15px;
+}

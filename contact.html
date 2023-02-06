@@ -29,7 +29,9 @@
     </head>
     <script>
         setTimeout(() => {
-            loadNav();
+            init().then(async() => {
+                loadNav();
+            });
         }, 100);
     </script>
     <body>

@@ -1,6 +1,7 @@
 const express = require('express');
 const ejs = require("ejs");
 const axios = require("axios");
+const dotenv = require("dotenv");
 
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -9,9 +10,9 @@ const cookieParser = require('cookie-parser');
 const { join } = require("path");
 
 const colors = require("colors");
-
-const config = require("./config.json");
-const port = config.port;
+dotenv.config();
+const port = process.env.PORT || 3000;
+const api = process.env.API || "https://api.anify.tv";
 
 const app = express();
 
@@ -59,6 +60,10 @@ app.get("/", (req, res) => {
     res.sendFile("./index.html", { root: __dirname });
 })
 
+app.get("/api*", (req, res) => {
+    res.json({ api: api }).status(200).end();
+})
+
 app.get("/anime*", (req, res) => {
     res.sendFile("./anime.html", { root: __dirname });
 })
@@ -73,7 +78,7 @@ app.get("/novels*", (req, res) => {
 
 app.get("/info/:id", async(req, res) => {
     const id = req.params["id"];
-    const { data } = await axios.post(config.api + "/info", { id: id })
+    const { data } = await axios.post(api + "/info", { id: id })
     const connectors = data.connectors;
 
     const info = data.data;
@@ -128,7 +133,7 @@ app.get("/info/:id", async(req, res) => {
         }
     }
     if (tmdbId != null) {
-        const req = await fetch(config.api + "/tmdb", { method: "POST", body: JSON.stringify({ id: tmdbId }), headers: { "Content-Type": "application/json" }});
+        const req = await fetch(api + "/tmdb", { method: "POST", body: JSON.stringify({ id: tmdbId }), headers: { "Content-Type": "application/json" }});
         const json = await req.json();
         bannerImage = json.backdrop_path ? json.backdrop_path : bannerImage;
     }
@@ -180,7 +185,7 @@ app.get("/subtitles", async(req, res) => {
         res.status(400).json("Bad request").end();
     }
     
-    const { data } = await axios.get(url);
+    const { data } = await axios.get("https://cors.consumet.stream/" + url);
     res.header("Content-Type", "text/vtt");
     res.send(data).end();
 });

@@ -37,31 +37,33 @@
         <script>
             let listData = [];
             setTimeout(async() => {
-                loadSkeleton(".popular_list");
-                loadSkeleton(".slideshow_grid");
+                init().then(async() => {
+                    loadSkeleton(".popular_list");
+                    loadSkeleton(".slideshow_grid");
 
-                const currentList = await getList("anime");
-                listData = currentList ? currentList : [];
-                
-                fetchTrending().then((trending) => {
-                    displayTrending(trending);
-                    unloadSkeleton(".popular_list", ".skeleton_slide");
-                }).catch((err) => {
-                    handleError(err);
-                    alert("Could not fetch trending anime! Contact Eltik via Discord.");
+                    const currentList = await getList("anime");
+                    listData = currentList ? currentList : [];
+                    
+                    fetchTrending().then((trending) => {
+                        displayTrending(trending);
+                        unloadSkeleton(".popular_list", ".skeleton_slide");
+                    }).catch((err) => {
+                        handleError(err);
+                        alert("Could not fetch trending anime! Contact Eltik via Discord.");
+                    })
+
+                    fetchPopular().then((popular) => {
+                        displayPopular(popular, listData);
+                        unloadSkeleton(".slideshow_grid", ".skeleton_result");
+                    }).catch((err) => {
+                        handleError(err);
+                        alert("Could not fetch popular anime! Contact Eltik via Discord.")
+                    })
+
+                    displayWatching(listData);
+
+                    loadNav();
                 })
-
-                fetchPopular().then((popular) => {
-                    displayPopular(popular, listData);
-                    unloadSkeleton(".slideshow_grid", ".skeleton_result");
-                }).catch((err) => {
-                    handleError(err);
-                    alert("Could not fetch popular anime! Contact Eltik via Discord.")
-                })
-
-                displayWatching(listData);
-
-                loadNav();
             }, 100);
         </script>
     </head>
