@@ -34,76 +34,76 @@
             }
         </style>
         <script>
+            let sources = [];
+            let subtitles = [];
+            let intro = [];
+
+            let info = null;
+            let episodes = [];
+
+            let isRaw = false;
+
+            const id = window.location.pathname.split("/")[2];
+            const provider = window.location.pathname.split("/")[3];
+            const watchId = window.location.pathname.split("/")[4];
             init().then(async() => {
-                const id = window.location.pathname.split("/")[2];
-                const provider = window.location.pathname.split("/")[3];
-                const watchId = window.location.pathname.split("/")[4];
                 load(id, provider, watchId, true);
-
-                let sources = [];
-                let subtitles = [];
-                let intro = [];
-
-                let info = null;
-                let episodes = [];
-
-                let isRaw = false;
-
-                function rawVideo() {
-                    const button = document.querySelector(".alternative button");
-                    if (sources.length === 0) {
-                        return;
-                    }
-                    if (!isRaw) {
-                        const player = document.querySelector(".player");
-                        player.innerHTML = "";
-                        const video = document.createElement("video");
-                        video.controls = true;
-                        video.autoplay = true;
-
-                        for (let i = 0; i < subtitles.length; i++) {
-                            const subtitleSrc = "/subtitles?url=" + subtitles[i].url;
-                            const subtitleLabel = subtitles[i].lang;
-                            subs.push({
-                                src: subtitleSrc,
-                                name: subtitleLabel
-                            })
-                            let newEl = document.createElement("track");
-                            newEl.src = subtitleSrc;
-                            newEl.label = subtitleLabel;
-                            newEl.className = "subtitle";
-                            video.append(newEl);
-                        }
-
-                        if (Hls.isSupported()) {
-                            hls = new Hls();
-                            hls.loadSource(sources[sources.length - 1].url);
-                            hls.attachMedia(video);
-
-                            hls.on(Hls.Events.MANIFEST_PARSED,function() {
-                                let promise = document.querySelector('video').play();
-                                if (promise !== undefined) {
-                                    promise.then(_ => {
-                                        // Playing
-                                    }).catch(error => {
-                                        // Can't play
-                                    });
-                                }
-                            });
-                        } else {
-                            video.src = source;
-                        }
-
-                        player.appendChild(video);
-                        isRaw = true;
-                        button.textContent = "Try Custom Player";
-                    } else {
-                        loadPlayer();
-                        isRaw = false;
-                        button.textContent = "Try Raw Video";
-                    }
-                }
             });
+
+            function rawVideo() {
+                const button = document.querySelector(".alternative button");
+                if (sources.length === 0) {
+                    return;
+                }
+                if (!isRaw) {
+                    const player = document.querySelector(".player");
+                    player.innerHTML = "";
+                    const video = document.createElement("video");
+                    video.controls = true;
+                    video.autoplay = true;
+
+                    for (let i = 0; i < subtitles.length; i++) {
+                        const subtitleSrc = "/subtitles?url=" + subtitles[i].url;
+                        const subtitleLabel = subtitles[i].lang;
+                        subs.push({
+                            src: subtitleSrc,
+                            name: subtitleLabel
+                        })
+                        let newEl = document.createElement("track");
+                        newEl.src = subtitleSrc;
+                        newEl.label = subtitleLabel;
+                        newEl.className = "subtitle";
+                        video.append(newEl);
+                    }
+
+                    if (Hls.isSupported()) {
+                        hls = new Hls();
+                        hls.loadSource(sources[sources.length - 1].url);
+                        hls.attachMedia(video);
+
+                        hls.on(Hls.Events.MANIFEST_PARSED,function() {
+                            let promise = document.querySelector('video').play();
+                            if (promise !== undefined) {
+                                promise.then(_ => {
+                                    // Playing
+                                }).catch(error => {
+                                    // Can't play
+                                });
+                            }
+                        });
+                    } else {
+                        video.src = source;
+                    }
+
+                    player.appendChild(video);
+                    isRaw = true;
+                    button.textContent = "Try Custom Player";
+                } else {
+                    loadPlayer();
+                    isRaw = false;
+                    button.textContent = "Try Raw Video";
+                }
+            }
         </script>
     </head>
 

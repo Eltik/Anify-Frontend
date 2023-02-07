@@ -36,35 +36,33 @@
         <script src="./scripts/manga.min.js"></script>
         <script>
             let listData = [];
-            setTimeout(async() => {
-                init().then(async() => {
-                    loadSkeleton(".popular_list");
-                    loadSkeleton(".slideshow_grid");
+            init().then(async() => {
+                loadSkeleton(".popular_list");
+                loadSkeleton(".slideshow_grid");
 
-                    const currentList = await getList("manga");
-                    listData = currentList ? currentList : [];
+                const currentList = await getList("manga");
+                listData = currentList ? currentList : [];
 
-                    fetchTrending().then((popular) => {
-                        displayTrending(popular);
-                        unloadSkeleton(".popular_list", ".skeleton_slide");
-                    }).catch((err) => {
-                        // Handle error
-                        handleError(err);
-                        alert("Couldn't fetch trending manga! Please contact Eltik via Discord.");
-                    });
-
-                    fetchPopular().then((latest) => {
-                        displayPopular(latest, listData);
-                        unloadSkeleton(".slideshow_grid", ".skeleton_result");
-                    }).catch((err) => {
-                        // Handle error
-                        handleError(err);
-                        alert("Couldn't fetch popular manga! Please contact Eltik via Discord.");
-                    });
-
-                    loadNav();
+                fetchTrending().then((popular) => {
+                    displayTrending(popular);
+                    unloadSkeleton(".popular_list", ".skeleton_slide");
+                }).catch((err) => {
+                    // Handle error
+                    handleError(err);
+                    alert("Couldn't fetch trending manga! Please contact Eltik via Discord.");
                 });
-            }, 100);
+
+                fetchPopular().then((latest) => {
+                    displayPopular(latest, listData);
+                    unloadSkeleton(".slideshow_grid", ".skeleton_result");
+                }).catch((err) => {
+                    // Handle error
+                    handleError(err);
+                    alert("Couldn't fetch popular manga! Please contact Eltik via Discord.");
+                });
+
+                loadNav();
+            });
         </script>
     </head>
     <body>

@@ -31,17 +31,15 @@
         <script src="../../../scripts/global.min.js"></script>
         <script src="../../../scripts/read.min.js"></script>
         <script>
-            setTimeout(() => {
-                init().then(async() => {
-                    loadSkeleton(".pages_temp");
+            init().then(async() => {
+                loadSkeleton(".pages_temp");
 
-                    const id = window.location.pathname.split("/")[2];
-                    const provider = window.location.pathname.split("/")[3];
-                    const readId = window.location.pathname.split("/")[4];
-                    load(id, provider, readId, true);
-                    loadNav();
-                });
-            }, 100);
+                const id = window.location.pathname.split("/")[2];
+                const provider = window.location.pathname.split("/")[3];
+                const readId = window.location.pathname.split("/")[4];
+                load(id, provider, readId, true);
+                loadNav();
+            });
         </script>
     </head>
 
