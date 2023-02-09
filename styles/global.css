@@ -1109,7 +1109,7 @@ a {
         font-size: 4rem;
     }
 
-    .result_slideshow_airing {
+    .result_slideshow_airing, .result_slideshow_airing_highlight {
         font-size: 2rem;
     }
 

@@ -303,7 +303,7 @@ async function displaySchedule(data, listData) {
             const show = data[i].data;
             const id = show.id;
 
-            const dateAiring = data[i].day;
+            const dateAiring = timeSince(data[i].date);
 
             const list = {
                 name: ""
@@ -353,7 +353,7 @@ async function displaySchedule(data, listData) {
                                 ${genresText}
                             </div>
                             <div class="result_slideshow_airing">
-                                ${dateAiring}
+                                Airing in <span class="result_slideshow_airing_highlight">${dateAiring}</span>
                             </div>
                         </div>
                     </div>
@@ -367,7 +367,6 @@ async function displaySchedule(data, listData) {
     }
 
     await Promise.all(promises).then(() => {
-        console.log("Finished fetching episodes.");
         setTimeout(() => {
             anime({
                 targets:[".schedule_item"],
