@@ -245,7 +245,7 @@ a {
     cursor: not-allowed;
 }
 
-.popular_items, .latest_items, .search_items, .watching_items {
+.popular_items, .latest_items, .search_items, .watching_items, .schedule_items {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -260,11 +260,11 @@ a {
     margin-top: initial;
 }
 
-.search_items, .latest_items, .watching_items {
+.search_items, .latest_items, .watching_items, .schedule_items {
     width: 80%;
 }
 
-.popular_items h2, .latest_items h2, .search_items h2, .watching_items h2 {
+.popular_items h2, .latest_items h2, .search_items h2, .watching_items h2, .schedule_items h2 {
     font-size: 2rem;
     color: rgb(var(--grey-300));
     text-shadow: var(--global-shadow);
@@ -324,7 +324,7 @@ a {
     overflow-y: hidden;
 }
 
-.search_grid {
+.search_grid, .schedule_grid {
     display: grid;
     grid-template-columns: auto auto auto auto auto;
     gap: 15px;
@@ -969,7 +969,7 @@ a {
 }
 
 @media screen and (max-width: 1500px) {
-    .search_grid {
+    .search_grid, .schedule_grid {
         grid-template-columns: auto auto auto auto;
     }
     .slideshow_grid {
@@ -1105,8 +1105,12 @@ a {
         font-size: 1.5rem;
     }
 
-    .popular_items h2, .latest_items h2, .search_items h2, .watching_items h2 {
+    .popular_items h2, .latest_items h2, .search_items h2, .watching_items h2, .schedule_items h2 {
         font-size: 4rem;
+    }
+
+    .result_slideshow_airing {
+        font-size: 2rem;
     }
 
     .swiper {
@@ -1117,7 +1121,7 @@ a {
         grid-template-columns: auto;
     }
 
-    .search_grid {
+    .search_grid, .schedule_grid {
         grid-template-columns: auto auto;
     }
 
@@ -1194,7 +1198,7 @@ a {
         font-size: 2.3rem;
     }
 
-    .search_items, .latest_items, .watching_items {
+    .search_items, .latest_items, .watching_items, .schedule_items {
         width: 85%;
     }
 

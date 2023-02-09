@@ -36,6 +36,15 @@ async function fetchPopular() {
     return data;
 }
 
+async function fetchSchedule() {
+    const req = await fetch(api_server + "/schedule", { method: "GET", headers: { "Content-Type": "application/json" }}).catch((err) => {
+        handleError(err);
+        return { "error": "Could not fetch schedule data!" };
+    });
+    const data = await req.json();
+    return data;
+}
+
 async function displayTrending(data) {
     const swiper = new Swiper('.swiper', {
         direction: 'horizontal',
@@ -54,6 +63,10 @@ async function displayTrending(data) {
 
     for (let i = 0; i < data.length; i++) {
         const promise = new Promise(async(resolve, reject) => {
+            if (!data[i]) {
+                resolve();
+                return;
+            }
             const show = data[i].data;
 
             let tmdbId = null;
@@ -204,7 +217,7 @@ async function displayWatching(list) {
     if (watching.length > 0) {
         document.querySelector(".watching_items").classList.remove("hidden");
     } else {
-        document.querySelector(".watching_items").remove();
+        document.querySelector(".watching_items").innerHTML = "";
     }
     const popularDOM = document.querySelector(".watching_items .slideshow_grid");
     const promises = [];
@@ -281,6 +294,92 @@ async function displayWatching(list) {
     })
 }
 
+async function displaySchedule(data, listData) {
+    const promises = [];
+
+    const popularDOM = document.querySelector(".schedule_items .schedule_grid");
+    for (let i = 0; i < data.length; i++) {
+        const promise = new Promise(async(resolve, reject) => {
+            const show = data[i].data;
+            const id = show.id;
+
+            const dateAiring = data[i].day;
+
+            const list = {
+                name: ""
+            };
+            for (let j = 0; j < listData.length; j++) {
+                const currentList = listData[j];
+                for (let k = 0; k < currentList.media.length; k++) {
+                    if (currentList.media[k].id === id) {
+                        list.name = currentList.name;
+                    }
+                }
+            }
+
+            const title = show.title.english ? show.title.english : show.title.romaji;
+            let description = show.description && show.description.length > 250 ? show.description.substring(0, 250) + "..." : (show.description && show.description.length > 0 ? show.description : "No description");
+            
+            const cover = show.coverImage.large;
+
+            if (x.matches) {
+                description = description.length > 200 ? description.substring(0, 200) + "..." : description;
+            }
+
+            const genres = show.genres;
+            
+            let genresText = "";
+            genres.map((genre, index) => {
+                if (index < 3) {
+                    genresText += `<span class="result_slideshow_genre">${genre}</span>`;
+                }
+            });
+    
+            const mangaDOM = document.createElement("div");
+            mangaDOM.classList.add("result_item");
+            mangaDOM.classList.add("search_item");
+            
+            mangaDOM.innerHTML = `
+            <div class="result_search">
+                <a href="/info/${id}" class="result_search_link">
+                    <div class="result_search_content">
+                        <div class="result_search_image">
+                            <img src="${cover}" alt="${title}" class="cover">
+                        </div>
+                        <div class="result_search_text">
+                            <div class="result_search_title">${title}</div>
+                            ${list.name ? `<div class="result_item_status ${list.name === "Completed" ? "status_green" : list.name === "Watching" ? "status_blue" : list.name === "Dropped" ? "status_red" : "status_orange"}"></div>` : ""}
+                            <div class="result_slideshow_genres">
+                                ${genresText}
+                            </div>
+                            <div class="result_slideshow_airing">
+                                ${dateAiring}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            `;
+            popularDOM.appendChild(mangaDOM);
+            resolve();
+        });
+        promises.push(promise);
+    }
+
+    await Promise.all(promises).then(() => {
+        console.log("Finished fetching episodes.");
+        setTimeout(() => {
+            anime({
+                targets:[".schedule_item"],
+                opacity: 1,
+                filter: "blur(0px)",
+                translateY: "10px",
+                delay: anime.stagger(100, { from: "center", easing: "linear" })
+            })
+        }, 100);
+    })
+}
+
 async function handleSearch(data, listData) {
     if (!data || data.length === 0) {
         // Need to update
@@ -291,7 +390,7 @@ async function handleSearch(data, listData) {
     document.querySelector(".search_items").style = "opacity: 1";
     document.querySelector(".search_items .search_grid").innerHTML = "";
     anime({
-        targets:[".popular_items", ".latest_items", ".watching_items"],
+        targets:[".popular_items", ".latest_items", ".watching_items", ".schedule_items"],
         opacity: 0,
         translateY: "50px",
         duration: 500,
@@ -299,6 +398,7 @@ async function handleSearch(data, listData) {
         complete: () => {
             document.querySelector(".popular_items").style = "display:none";
             document.querySelector(".latest_items").style = "display:none";
+            document.querySelector(".schedule_items").style = "display:none";
             document.querySelector(".watching_items").style = "display:none";
         }
     })
@@ -388,10 +488,11 @@ function checkIfEmpty() {
     if (!searchValue || searchValue.length === 0) {
         document.querySelector(".search_items").style = "display:none";
         document.querySelector(".popular_items").style = "display:block";
+        document.querySelector(".latest_items").style = "display:flex";
+        document.querySelector(".schedule_items").style = "display:flex";
         document.querySelector(".watching_items").style = "display:block";
-        document.querySelector(".latest_items").style = "display:block";
         anime({
-            targets:[".popular_items", ".latest_items", ".watching_items"],
+            targets:[".popular_items", ".latest_items", ".schedule_items", ".watching_items"],
             opacity: 1,
             translateY: "0px",
             duration: 1000,

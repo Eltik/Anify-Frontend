@@ -59,6 +59,10 @@
                     alert("Could not fetch popular anime! Contact Eltik via Discord.")
                 })
 
+                fetchSchedule().then((schedule) => {
+                    displaySchedule(schedule, listData);
+                })
+
                 displayWatching(listData);
 
                 loadNav();
@@ -114,6 +118,11 @@
                     <div class="watching_items hidden">
                         <h2>Currently Watching</h2>
                         <div class="slideshow_grid">
+                        </div>
+                    </div>
+                    <div class="schedule_items">
+                        <h2>Airing Schedule</h2>
+                        <div class="schedule_grid">
                         </div>
                     </div>
                     <div class="latest_items">
