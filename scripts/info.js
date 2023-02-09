@@ -46,11 +46,19 @@ function switchProvider(index) {
 
 async function load(id, type) {
     let content = null;
+
+    let themes = null;
     if (type === "ANIME") {
         const req = await fetch(api_server + "/episodes", { method: "POST", body: JSON.stringify({ id: id }), headers: { "Content-Type": "application/json" }});
         const json = await req.json();
         content = json;
         document.querySelector(".chaptersheader span").textContent = "Episodes";
+
+        const themeReq = await fetch(api_server + "/themes", { method: "POST", body: JSON.stringify({ id: id }), headers: { "Content-Type": "application/json" }});
+        const themeJson = await themeReq.json();
+        if (themeJson.length > 0) {
+            themes = themeJson;
+        }
     } else if (type === "MANGA") {
         const req = await fetch(api_server + "/chapters", { method: "POST", body: JSON.stringify({ id: id }), headers: { "Content-Type": "application/json" }});
         const json = await req.json();
@@ -150,6 +158,29 @@ async function load(id, type) {
         if (maxProviders === 1) {
             document.getElementById("switchProvider").remove();
             document.querySelector(".providerlist .chaptersheader").remove();
+        }
+    }
+
+    if (themes != null) {
+        document.querySelector(".themesheader span").textContent = "Themes";
+        const themesList = document.querySelector(".themeslist");
+        for (let i = 0; i < themes.length; i++) {
+            const theme = themes[i];
+            const themeItem = document.createElement("div");
+            themeItem.className = "theme";
+
+            const themeItemTitle = document.createElement("div");
+            themeItemTitle.className = "theme-title";
+            themeItemTitle.textContent = theme.type;
+            themeItem.appendChild(themeItemTitle);
+
+            const video = document.createElement("video");
+            video.src = theme.url[0];
+            video.controls = true;
+            video.className = "theme-video";
+            themeItem.appendChild(video);
+
+            themesList.appendChild(themeItem);
         }
     }
 }
