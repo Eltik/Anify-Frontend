@@ -30,10 +30,14 @@ function switchProvider(index) {
     const providerList = document.querySelectorAll(".providerlist");
 
     providerList[providerIndex].classList.add("hidden");
-    if (providerIndex === maxProviders - 1) {
-        providerIndex = 0;
+    if (index != undefined) {
+        providerIndex = index;
     } else {
-        providerIndex = index || providerIndex + 1;
+        if (providerIndex === maxProviders - 1) {
+            providerIndex = 0;
+        } else {
+            providerIndex = providerIndex + 1;
+        }
     }
 
     document.querySelector(".providers_selector .value-placeholder").textContent = providerList[providerIndex].querySelector(".chaptersheader").textContent;
@@ -68,6 +72,8 @@ async function load(id, type) {
             document.querySelector(".chapters").insertBefore(button, chaptersList);
         }
 
+        document.querySelector(".providers_selector .value-placeholder").textContent = content[0].provider;
+
         for (let i = 0; i < content.length; i++) {
             const provider = document.createElement("div");
             provider.className = "providerlist";
@@ -76,7 +82,6 @@ async function load(id, type) {
             const headerSpan = document.createElement("span");
             headerSpan.textContent = content[i].provider;
 
-            document.querySelector(".providers_selector .value-placeholder").textContent = content[i].provider;
             const providerAppend = document.createElement("div");
             providerAppend.innerHTML = `
             <div data-v-e3e1e202="" class="option" onclick="switchProvider(${i})">
