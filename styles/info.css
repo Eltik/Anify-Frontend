@@ -240,6 +240,13 @@
     border-radius: 5px;
 }
 
+.theme-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
 @media screen and (max-width: 3000px) {
     .bannerimage {
         margin-top: -85px;

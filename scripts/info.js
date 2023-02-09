@@ -46,8 +46,9 @@ function switchProvider(index) {
 
 async function load(id, type) {
     let content = null;
-
     let themes = null;
+    let covers = null;
+
     if (type === "ANIME") {
         const req = await fetch(api_server + "/episodes", { method: "POST", body: JSON.stringify({ id: id }), headers: { "Content-Type": "application/json" }});
         const json = await req.json();
@@ -64,6 +65,12 @@ async function load(id, type) {
         const json = await req.json();
         content = json;
         document.querySelector(".chaptersheader span").textContent = "Chapters";
+
+        const coversReq = await fetch(api_server + "/covers", { method: "POST", body: JSON.stringify({ id: id }), headers: { "Content-Type": "application/json" }});
+        const coversJson = await coversReq.json();
+        if (coversJson.length > 0) {
+            covers = coversJson;
+        }
     }
 
     if (content != null) {
@@ -179,6 +186,28 @@ async function load(id, type) {
             video.controls = true;
             video.className = "theme-video";
             themeItem.appendChild(video);
+
+            themesList.appendChild(themeItem);
+        }
+    }
+
+    if (covers != null) {
+        document.querySelector(".themesheader span").textContent = "Covers";
+        const themesList = document.querySelector(".themeslist");
+        for (let i = 0; i < covers.length; i++) {
+            const theme = covers[i];
+            const themeItem = document.createElement("div");
+            themeItem.className = "theme";
+
+            const themeItemTitle = document.createElement("div");
+            themeItemTitle.className = "theme-title";
+            themeItemTitle.textContent = "Vol. " + theme.volume;
+            themeItem.appendChild(themeItemTitle);
+
+            const cover = document.createElement("img");
+            cover.src = theme.url;
+            cover.className = "theme-cover";
+            themeItem.appendChild(cover);
 
             themesList.appendChild(themeItem);
         }
