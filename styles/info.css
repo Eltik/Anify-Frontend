@@ -21,6 +21,8 @@
 .header {
     background: rgb(var(--blue-200));
     position: relative;
+    margin: 0 auto;
+    padding: 50px;
 }
 
 .header_wrapper {
@@ -96,6 +98,7 @@
     position: relative;
     margin: 0 auto;
     width: 100%;
+    max-width: 90vw;
 }
 
 .sidebar {
@@ -218,6 +221,20 @@
     color: rgb(61,180,242);
 }
 
+@media screen and (max-width: 3000px) {
+    .bannerimage {
+        margin-top: -85px;
+    }
+
+    .cover_wrapper {
+        margin-top: -125px;
+    }
+
+    .header_wrapper {
+        min-height: 250px;
+    }
+}
+
 @media screen and (max-width: 1600px) {
     .bannerimage {
         height: 300px;
@@ -268,6 +285,7 @@
 
     .content {
         display: block;
+        max-width: initial;
     }
 
     .mangatitle {

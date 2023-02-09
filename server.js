@@ -79,7 +79,6 @@ app.get("/novels*", (req, res) => {
 app.get("/info/:id", async(req, res) => {
     const id = req.params["id"];
     const { data } = await axios.post(api + "/info", { id: id })
-    const connectors = data.connectors;
 
     const info = data.data;
     const title = info.title.english || info.title.romaji || info.title.native;
@@ -125,20 +124,24 @@ app.get("/info/:id", async(req, res) => {
     `;
 
     let bannerImage = info.bannerImage;
-    let tmdbId = null;
-    for (let i = 0; i < connectors.length; i++) {
-        const connector = connectors[i];
-        if (connector.provider === "TMDB") {
-            tmdbId = connector.data.id;
-        }
+    let coverImage = info.coverImage.extraLarge;
+    const request = await axios.post(api + "/tmdb", { id: id }).catch((err) => {
+        return null;
+    });
+    if (!request) {
+        res.render("info", {
+            header: header,
+            info: info,
+            relations: relationsData
+        })
+        return;
     }
-    if (tmdbId != null) {
-        const req = await fetch(api + "/tmdb", { method: "POST", body: JSON.stringify({ id: tmdbId }), headers: { "Content-Type": "application/json" }});
-        const json = await req.json();
-        bannerImage = json.backdrop_path ? json.backdrop_path : bannerImage;
-    }
+    const json = request.data;
+    bannerImage = json.backdrop_path ? json.backdrop_path : bannerImage;
+    coverImage = json.poster_path ? json.poster_path : coverImage;
 
     info.bannerImage = bannerImage;
+    info.coverImage.extraLarge = coverImage;
 
     res.render("info", {
         header: header,

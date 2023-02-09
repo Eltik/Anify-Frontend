@@ -1,6 +1,31 @@
 let providerIndex = 0;
 let maxProviders = 0;
 
+function showOptions() {
+    if (document.querySelector(".providers_selector .options").classList.contains("hidden")) {
+        document.querySelector(".providers_selector .options").style.opacity = 0;
+        document.querySelector(".providers_selector .options").classList.remove("hidden");
+        anime({
+            targets: ".providers_selector .options",
+            opacity: 1,
+            translateY: 0,
+            duration: 200,
+            easing: "easeInOutQuad"
+        });
+    } else {
+        anime({
+            targets: ".providers_selector .options",
+            opacity: 0,
+            translateY: -10,
+            duration: 200,
+            easing: "easeInOutQuad",
+            complete: () => {
+                document.querySelector(".providers_selector .options").classList.add("hidden");
+            }
+        });
+    }
+}
+
 async function load(id, type) {
     let content = null;
     if (type === "ANIME") {
@@ -45,6 +70,9 @@ async function load(id, type) {
             header.className = "chaptersheader";
             const headerSpan = document.createElement("span");
             headerSpan.textContent = content[i].provider;
+
+            document.querySelector(".providers_selector .value-placeholder").textContent = content[i].provider;
+
             header.append(headerSpan);
             provider.appendChild(header);
 
