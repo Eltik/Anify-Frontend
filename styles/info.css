@@ -235,6 +235,12 @@
     }
 }
 
+@media screen and (max-width: 2000px) {
+    .bannerimage {
+        margin-top: -58px;
+    }
+}
+
 @media screen and (max-width: 1600px) {
     .bannerimage {
         height: 300px;

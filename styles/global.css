@@ -848,11 +848,11 @@ a {
     box-shadow: 0 14px 30px rgba(0,5,15,.1),0 4px 4px rgba(0,5,15,.04);
     cursor: pointer;
     display: grid;
-    font-size: 1.3rem;
+    font-size: 0.8rem;
     font-weight: 600;
     grid-template-columns: auto 20px;
     letter-spacing: .03rem;
-    padding: 11px 16px;
+    padding: 8px 13px;
 }
 .value-wrap {
     position: relative;
@@ -888,7 +888,7 @@ a {
     overflow: visible;
     color: rgb(81,97,112);
     cursor: pointer;
-    font-size: 1.6rem;
+    font-size: 1.1rem;
     transition: color .2s ease;
     width: 1.25em;
     text-align: center;
@@ -923,21 +923,21 @@ a {
 
 .group-title {
     margin-top: 0;
-    font-size: 1.3rem;
+    font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: .06rem;
     padding: 4px;
     text-transform: uppercase;
     -ms-user-select: none;
     user-select: none;
-    color: rgb(var(--grey-200));
+    color: rgb(201,215,227);
 }
 
 .option {
     border-radius: 4px;
     color: rgb(139,160,178);
     cursor: pointer;
-    font-size: 1.4rem;
+    font-size: 0.9rem;
     font-weight: 600;
     padding: 10px 12px;
     transition: background .2s ease-in-out,color .2s ease-in-out;
@@ -947,11 +947,15 @@ a {
 .option-label {
     display: grid;
     grid-template-columns: auto 16px;
-    color: rgb(139,160,178);
     cursor: pointer;
-    font-size: 1.4rem;
+    font-size: 0.9rem;
     font-weight: 600;
     white-space: normal;
+}
+
+.option:hover {
+    color: rgb(61,180,242);
+    background-color: rgb(7, 16, 31);
 }
 
 @media screen and (max-width: 1800px) {
@@ -1214,6 +1218,31 @@ a {
         overflow-x: scroll;
         overflow-y: hidden;
         white-space: nowrap;
+    }
+
+    .select {
+        font-size: 2.5rem;
+        padding: 16px 26px;
+    }
+
+    .value-wrap {
+        max-height: 50px;
+    }
+
+    .group-title {
+        font-size: 2rem;
+    }
+
+    .options {
+        top: calc(100% + 20px);
+    }
+
+    .option {
+        padding: 30px 16px;
+    }
+
+    .option-label {
+        font-size: 2.35rem;
     }
 }
 

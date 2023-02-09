@@ -26,6 +26,20 @@ function showOptions() {
     }
 }
 
+function switchProvider(index) {
+    const providerList = document.querySelectorAll(".providerlist");
+
+    providerList[providerIndex].classList.add("hidden");
+    if (providerIndex === maxProviders - 1) {
+        providerIndex = 0;
+    } else {
+        providerIndex = index || providerIndex + 1;
+    }
+
+    document.querySelector(".providers_selector .value-placeholder").textContent = providerList[providerIndex].querySelector(".chaptersheader").textContent;
+    providerList[providerIndex].classList.remove("hidden");
+}
+
 async function load(id, type) {
     let content = null;
     if (type === "ANIME") {
@@ -48,16 +62,7 @@ async function load(id, type) {
             button.className = "button";
             button.id = "switchProvider";
             button.onclick = () => {
-                const providerList = document.querySelectorAll(".providerlist");
-
-                providerList[providerIndex].classList.add("hidden");
-                if (providerIndex === maxProviders - 1) {
-                    providerIndex = 0;
-                } else {
-                    providerIndex++;
-                }
-
-                providerList[providerIndex].classList.remove("hidden");
+                switchProvider()
             }
             button.textContent = "Switch Provider";
             document.querySelector(".chapters").insertBefore(button, chaptersList);
@@ -72,11 +77,20 @@ async function load(id, type) {
             headerSpan.textContent = content[i].provider;
 
             document.querySelector(".providers_selector .value-placeholder").textContent = content[i].provider;
+            const providerAppend = document.createElement("div");
+            providerAppend.innerHTML = `
+            <div data-v-e3e1e202="" class="option" onclick="switchProvider(${i})">
+                <div data-v-e3e1e202="" class="option-label">
+                    <div data-v-e3e1e202="" class="option-name">${content[i].provider}</div>
+                </div>
+            </div>
+            `
+            document.querySelector(".providers_selector .options .option-group").append(providerAppend);
 
             header.append(headerSpan);
             provider.appendChild(header);
 
-            if (i != 0 && maxProviders > 0) {
+            if (i != 0) {
                 provider.classList.add("hidden");
             }
 
