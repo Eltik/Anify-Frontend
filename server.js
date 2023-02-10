@@ -197,7 +197,7 @@ app.get("/login", (req, res) => {
     if (req.cookies.token) {
         res.redirect("/");
     } else {
-        res.redirect(config.api + "/login");
+        res.redirect(api + "/login");
     }
 })
 

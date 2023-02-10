@@ -32,6 +32,12 @@
                 width: 100%;
                 height: 100%;
             }
+
+            .video-player {
+                width: 100%;
+                height: 100%;
+                max-height: 100vh;
+            }
         </style>
         <script>
             let sources = [];
@@ -61,6 +67,7 @@
                     const video = document.createElement("video");
                     video.controls = true;
                     video.autoplay = true;
+                    video.className = "video-player";
 
                     for (let i = 0; i < subtitles.length; i++) {
                         const subtitleSrc = "/subtitles?url=" + subtitles[i].url;
@@ -92,7 +99,7 @@
                             }
                         });
                     } else {
-                        video.src = source;
+                        video.src = sources[sources.length - 1].url;
                     }
 
                     player.appendChild(video);

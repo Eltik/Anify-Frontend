@@ -296,6 +296,7 @@ async function displayWatching(list) {
 
 async function displaySchedule(data, listData) {
     const promises = [];
+    data = data.reverse();
 
     const popularDOM = document.querySelector(".schedule_items .schedule_grid");
     for (let i = 0; i < data.length; i++) {
@@ -353,7 +354,7 @@ async function displaySchedule(data, listData) {
                                 ${genresText}
                             </div>
                             <div class="result_slideshow_airing">
-                                Airing in <span class="result_slideshow_airing_highlight">${dateAiring}</span>
+                                Next Ep. in <span class="result_slideshow_airing_highlight">${dateAiring}</span>
                             </div>
                         </div>
                     </div>
