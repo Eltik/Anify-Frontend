@@ -168,11 +168,27 @@ async function load(id, type) {
         }
     }
 
+    const swiper = new Swiper('.swiper', {
+        direction: 'horizontal',
+        
+        pagination: {
+            el: '.swiper-pagination',
+        },
+        
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        }
+    });
+
     if (themes != null) {
         document.querySelector(".themesheader span").textContent = "Themes";
-        const themesList = document.querySelector(".themeslist");
+        const themesList = document.querySelector(".themeslist .swiper-wrapper");
         for (let i = 0; i < themes.length; i++) {
             const theme = themes[i];
+            const slide = document.createElement("div");
+            slide.className = "swiper-slide";
+
             const themeItem = document.createElement("div");
             themeItem.className = "theme";
 
@@ -187,15 +203,36 @@ async function load(id, type) {
             video.className = "theme-video";
             themeItem.appendChild(video);
 
-            themesList.appendChild(themeItem);
+            slide.appendChild(themeItem);
+
+            //themesList.appendChild(slide);
+
+            swiper.appendSlide(slide);
         }
     }
 
     if (covers != null) {
         document.querySelector(".themesheader span").textContent = "Covers";
-        const themesList = document.querySelector(".themeslist");
+        const themesList = document.querySelector(".themeslist .swiper-wrapper");
+
+        const swiper = new Swiper('.swiper', {
+            direction: 'horizontal',
+            
+            pagination: {
+                el: '.swiper-pagination',
+            },
+            
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            }
+        });
+        
         for (let i = 0; i < covers.length; i++) {
             const theme = covers[i];
+            const slide = document.createElement("div");
+            slide.className = "swiper-slide";
+
             const themeItem = document.createElement("div");
             themeItem.className = "theme";
 
@@ -209,7 +246,10 @@ async function load(id, type) {
             cover.className = "theme-cover";
             themeItem.appendChild(cover);
 
-            themesList.appendChild(themeItem);
+            slide.appendChild(themeItem);
+
+            //themesList.appendChild(slide);
+            swiper.appendSlide(slide);
         }
     }
 }
