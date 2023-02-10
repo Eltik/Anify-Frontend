@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
 const { join } = require("path");
+const cheerio = require("cheerio");
 
 const colors = require("colors");
 dotenv.config();
@@ -105,29 +106,31 @@ app.get("/info/:id", async(req, res) => {
         `;
     }
 
-    const header = `
-    <title>${title}</title>
-    <meta name="title" content="${title}" />
-    <meta name="description" content="${description}" />
-
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://anify.tv/info/${id}" />
-    <meta property="og:title" content="${title}" />
-    <meta property="og:description" content="${description}" />
-    <meta property="og:image" content="${cover}" />
-
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://anify.tv/info/${id}" />
-    <meta property="twitter:title" content="${title}"/>
-    <meta property="twitter:description" content="${description}" />
-    <meta property="twitter:image" content="${cover}" />
-    `;
-
     let bannerImage = info.bannerImage;
     let coverImage = info.coverImage.extraLarge;
     const request = await axios.post(api + "/tmdb", { id: id }).catch((err) => {
         return null;
     });
+    const $ = cheerio.load(description);
+    const parsed = $("<div>" + description + "</div>").text();
+
+    let header = `
+    <title>${title}</title>
+    <meta name="title" content="${title}" />
+    <meta name="description" content="${parsed}" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://anify.tv/info/${id}" />
+    <meta property="og:title" content="${title}" />
+    <meta property="og:description" content="${parsed}" />
+    <meta property="og:image" content="${cover}" />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://anify.tv/info/${id}" />
+    <meta property="twitter:title" content="${title}"/>
+    <meta property="twitter:description" content="${parsed}" />
+    <meta property="twitter:image" content="${coverImage}" />
+    `;
     if (!request) {
         res.render("info", {
             header: header,
@@ -142,6 +145,24 @@ app.get("/info/:id", async(req, res) => {
 
     info.bannerImage = bannerImage;
     info.coverImage.extraLarge = coverImage;
+
+    header = `
+    <title>${title}</title>
+    <meta name="title" content="${title}" />
+    <meta name="description" content="${parsed}" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://anify.tv/info/${id}" />
+    <meta property="og:title" content="${title}" />
+    <meta property="og:description" content="${parsed}" />
+    <meta property="og:image" content="${cover}" />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://anify.tv/info/${id}" />
+    <meta property="twitter:title" content="${title}"/>
+    <meta property="twitter:description" content="${parsed}" />
+    <meta property="twitter:image" content="${coverImage}" />
+    `;
 
     res.render("info", {
         header: header,
