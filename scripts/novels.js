@@ -21,9 +21,11 @@ function handleSearch(data) {
         
         mangaDOM.innerHTML = `
         <div class="result_search">
-            <a href="${api_server}/pdf/${id}" class="result_search_link">
+            <a href="${api_server}/pdf/${id}" target="_blank" class="result_search_link">
                 <div class="result_search_content">
-                    <img src="${api_server}/cover/${cover}" alt="${title}" class="cover">
+                    <div class="result_search_image">
+                        <img src="${api_server}/cover/${cover}" alt="${title}" class="cover">
+                    </div>
                     <div class="result_search_text">
                         <div class="result_search_title">${title}</div>
                         <div class="result_item_description">

@@ -78,7 +78,7 @@ async function displayTrending(data) {
             }
 
             const id = data[i].id;
-            const title = show.title.english;
+            const title = show.title.english ? show.title.english : show.title.romaji;
             const romaji = show.title.romaji;
             const native = show.title.native;
             let description = show.description && show.description.length > 300 ? show.description.substring(0, 300) + "..." : (show.description && show.description.length > 0 ? show.description : "No description");

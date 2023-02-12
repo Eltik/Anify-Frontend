@@ -4,6 +4,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="./styles/global.css">
         <link rel="stylesheet" href="./styles/novels.css">
+        <link rel="stylesheet" href="./scripts/libraries/swiper-bundle.css"/>
         <link rel="icon" href="./images/favicon.ico" />
         <meta charset="utf-8">
 
@@ -27,9 +28,10 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
         <script src="./scripts/libraries/numeral.min.js"></script>
         <script src="./scripts/libraries/anime.min.js"></script>
+        <script src="./scripts/libraries/swiper-bundle.min.js"></script>
         <script src="./scripts/libraries/cryptojs.min.js"></script>
-        <script src="./scripts/global.min.js"></script>
-        <script src="./scripts/novels.min.js"></script>
+        <script src="./scripts/global.js"></script>
+        <script src="./scripts/novels.js"></script>
     </head>
     <script>
         init().then(async() => {
@@ -59,7 +61,124 @@
             </div>
             <div class="main">
                 <div class="header">
-                    <h1>Novels</h1>
+                    <div class="popular_items">
+                        <div class="swiper">
+                            <div class="swiper-wrapper popular_list">
+                                <div class="result_slideshow swiper-slide" id="rec1">
+                                    <a href="https://api.anify.tv/pdf/TybGx" target="_blank" class="result_slideshow_link">
+                                        <img src="https://artworks.thetvdb.com/banners/v4/series/378609/backgrounds/60734d756e22f.jpg" alt="86" class="cover_blur">
+                                        <div class="banner"></div>
+                                        <div class="result_slideshow_content_wrapper">
+                                            <div class="result_slideshow_text">
+                                                <div class="result_slideshow_title">86―EIGHTY-SIX</div>
+                                                <div class="result_slideshow_subtitle">86: Eighty Six, 86―エイティシックス―</div>
+                                                <div class="result_slideshow_description">A War Without Casualties:<br />The Republic of San Magnolia has long been under attack from the neighboring Giadian Empire's army of unmanned drones known as the Legion. After years of painstaking research, the Republic finally developed autonomous drones of their own, turning the one-sided struggle into a war without casualties-or at least, that's what the government claims. In truth, there is no such thing as a bloodless war. Beyond the fortified walls protecting the eighty-five Republic territories lies the "nonexistent" Eighty-Sixth Sector. The young men and women of this forsaken land are branded the Eighty-Six and, stripped of their humanity, pilot the "unmanned" weapons into battle...</div>
+                                                <div class="result_slideshow_genres">
+                                                    <span class="result_slideshow_genre">Action</span>
+                                                    <span class="result_slideshow_genre">Mecha</span>
+                                                    <span class="result_slideshow_genre">Sci-Fi</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="result_slideshow swiper-slide" id="rec2">
+                                    <a href="https://api.anify.tv/pdf/nPrId" target="_blank" class="result_slideshow_link">
+                                        <img src="https://s4.anilist.co/file/anilistcdn/media/manga/banner/85134-AXHmUVj1J3f4.jpg" alt="The Empty Box and Zeroth Maria" class="cover_blur">
+                                        <div class="banner"></div>
+                                        <div class="result_slideshow_content_wrapper">
+                                            <div class="result_slideshow_text">
+                                                <div class="result_slideshow_title">The Empty Box and Zeroth Maria</div>
+                                                <div class="result_slideshow_subtitle">Utsuro no Hako to Zero no Maria, 空ろの箱と零のマリア</div>
+                                                <div class="result_slideshow_description">Kazuki Hoshino treasures nothing more than his ordinary life, and March 2 should have been an ordinary day. The arrival of a transfer student, the mysterious Aya Otonashi, shouldn't have shattered the world he knows. He's never seen this girl before in his life, but she says she's met him thousands of times--and declares war on him for a crime he can't even remember... As the truth begins to unravel, nothing is as it seems, and at the heart of it all is a wish powerful enough to change everything...</div>
+                                                <div class="result_slideshow_genres">
+                                                    <span class="result_slideshow_genre">Mystery</span>
+                                                    <span class="result_slideshow_genre">Thriller</span>
+                                                    <span class="result_slideshow_genre">Supernatural</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="result_slideshow swiper-slide" id="rec3">
+                                    <a href="https://api.anify.tv/pdf/IH8jd" target="_blank" class="result_slideshow_link">
+                                        <img src="https://s4.anilist.co/file/anilistcdn/media/manga/banner/130687-ZdUsx1UjxjIA.jpg" alt="Alya Sometimes Hides Her Feelings in Russian" class="cover_blur">
+                                        <div class="banner"></div>
+                                        <div class="result_slideshow_content_wrapper">
+                                            <div class="result_slideshow_text">
+                                                <div class="result_slideshow_title">Alya Sometimes Hides Her Feelings in Russian</div>
+                                                <div class="result_slideshow_subtitle">Tokidoki Bosotto Russiago de Dereru Tonari no Alya-san, 時々ボソッとロシア語でデレる隣のアーリャさん</div>
+                                                <div class="result_slideshow_description">Masachika Kuse sits next to Alya, a girl of Russian and Japanese descent. She's beautiful, haughty, and an exceptional student, while Masachika is nerdy and known for being a slacker. He's an easy target for her comments in Russian, which she's all too happy to translate—except he can understand what she's really saying!</div>
+                                                <div class="result_slideshow_genres">
+                                                    <span class="result_slideshow_genre">Comedy</span>
+                                                    <span class="result_slideshow_genre">Romance</span>
+                                                    <span class="result_slideshow_genre">Slice of Life</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="result_slideshow swiper-slide" id="rec4">
+                                    <a href="https://api.anify.tv/pdf/N5V5c" target="_blank" class="result_slideshow_link">
+                                        <img src="https://s4.anilist.co/file/anilistcdn/media/manga/banner/117853-6KlUNNpVJ75K.jpg" alt="The Tunnel to Summer, the Exit of Goodbyes" class="cover_blur">
+                                        <div class="banner"></div>
+                                        <div class="result_slideshow_content_wrapper">
+                                            <div class="result_slideshow_text">
+                                                <div class="result_slideshow_title">The Tunnel to Summer, the Exit of Goodbyes</div>
+                                                <div class="result_slideshow_subtitle">Natsu e no Tunnel, Sayonara no Deguchi, 夏へのトンネル、さよならの出口</div>
+                                                <div class="result_slideshow_description">Kaoru Touno heard a rumor: The laws of space and time mean nothing to the Urashima Tunnel. If you find it, walk through and you'll find your heart's desire on the other side… in exchange for years of your own life. On the night Kaoru just so happens to find himself standing in front of a tunnel that looks suspiciously like the one the rumor describes, he finds himself thinking of Karen, the sister he lost in an accident five years ago. To Kaoru's surprise, he's been followed by the new transfer student Anzu Hanashiro, who promises to help him experiment with the mysterious tunnel - but what does she want from Kaoru in exchange? And what will he have left to give, after the tunnel's done with him?</div>
+                                                <div class="result_slideshow_genres">
+                                                    <span class="result_slideshow_genre">Drama</span>
+                                                    <span class="result_slideshow_genre">Romance</span>
+                                                    <span class="result_slideshow_genre">Supernatural</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="result_slideshow swiper-slide" id="rec5">
+                                    <a href="https://api.anify.tv/pdf/N5V5c" target="_blank" class="result_slideshow_link">
+                                        <img src="https://artworks.thetvdb.com/banners/v4/series/414221/backgrounds/61d5adf8d8fcc.jpg" alt="The Angel Next Door Spoils Me Rotten" class="cover_blur">
+                                        <div class="banner"></div>
+                                        <div class="result_slideshow_content_wrapper">
+                                            <div class="result_slideshow_text">
+                                                <div class="result_slideshow_title">The Angel Next Door Spoils Me Rotten</div>
+                                                <div class="result_slideshow_subtitle">Otonari no Tenshi-sama ni Itsunomanika Dame Ningen ni Sareteita Ken, お隣の天使様にいつの間にか駄目人間にされていた件</div>
+                                                <div class="result_slideshow_description">Amane lives alone in an apartment, and the most beautiful girl in school, Mahiru, lives just next door. They've almost never spoken-until the day he sees her in distress on a rainy day and lends her his umbrella. To return the favor, she offers him help around the house, and a relationship slowly begins to blossom as the distance between them closes...</div>
+                                                <div class="result_slideshow_genres">
+                                                    <span class="result_slideshow_genre">Comedy</span>
+                                                    <span class="result_slideshow_genre">Romance</span>
+                                                    <span class="result_slideshow_genre">Slice of Life</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="result_slideshow swiper-slide" id="rec6">
+                                    <a href="https://api.anify.tv/pdf/Ijkyk" target="_blank" class="result_slideshow_link">
+                                        <img src="https://mcdn.wallpapersafari.com/medium/4/95/HSYiKZ.jpg" alt="The Beginning After the End" class="cover_blur">
+                                        <div class="banner"></div>
+                                        <div class="result_slideshow_content_wrapper">
+                                            <div class="result_slideshow_text">
+                                                <div class="result_slideshow_title">The Beginning After the End</div>
+                                                <div class="result_slideshow_subtitle">Romaji, Native</div>
+                                                <div class="result_slideshow_description">King Grey has unrivaled strength, wealth, and prestige in a world governed by martial ability. However, solitude lingers closely behind those with great power. Beneath the glamorous exterior of a powerful king lurks the shell of man, devoid of purpose and will.<br />Reincarnated into a new world filled with magic and monsters, the king has a second chance to relive his life. Correcting the mistakes of his past will not be his only challenge, however. Underneath the peace and prosperity of the new world is an undercurrent threatening to destroy everything he has worked for, questioning his role and reason for being born again. </div>
+                                                <div class="result_slideshow_genres">
+                                                    <span class="result_slideshow_genre">Fantasy</span>
+                                                    <span class="result_slideshow_genre">Action</span>
+                                                    <span class="result_slideshow_genre">Comedy</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                            
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                        </div>
+                    </div>
                     <form id="search_form" action="/novels/search" method="GET" class="search_wrapper">
                         <input class="search" placeholder="Search for novels..." type="search" />
                         <button class="submit" type="submit"><i class="fa fa-search"></i></button>
@@ -82,6 +201,33 @@
             </div>
         </div>
         <script type="text/javascript">
+            const swiper = new Swiper('.swiper', {
+                direction: 'horizontal',
+                
+                pagination: {
+                    el: '.swiper-pagination',
+                },
+                
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                }
+            });
+
+            const rec1 = document.getElementById("rec1");
+            const rec2 = document.getElementById("rec2");
+            const rec3 = document.getElementById("rec3");
+            const rec4 = document.getElementById("rec4");
+            const rec5 = document.getElementById("rec5");
+            const rec6 = document.getElementById("rec6");
+
+            swiper.appendSlide(rec1);
+            swiper.appendSlide(rec2);
+            swiper.appendSlide(rec3);
+            swiper.appendSlide(rec4);
+            swiper.appendSlide(rec5);
+            swiper.appendSlide(rec6);
+        
             $('#search_form').submit(function(e){
                 e.preventDefault();
                 const searchValue = document.getElementsByClassName("search")[0]["value"];
