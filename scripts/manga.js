@@ -72,6 +72,9 @@ function displayTrending(data) {
     });
 
     for (let i = 0; i < data.length; i++) {
+        if (!data[i]) {
+            continue;
+        }
         const manga = data[i].data;
         const id = manga.id;
         const title = manga.title.english;
@@ -119,6 +122,9 @@ function displayTrending(data) {
 function displayPopular(data, listData) {
     const popularDOM = document.getElementsByClassName("slideshow_grid")[0];
     for (let i = 0; i < data.length; i++) {
+        if (!data[i]) {
+            continue;
+        }
         const manga = data[i].data;
         const id = manga.id;
         const list = {

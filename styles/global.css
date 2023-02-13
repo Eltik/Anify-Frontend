@@ -592,6 +592,11 @@ a {
     left: 0;
 }
 
+.result_item_episode {
+    font-weight: 600;
+    color: rgb(var(--gray-300));
+}
+
 .result_item_status {
     position: absolute;
     width: 20px;

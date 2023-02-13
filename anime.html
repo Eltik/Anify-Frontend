@@ -51,12 +51,12 @@
                     alert("Could not fetch trending anime! Contact Eltik via Discord.");
                 })
 
-                fetchPopular().then((popular) => {
-                    displayPopular(popular, listData);
+                fetchRecentEpisodes().then((popular) => {
+                    displayRecentEpisodes(popular, listData);
                     unloadSkeleton(".slideshow_grid", ".skeleton_result");
                 }).catch((err) => {
                     handleError(err);
-                    alert("Could not fetch popular anime! Contact Eltik via Discord.")
+                    alert("Could not fetch recent episodes! Contact Eltik via Discord.")
                 })
 
                 fetchSchedule().then((schedule) => {
@@ -126,7 +126,7 @@
                         </div>
                     </div>
                     <div class="latest_items">
-                        <h2>This Season</h2>
+                        <h2>Recent Episodes</h2>
                         <div class="slideshow_grid">
                             <div class="skeleton_result">
                                 <div class="skeleton_div"></div>

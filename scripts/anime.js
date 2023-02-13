@@ -23,17 +23,20 @@ async function fetchTrending() {
     return data;
 }
 
-async function fetchPopular() {
-    const args = {
-        season: "season"
-    };
-    const req = await fetch(api_server + "/seasonal/anime", { method: "POST", body: JSON.stringify(args), headers: { "Content-Type": "application/json" }}).catch((err) => {
+async function fetchRecentEpisodes() {
+    const req = await fetch(api_server + "/recent-episodes?page=1", { method: "GET", headers: { "Content-Type": "application/json" }}).catch((err) => {
         handleError(err);
-        return { "error": "Could not fetch seasonal data!" };
+        return { "error": "Could not fetch recent episodes!" };
     });
 
     const data = await req.json();
-    return data;
+    const req2 = await fetch(api_server + "/recent-episodes?page=2", { method: "GET", headers: { "Content-Type": "application/json" }}).catch((err) => {
+        handleError(err);
+        return { "error": "Could not fetch recent episodes!" };
+    });
+
+    const data2 = await req2.json();
+    return data.concat(data2);
 }
 
 async function fetchSchedule() {
@@ -129,7 +132,7 @@ async function displayTrending(data) {
     await Promise.all(promises);
 }
 
-async function displayPopular(data, listData) {
+async function displayRecentEpisodes(data, listData) {
     const popularDOM = document.querySelector(".latest_items .slideshow_grid");
     const promises = [];
     for (let i = 0; i < data.length; i++) {
@@ -152,6 +155,8 @@ async function displayPopular(data, listData) {
             
             const title = show.title.english ? show.title.english : show.title.romaji;
             let description = show.description && show.description.length > 250 ? show.description.substring(0, 250) + "..." : (show.description && show.description.length > 0 ? show.description : "No description");
+
+            const episodeNum = data[i].episodeNumber;
 
             if (x.matches) {
                 description = description.length > 200 ? description.substring(0, 200) + "..." : description;
@@ -180,7 +185,7 @@ async function displayPopular(data, listData) {
                         <div class="result_item_text">
                             <div class="result_item_title">${title}</div>
                             <div class="result_slideshow_genres">
-                                ${genresText}
+                                ${genresText} <div class="result_slideshow_airing"> - <span class="result_slideshow_airing_highlight">Ep. ${episodeNum}</span></div>
                             </div>
                         </div>
                     </div>
@@ -319,7 +324,7 @@ async function displaySchedule(data, listData) {
             const title = show.title.english ? show.title.english : show.title.romaji;
             let description = show.description && show.description.length > 250 ? show.description.substring(0, 250) + "..." : (show.description && show.description.length > 0 ? show.description : "No description");
             
-            const cover = show.coverImage.large;
+            const cover = show.coverImage.alt ?? show.coverImage.extraLarge;
 
             if (x.matches) {
                 description = description.length > 200 ? description.substring(0, 200) + "..." : description;
@@ -424,7 +429,7 @@ async function handleSearch(data, listData) {
             const title = show.title.english ? show.title.english : show.title.romaji;
             let description = show.description && show.description.length > 250 ? show.description.substring(0, 250) + "..." : (show.description && show.description.length > 0 ? show.description : "No description");
             
-            const cover = show.coverImage.large;
+            const cover = show.coverImage.alt ?? show.coverImage.extraLarge;
 
             if (x.matches) {
                 description = description.length > 200 ? description.substring(0, 200) + "..." : description;
