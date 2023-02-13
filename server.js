@@ -79,7 +79,16 @@ app.get("/novels*", (req, res) => {
 
 app.get("/info/:id", async(req, res) => {
     const id = req.params["id"];
-    const { data } = await axios.post(api + "/info", { id: id })
+    const { data } = await axios.post(api + "/info", { id: id }).catch((err) => {
+        console.error(err);
+        res.status(404).send("Not found").end();
+        return {
+            data: null
+        }
+    });
+    if (!data) {
+        return;
+    }
 
     const info = data.data;
     const title = info.title.english || info.title.romaji || info.title.native;
@@ -209,7 +218,11 @@ app.get("/subtitles", async(req, res) => {
         res.status(400).json("Bad request").end();
     }
     
-    const { data } = await axios.get("https://cors.consumet.stream/" + url);
+    const { data } = await axios.get("https://cors.consumet.stream/" + url).catch((err) => {
+        return {
+            data: ""
+        }
+    });
     res.header("Content-Type", "text/vtt");
     res.send(data).end();
 });
@@ -240,6 +253,7 @@ app.get("/token", (req, res) => {
     const token = req.cookies.token;
     if (!token) {
         res.status(400).json({ error: "No token found." }).end();
+        return;
     }
     res.send({ token: token }).end();
 })

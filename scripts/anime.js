@@ -48,11 +48,9 @@ async function fetchSchedule() {
 async function displayTrending(data) {
     const swiper = new Swiper('.swiper', {
         direction: 'horizontal',
-        
         pagination: {
             el: '.swiper-pagination',
         },
-        
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
