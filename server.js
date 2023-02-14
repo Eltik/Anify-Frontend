@@ -80,7 +80,7 @@ app.get("/novels*", (req, res) => {
 app.get("/info/:id", async(req, res) => {
     const id = req.params["id"];
     const { data } = await axios.post(api + "/info", { id: id }).catch((err) => {
-        console.error(err);
+        console.log("Error. Not found " + id);
         res.status(404).send("Not found").end();
         return {
             data: null
@@ -150,10 +150,8 @@ app.get("/info/:id", async(req, res) => {
     }
     const json = request.data;
     bannerImage = json.backdrop_path ? json.backdrop_path : bannerImage;
-    coverImage = json.poster_path ? json.poster_path : coverImage;
 
     info.bannerImage = bannerImage;
-    info.coverImage.extraLarge = coverImage;
 
     header = `
     <title>${title}</title>
@@ -178,6 +176,61 @@ app.get("/info/:id", async(req, res) => {
         info: info,
         relations: relationsData
     })
+})
+
+app.get("/novel/:id", async(req, res) => {
+    const id = req.params["id"];
+    const { data } = await axios.post(api + "/novel", { id: id }).catch((err) => {
+        console.log("Error. Not found ID " + id);
+        res.status(404).send("Not found").end();
+        return {
+            data: null
+        }
+    });
+    if (!data) {
+        return;
+    }
+
+    const info = data.data;
+    const title = info.title.english || info.title.romaji || info.title.native;
+    const description = info.description.replace(/<br>/g, "");
+    const cover = info.coverImage.large;
+
+    const coverImage = info.coverImage.extraLarge;
+    const $ = cheerio.load(description);
+    const parsed = $("<div>" + description + "</div>").text();
+
+    const header = `
+    <title>${title}</title>
+    <meta name="title" content="${title}" />
+    <meta name="description" content="${parsed}" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://anify.tv/info/${id}" />
+    <meta property="og:title" content="${title}" />
+    <meta property="og:description" content="${parsed}" />
+    <meta property="og:image" content="${cover}" />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://anify.tv/info/${id}" />
+    <meta property="twitter:title" content="${title}"/>
+    <meta property="twitter:description" content="${parsed}" />
+    <meta property="twitter:image" content="${coverImage}" />
+    `;
+
+    const connectors = data.connectors.map((connector, index) => {
+        return `
+        <a href="${api + connector.id}" target="_blank">
+            <div class="chapter" id="chapter-${index}">${connector.title}</div>
+        </a>
+        `
+    })
+    res.render("novel", {
+        header: header,
+        info: info,
+        connectors: connectors
+    })
+    return;
 })
 
 app.get("/watch*", (req, res) => {

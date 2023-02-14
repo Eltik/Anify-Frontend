@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+    <head>
+        <link rel="stylesheet" href="../styles/global.css">
+        <link rel="stylesheet" href="../styles/info.css">
+        <link rel="stylesheet" href="../scripts/libraries/swiper-bundle.css"/>
+        <link rel="icon" href="../images/favicon.ico" />
+        <meta charset="utf-8">
+
+        <%- header %>
+
+        <script src="https://cdn.jsdelivr.net/npm/js-base64@3.7.3/base64.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+        <script src="../scripts/libraries/swiper-bundle.min.js"></script>
+        <script src="../scripts/libraries/numeral.min.js"></script>
+        <script src="../scripts/libraries/anime.min.js"></script>
+        <script src="../scripts/libraries/cryptojs.min.js"></script>
+        <script src="../scripts/global.min.js"></script>
+        <script>
+            setTimeout(() => {
+                init().then(() => {
+                    loadNav();
+                })
+            }, 100);
+        </script>
+    </head>
+
+    <body>
+        <div class="navbar">
+            <button type="button" id="navbutton" class="navbutton" onclick="displayNav()">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+            </button>
+            <div class="anify">
+                <span class="anify">Anify</span>
+            </div>  
+            <img class="navlogo" src="../images/anify_logo.png"> 
+            <div class="navlinks">
+                <a href="/" class="navtext">Home</a>
+                <a href="/anime" class="navtext">Anime</a>
+                <a href="/manga" class="navtext">Manga</a>
+                <a href="/novels" class="navtext">Novels</a>
+                <a href="/discord" target="_blank" class="navtext">Discord</a>
+                <a href="/login" class="navtext login">Login</a>
+            </div>
+        </div>
+        <div class="header_wrap">
+            <div class="bannerimage" style="background-image: url('<%- info.bannerImage %>');">
+                <div class="gradient">
+                </div>
+            </div>
+            <div class="header">
+                <div class="header_wrapper">
+                    <div class="cover_wrapper">
+                        <div class="cover_wrapper_inner">
+                            <img src="<%- info.coverImage.extraLarge %>" class="cover">
+                            <div class="actions">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="header_content">
+                        <div class="mangatitle"><%- info.title.romaji %></div>
+                        <div class="mangasubtitle"><span class="native"><%- info.title.native %></span><br><span class="english"><%- info.title.english %></span></div>
+                        <div class="mangadescription">
+                            <span><%- info.description %></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="sidebar">
+                <div class="stats">
+
+                </div>
+            </div>
+            <div class="main_content">
+                <div class="chapters">
+                    <div class="chaptersheader">
+                        <span class="chaptersheader">Novels List</span>
+                    </div>
+                    <div class="chapterslist">
+                        <%- connectors %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <span class="foottext"><a href="/tos">Terms of Service</a></span>
+            <span class="foottext"><a href="/dmca">DMCA</a></span>
+            <span class="foottext"><a href="/contact">Contact</a></span>
+            <span class="foottext"><a href="/discord">Discord</a></span>
+            <span class="foottext"><a href="https://ko-fi.com/anify" target="_blank">Donate</a></span>
+        </div>
+    </body>
+</html>
