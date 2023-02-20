@@ -49,7 +49,7 @@ async function load(id, type) {
 
     let tnails = [];
     console.log(info);
-    if (info.id) {
+    if (info.id && info.data != undefined) {
         info = info.data;
     }
 
