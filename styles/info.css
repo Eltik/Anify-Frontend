@@ -65,45 +65,59 @@
     width: 100%;
 }
 
+.main_content {
+    display: grid;
+    grid-template-columns: 35vw 40vw;
+    grid-template-areas: "header chapters";
+}
+
 .header_content {
-    display: inline-grid;
-    grid-template-rows: -webkit-min-content -webkit-min-content auto;
-    grid-template-rows: min-content min-content auto;
-    padding-top: 25px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+    margin-top: 0px;
+    position: relative;
+    z-index: 1;
+    line-height: 0;
+    font-family: "Roboto";
+    grid-area: header;
 }
 
 .mangatitle {
-    font-size: 3rem;
-    color: rgb(var(--grey-300));
+    font-size: 2.5rem;
+        color: rgb(var(--grey-anilist));
     text-shadow: var(--global-shadow);
 }
 
 .mangasubtitle {
-    color: rgb(var(--grey-200));
+    color: rgb(var(--grey-anilist-dark));
     text-shadow: var(--global-shadow);
 }
 
 .mangadescription {
     margin-top: 1rem;
-    color: rgb(var(--grey-100));
+    color: rgb(var(--grey-anilist-dark));
     text-shadow: var(--global-shadow);
     margin-bottom: 1rem;
+    line-height: normal;
 }
 
 .content {
     display: grid;
-    grid-column-gap: 40px;
-    grid-template-columns: 208px auto;
-    margin-top: 30px;
+    grid-template-columns: 10vw 35vw 40vw;
+    grid-template-areas: "sidebar header chapters";
     position: relative;
     margin: 0 auto;
     width: 100%;
     max-width: 90vw;
+    margin-top: 30px;
 }
 
 .sidebar {
     margin-top: 0px;   
+    grid-area: sidebar;
 }
+
 
 .genres {
     display: flex;
@@ -138,42 +152,6 @@
     color: rgb(var(--grey-200));
 }
 
-.chapters {
-    margin-top: 3%;
-    display: flex;
-    flex-direction: column;
-    gap: 1.3rem;
-}
-
-.chaptersheader, .themesheader {
-    color: rgb(var(--grey-300));
-    font-size: 1.3rem;
-}
-
-.providerlist {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.providerchapters {
-    max-height: 100vh;
-    overflow-y: scroll;
-    background-color: rgb(var(--blue-100));
-    border-radius: 5px;
-}
-
-.chapter {
-    color: rgb(var(--grey-200));
-    padding: 20px 15px 20px 20px;
-    transition: 0.2s all;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-}
-
-.chapter:hover {
-    background-color: rgb(var(--blue-200));
-}
-
 .hidden {
     display: none;
 }
@@ -185,11 +163,12 @@
 
 .relation {
     background: rgb(var(--blue-200));
-    border-radius: 3px;
+    border-radius: 15px;
     display: block;
-    padding: 8px 12px;
+    padding: 10px 12px;
     width: 100%;
     margin-bottom: 16px;
+    font-family: "Roboto", sans-serif;
 }
 
 .relation_wrapper {
@@ -221,37 +200,164 @@
     color: rgb(61,180,242);
 }
 
-.themeslist {
+.stats {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 15px;
+    padding: 0 1em;
+    background-color: #232436;
+    border-radius: 15px;
+    font-family: "Roboto", sans-serif;
+}
+
+.stats h3 {
+    color: #9FADBD;
+    font-weight: 600;
+}
+
+.stats p {
+    color: #8596A5;
+    font-weight: 300;
+}
+
+.chapters_content {
+    grid-area: chapters;
+}
+
+.chapterslist {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(10vw, 1fr));
     gap: 15px;
     margin-top: 15px;
 }
 
-.theme-title {
-    color: rgb(var(--grey-300));
-    font-size: 1.3rem;
+.chapter_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 15vh;
 }
 
-.theme-video {
+.chapter_wrapper[data-chapter] {
+    margin-bottom: 0;
+}
+
+.episode_wrapper {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    margin: 0 auto;
+    border: 2px solid transparent;
+    transition: 0.2s all;
+    border-radius: 15px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.episode_info {
+    font-family: "Roboto", sans-serif;
+    color: rgb(var(--grey-anilist));
+    font-size: 1.2rem;
+    z-index: 5;
+}
+
+.episode {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 5px;
+    min-height: 20vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s all;
+    cursor: pointer;
+    z-index: 2;
+    background-color: rgba(25, 35, 61, 0.5);
+    flex-shrink: 0;
+    position: relative;
+    transition-property: transform;
 }
 
-.theme-cover {
-    width: 100%;
-    height: 100%;
-    min-width: 40vw;
-    min-height: 110vh;
+.episode_image {
+    position: absolute;
     object-fit: cover;
-    border-radius: 5px;
+    max-width: 100%;
+    display: block;
+    vertical-align: middle;
+    width: 150%;
+    height: 150%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    filter: brightness(0.5);
 }
 
-.swiper {
-    width: 40vw;
-    height: 110vh;
+.play_icon {
+    overflow: visible;
+    color: rgb(97, 132, 228);
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: color .2s ease;
+    width: 4rem;
+    text-align: center;
+    vertical-align: -0.125em;
+    height: 4rem;
+    transition: 0.2s all;
+    z-index: 3;
+}
+
+.play_icon path {
+    width: inherit;
+    height: inherit;
+    z-index: inherit;
+}
+
+.episode_wrapper:hover {
+    transform: scale(1.025);
+    opacity: 0.7;
+    border: 2px solid rgb(61, 180, 242);
+}
+
+.episode_wrapper:hover .play_icon {
+    color: rgb(61, 180, 242);
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.episode_wrapper:active {
+    transform: scale(1);
+    opacity: 0.6;
+}
+
+.episode_wrapper:active .play_icon {
+    color: rgb(61, 180, 242);
+    transform: scale(1);
+    opacity: 0.8;
+}
+
+.chapter {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #9FADBD;
+    transition: 0.2s all;
+    background-color: #111222;
+    padding-left: 0.75rem;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.chapter:hover {
+    color: rgb(61, 180, 242);
+}
+
+.chapter:active {
+    background-color:rgb(27, 23, 45);
 }
 
 @media screen and (max-width: 3000px) {
@@ -272,6 +378,30 @@
     .bannerimage {
         margin-top: -58px;
     }
+    .main_content {
+        display: flex;
+        flex-direction: column;
+    }
+    .chapters_content {
+        margin-top: 15px;
+        margin-left: 30px;
+    }
+    .content {
+        display: grid;
+        grid-template-columns: 10vw 75vw;
+        position: relative;
+        margin: 0 auto;
+        width: 100%;
+        max-width: 90vw;
+        margin-top: 30px;
+    }
+    .chapterslist {
+        grid-template-columns: repeat(auto-fill, minmax(20vw, 1fr));
+    }
+
+    .episode_number {
+        margin-right: 20vw;
+    }
 }
 
 @media screen and (max-width: 1600px) {
@@ -281,14 +411,6 @@
 }
 
 @media screen and (max-width: 1000px) {
-    .themeslist {
-        display: block;
-    }
-    .swiper {
-        width: 90vw;
-        height: 100%;
-    }
-
     .header_wrapper {
         grid-template-columns: 250px auto;
     }
@@ -322,6 +444,10 @@
         height: 50px;
     }
 
+    .stats {
+        display: none;
+    }
+
     .header_wrap {
         margin-top: 0;
     }
@@ -339,12 +465,8 @@
         font-size: 4rem;
     }
 
-    .mangasubtitle {
-        display: none;
-    }
-
     .mangadescription {
-        font-size: 1.35rem;
+        font-size: 1rem;
     }
 
     .genre {
@@ -355,16 +477,33 @@
         padding-bottom: 15px;
     }
 
+    .header_content, .chapters_content {
+        margin-left: 0;
+        padding: 20px;
+    }
+
     .chapterslist {
-        margin-bottom: 50px;
+        grid-template-columns: repeat(auto-fill, minmax(40vw, 1fr));
     }
 
-    .chaptersheader, .themesheader {
-        font-size: 3rem;
+    .chapter_wrapper {
+        margin-bottom: 10vh;
     }
 
-    .chapter {
-        font-size: 2.3rem;
-        padding: 45px 15px 20px 45px;
+    .chapter_wrapper[data-chapter] {
+        margin-bottom: 0;
+    }
+
+    .episode_info {
+        font-size: 2.5rem;
+    }
+
+    .chapter_title {
+        font-size: 2.5rem;
+    }
+
+    .play_icon {
+        width: 8rem;
+        height: 8rem;
     }
 }

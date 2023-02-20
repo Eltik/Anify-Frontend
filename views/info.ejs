@@ -1,140 +1,131 @@
 <!DOCTYPE html>
-    <head>
-        <link rel="stylesheet" href="../styles/global.css">
-        <link rel="stylesheet" href="../styles/info.css">
-        <link rel="stylesheet" href="../scripts/libraries/swiper-bundle.css"/>
-        <link rel="icon" href="../images/favicon.ico" />
-        <meta charset="utf-8">
 
-        <%- header %>
+<head>
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/info.css">
+    <link rel="stylesheet" href="../scripts/libraries/swiper-bundle.css" />
+    <link rel="icon" href="../images/favicon.ico" />
+    <meta charset="utf-8">
 
-        <script src="https://cdn.jsdelivr.net/npm/js-base64@3.7.3/base64.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-        <script src="../scripts/libraries/swiper-bundle.min.js"></script>
-        <script src="../scripts/libraries/numeral.min.js"></script>
-        <script src="../scripts/libraries/anime.min.js"></script>
-        <script src="../scripts/libraries/cryptojs.min.js"></script>
-        <script src="../scripts/global.min.js"></script>
-        <script src="../scripts/info.min.js"></script>
-        <script>
-            setTimeout(() => {
-                init().then(() => {
-                    const id = window.location.pathname.split("/")[2];
-                    load(id, "<%- info.type %>");
-                    loadNav();
-                })
-            }, 100);
-        </script>
-    </head>
+    <%- header %>
 
-    <body>
-        <div class="navbar">
-            <button type="button" id="navbutton" class="navbutton" onclick="displayNav()">
-                <div class="bar1"></div>
-                <div class="bar2"></div>
-                <div class="bar3"></div>
-            </button>
-            <div class="anify">
-                <span class="anify">Anify</span>
-            </div>  
-            <img class="navlogo" src="../images/anify_logo.png"> 
-            <div class="navlinks">
-                <a href="/" class="navtext">Home</a>
-                <a href="/anime" class="navtext">Anime</a>
-                <a href="/manga" class="navtext">Manga</a>
-                <a href="/novels" class="navtext">Novels</a>
-                <a href="/discord" target="_blank" class="navtext">Discord</a>
-                <a href="/login" class="navtext login">Login</a>
+    <script src="https://cdn.jsdelivr.net/npm/js-base64@3.7.3/base64.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="../scripts/libraries/swiper-bundle.min.js"></script>
+    <script src="../scripts/libraries/numeral.min.js"></script>
+    <script src="../scripts/libraries/anime.min.js"></script>
+    <script src="../scripts/libraries/cryptojs.min.js"></script>
+    <script src="../scripts/global.min.js"></script>
+    <script src="../scripts/info.min.js"></script>
+    <script>
+        let info = <%- stringifiedInfo %>;
+        setTimeout(() => {
+            init().then(() => {
+                const id = window.location.pathname.split("/")[2];
+                load(id, "<%- info.type %>");
+                loadNav();
+            })
+        }, 100);
+    </script>
+</head>
+
+<body>
+    <div class="navbar">
+        <button type="button" id="navbutton" class="navbutton" onclick="displayNav()">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+        </button>
+        <div class="anify">
+            <span class="anify">Anify</span>
+        </div>
+        <img class="navlogo" src="../images/anify_logo.png">
+        <div class="navlinks">
+            <a href="/" class="navtext">Home</a>
+            <a href="/anime" class="navtext">Anime</a>
+            <a href="/manga" class="navtext">Manga</a>
+            <a href="/novels" class="navtext">Novels</a>
+            <a href="/discord" target="_blank" class="navtext">Discord</a>
+            <a href="/login" class="navtext login">Login</a>
+        </div>
+    </div>
+    <div class="header_wrap">
+        <div class="bannerimage"
+            style="background-image: url('<%- info.bannerImage %>');">
+            <div class="gradient">
             </div>
         </div>
-        <div class="header_wrap">
-            <div class="bannerimage" style="background-image: url('<%- info.bannerImage %>');">
-                <div class="gradient">
-                </div>
+    </div>
+    <div class="content">
+        <div class="sidebar">
+            <div class="relations">
             </div>
-            <div class="header">
-                <div class="header_wrapper">
-                    <div class="cover_wrapper">
-                        <div class="cover_wrapper_inner">
-                            <img src="<%- info.coverImage.extraLarge %>" class="cover">
-                            <div class="actions">
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="header_content">
-                        <div class="mangatitle"><%- info.title.romaji %></div>
-                        <div class="mangasubtitle"><span class="native"><%- info.title.native %></span><br><span class="english"><%- info.title.english %></span></div>
-                        <div class="mangadescription">
-                            <span><%- info.description %></span>
-                        </div>
-                    </div>
+            <div class="stats">
+                <div class="stat">
+                    <h3>Format</h3>
+                    <p><%- info.format %></p>
+                </div>
+                <div class="stat">
+                    <h3><%- info.type === "MANGA" ? "Chapters" : "Episodes" %></h3>
+                    <p><%- info.type === "MANGA" ? info.chapters : info.episodes %></p>
+                </div>
+                <div class="stat">
+                    <h3><%- info.type === "MANGA" ? "Released" : "Premiered" %></h3>
+                    <p><%- info.startDate.month %>/<%- info.startDate.day %>/<%- info.startDate.year %></p>
+                </div>
+                <div class="stat">
+                    <h3>Studios</h3>
+                    <p>TBD</p>
                 </div>
             </div>
         </div>
-        <div class="content">
-            <div class="sidebar">
-                <div class="relations">
-                    <%- relations %>
-                </div>
-                <div class="stats">
-
-                </div>
+        <div class="main_content">
+            <div class="header_content">
+                <h1 class="mangatitle"><%- info.title.english ?? info.title.userPreferred %></h1>
+                <h2 class="mangasubtitle"><%- info.title.romaji ?? "" %></h2>
+                <h2 class="mangasubtitle"><%- info.title.native ?? "" %></h2>
+                <p class="mangadescription">...</p>
             </div>
-            <div class="main_content">
-                <div class="chapters">
-                    <div class="chaptersheader">
-                        <span class="chaptersheader">...</span>
-                    </div>
-                    <div class="providers_selector">
-                        <div class="select-wrap" onclick="showOptions()">
-                            <div class="select">
-                                <div class="value-wrap">
-                                    <div class="value-placeholder">
-                                        ...
-                                    </div>
-                                    <div style="opacity:0">Test</div>
+            <div class="chapters_content">
+                <div class="providers_selector">
+                    <div class="select-wrap" onclick="showOptions()">
+                        <div class="select">
+                            <div class="value-wrap">
+                                <div class="value-placeholder">
+                                    Loading...
                                 </div>
-                                <svg data-v-e3e1e202="" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="select_icon svg-inline--fa fa-chevron-down fa-w-14 fa-fw">
-                                    <path data-v-e3e1e202="" fill="currentColor" d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z" class=""></path>
-                                </svg>
+                                <div style="opacity:0">Test</div>
                             </div>
-                            <div data-v-e3e1e202="" class="options hidden">
-                                <section data-v-e3e1e202="" class="ps-container scroll-wrap ps ps--active-y">
-                                    <div data-v-e3e1e202="" class="option-group">
-                                        <div data-v-e3e1e202="" class="group-title">providers</div>
-                                    </div>
-                                </section>
-                            </div>
+                            <svg data-v-e3e1e202="" aria-hidden="true" focusable="false" data-prefix="fas"
+                                data-icon="chevron-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+                                class="select_icon svg-inline--fa fa-chevron-down fa-w-14 fa-fw">
+                                <path data-v-e3e1e202="" fill="currentColor"
+                                    d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                                    class=""></path>
+                            </svg>
                         </div>
-                    </div>
-                    <div class="chapterslist">
+                        <div data-v-e3e1e202="" class="options hidden">
+                            <section data-v-e3e1e202="" class="ps-container scroll-wrap ps ps--active-y">
+                                <div data-v-e3e1e202="" class="option-group">
+                                    <div data-v-e3e1e202="" class="group-title">providers</div>
+                                </div>
+                            </section>
+                        </div>
                     </div>
                 </div>
-                <div class="themes">
-                    <div class="themesheader">
-                        <span class="themesheader"></span>
-                    </div>
-                    <div class="themeslist">
-                        <div class="swiper">
-                            <div class="swiper-wrapper">
-                            </div>
-                            <div class="swiper-pagination"></div>
-                            
-                            <div class="swiper-button-prev"></div>
-                            <div class="swiper-button-next"></div>
-                        </div>
-                    </div>
+                <div class="chapterslist">
                 </div>
             </div>
         </div>
-        <div class="footer">
-            <span class="foottext"><a href="/tos">Terms of Service</a></span>
-            <span class="foottext"><a href="/dmca">DMCA</a></span>
-            <span class="foottext"><a href="/contact">Contact</a></span>
-            <span class="foottext"><a href="/discord">Discord</a></span>
-            <span class="foottext"><a href="https://ko-fi.com/anify" target="_blank">Donate</a></span>
-        </div>
-    </body>
+    </div>
+    <div class="footer">
+        <span class="foottext"><a href="/tos">Terms of Service</a></span>
+        <span class="foottext"><a href="/dmca">DMCA</a></span>
+        <span class="foottext"><a href="/contact">Contact</a></span>
+        <span class="foottext"><a href="/discord">Discord</a></span>
+        <span class="foottext"><a href="https://ko-fi.com/anify" target="_blank">Donate</a></span>
+    </div>
+</body>
+
 </html>

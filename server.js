@@ -77,6 +77,10 @@ app.get("/novels*", (req, res) => {
     res.sendFile("./novels.html", { root: __dirname });
 })
 
+app.get("/test/*", (req, res) => {
+    res.sendFile("./test.html", { root: __dirname });
+})
+
 app.get("/info/:id", async(req, res) => {
     const id = req.params["id"];
     const { data } = await axios.post(api + "/info", { id: id }).catch((err) => {
@@ -144,6 +148,7 @@ app.get("/info/:id", async(req, res) => {
         res.render("info", {
             header: header,
             info: info,
+            stringifiedInfo: JSON.stringify(info),
             relations: relationsData
         })
         return;
@@ -174,7 +179,8 @@ app.get("/info/:id", async(req, res) => {
     res.render("info", {
         header: header,
         info: info,
-        relations: relationsData
+        relations: relationsData,
+        stringifiedInfo: JSON.stringify(data),
     })
 })
 

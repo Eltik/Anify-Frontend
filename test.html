@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/info.css">
+    <link rel="stylesheet" href="../scripts/libraries/swiper-bundle.css" />
+    <link rel="icon" href="../images/favicon.ico" />
+    <meta charset="utf-8">
+
+    <script src="https://cdn.jsdelivr.net/npm/js-base64@3.7.3/base64.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="../scripts/libraries/swiper-bundle.min.js"></script>
+    <script src="../scripts/libraries/numeral.min.js"></script>
+    <script src="../scripts/libraries/anime.min.js"></script>
+    <script src="../scripts/libraries/cryptojs.min.js"></script>
+    <script src="../scripts/global.js"></script>
+    <script src="../scripts/info.js"></script>
+    <script>
+        setTimeout(() => {
+            init().then(() => {
+                const id = window.location.pathname.split("/")[2];
+                //load(id, "<%- info.type %>");
+                loadNav();
+            })
+        }, 100);
+    </script>
+</head>
+
+<body>
+    <div class="navbar">
+        <button type="button" id="navbutton" class="navbutton" onclick="displayNav()">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+        </button>
+        <div class="anify">
+            <span class="anify">Anify</span>
+        </div>
+        <img class="navlogo" src="../images/anify_logo.png">
+        <div class="navlinks">
+            <a href="/" class="navtext">Home</a>
+            <a href="/anime" class="navtext">Anime</a>
+            <a href="/manga" class="navtext">Manga</a>
+            <a href="/novels" class="navtext">Novels</a>
+            <a href="/discord" target="_blank" class="navtext">Discord</a>
+            <a href="/login" class="navtext login">Login</a>
+        </div>
+    </div>
+    <div class="header_wrap">
+        <div class="bannerimage"
+            style="background-image: url('https://image.tmdb.org/t/p/original/htD5SJpPOvkmAowU80KrWnN59WO.jpg');">
+            <div class="gradient">
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="sidebar">
+            <div class="relations">
+                <div class="relation">
+                    <a href="/info/106758" class="relation_wrapper">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" class="transition-all decoration-neutral-150 ease-linear">
+                            <path
+                                d="M22 16.74V4.67c0-1.2-.98-2.09-2.17-1.99h-.06c-2.1.18-5.29 1.25-7.07 2.37l-.17.11c-.29.18-.77.18-1.06 0l-.25-.15C9.44 3.9 6.26 2.84 4.16 2.67 2.97 2.57 2 3.47 2 4.66v12.08c0 .96.78 1.86 1.74 1.98l.29.04c2.17.29 5.52 1.39 7.44 2.44l.04.02c.27.15.7.15.96 0 1.92-1.06 5.28-2.17 7.46-2.46l.33-.04c.96-.12 1.74-1.02 1.74-1.98ZM12 5.49v15M7.75 8.49H5.5M8.5 11.49h-3"
+                                stroke="inherit" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            </path>
+                        </svg>
+                        <span class="relation_text">Read the Manga</span>
+                    </a>
+                </div>
+            </div>
+            <div class="stats">
+                <div class="stat">
+                    <h3>Format</h3>
+                    <p>TV</p>
+                </div>
+                <div class="stat">
+                    <h3>Episodes</h3>
+                    <p>12</p>
+                </div>
+                <div class="stat">
+                    <h3>Premiered</h3>
+                    <p>Oct 5, 2022</p>
+                </div>
+                <div class="stat">
+                    <h3>Studios</h3>
+                    <p>Nexus</p>
+                </div>
+            </div>
+        </div>
+        <div class="main_content">
+            <div class="header_content">
+                <h1 class="mangatitle">The Eminence in Shadow</h1>
+                <h2 class="mangasubtitle">Kage no Jitsuryokusha ni Naritakute!</h2>
+                <h2 class="mangasubtitle">陰の実力者になりたくて！</h2>
+                <p class="mangadescription">Some people just aren’t suited to playing the part of the flashy,
+                    in-your-face
+                    hero or the dastardly, mustache-twirling villain with larger-than-life panache. Instead, they
+                    operate in
+                    the shadows and pull the strings of society through wit and cleverness. That’s the role Cid wants to
+                    play when he’s transported to another world. Cid spins a yarn or three and becomes the unlikely
+                    leader
+                    of the underground Shadow Garden organization that fights against a menacing cult (which he totally
+                    made
+                    up). However, there’s a catch even his wild imagination didn’t see coming: the cult he concocted
+                    actually exists, and they’re beyond displeased that his power fantasy just got in the way of their
+                    evil
+                    plans!</p>
+            </div>
+            <div class="chapters_content">
+                <div class="providers_selector">
+                    <div class="select-wrap" onclick="showOptions()">
+                        <div class="select">
+                            <div class="value-wrap">
+                                <div class="value-placeholder">
+                                    Marin
+                                </div>
+                                <div style="opacity:0">Test</div>
+                            </div>
+                            <svg data-v-e3e1e202="" aria-hidden="true" focusable="false" data-prefix="fas"
+                                data-icon="chevron-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+                                class="select_icon svg-inline--fa fa-chevron-down fa-w-14 fa-fw">
+                                <path data-v-e3e1e202="" fill="currentColor"
+                                    d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                                    class=""></path>
+                            </svg>
+                        </div>
+                        <div data-v-e3e1e202="" class="options hidden">
+                            <section data-v-e3e1e202="" class="ps-container scroll-wrap ps ps--active-y">
+                                <div data-v-e3e1e202="" class="option-group">
+                                    <div data-v-e3e1e202="" class="group-title">providers</div>
+                                </div>
+                                <div data-v-e3e1e202="" class="option" onclick="switchProvider(0)">
+                                    <div data-v-e3e1e202="" class="option-label">
+                                        <div data-v-e3e1e202="" class="option-name">Marin</div>
+                                    </div>
+                                </div>
+                                <div data-v-e3e1e202="" class="option" onclick="switchProvider(1)">
+                                    <div data-v-e3e1e202="" class="option-label">
+                                        <div data-v-e3e1e202="" class="option-name">Zoro</div>
+                                    </div>
+                                </div>
+                                <div data-v-e3e1e202="" class="option" onclick="switchProvider(2)">
+                                    <div data-v-e3e1e202="" class="option-label">
+                                        <div data-v-e3e1e202="" class="option-name">GogoAnime</div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <div class="chapterslist">
+                    <div class="episode" style="background-image: url('https://marin.moe/cache/116837/thumb.jpg')">
+                        <div class="episode_number">
+                            <p>1</p>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" v-else-if="type === 'bulk'"
+                            class="play_icon">
+                            <path opacity=".4"
+                                d="M11.969 22c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10Z"
+                                fill="currentColor"></path>
+                            <path
+                                d="m14.97 10.231-2.9-1.67c-.72-.42-1.59-.42-2.31 0s-1.15 1.16-1.15 2v3.35c0 .83.43 1.58 1.15 2a2.285 2.285 0 0 0 2.3 0l2.9-1.67c.72-.42 1.15-1.16 1.15-2 .02-.84-.41-1.59-1.14-2.01Z"
+                                fill="currentColor"></path>
+                        </svg>
+                    </div>
+                    <div class="episode" style="background-image: url('https://marin.moe/cache/131495/thumb.jpg')">
+                        <div class="episode_number">
+                            <p>2</p>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" v-else-if="type === 'bulk'"
+                            class="play_icon">
+                            <path opacity=".4"
+                                d="M11.969 22c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10Z"
+                                fill="currentColor"></path>
+                            <path
+                                d="m14.97 10.231-2.9-1.67c-.72-.42-1.59-.42-2.31 0s-1.15 1.16-1.15 2v3.35c0 .83.43 1.58 1.15 2a2.285 2.285 0 0 0 2.3 0l2.9-1.67c.72-.42 1.15-1.16 1.15-2 .02-.84-.41-1.59-1.14-2.01Z"
+                                fill="currentColor"></path>
+                        </svg>
+                    </div>
+                    <div class="episode" style="background-image: url('https://marin.moe/cache/119256/thumb.jpg')">
+                        <div class="episode_number">
+                            <p>3</p>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" v-else-if="type === 'bulk'"
+                            class="play_icon">
+                            <path opacity=".4"
+                                d="M11.969 22c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10Z"
+                                fill="currentColor"></path>
+                            <path
+                                d="m14.97 10.231-2.9-1.67c-.72-.42-1.59-.42-2.31 0s-1.15 1.16-1.15 2v3.35c0 .83.43 1.58 1.15 2a2.285 2.285 0 0 0 2.3 0l2.9-1.67c.72-.42 1.15-1.16 1.15-2 .02-.84-.41-1.59-1.14-2.01Z"
+                                fill="currentColor"></path>
+                        </svg>
+                    </div>
+                    <div class="episode" style="background-image: url('https://marin.moe/cache/132950/thumb.jpg')">
+                        <div class="episode_number">
+                            <p>4</p>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" v-else-if="type === 'bulk'"
+                            class="play_icon">
+                            <path opacity=".4"
+                                d="M11.969 22c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10Z"
+                                fill="currentColor"></path>
+                            <path
+                                d="m14.97 10.231-2.9-1.67c-.72-.42-1.59-.42-2.31 0s-1.15 1.16-1.15 2v3.35c0 .83.43 1.58 1.15 2a2.285 2.285 0 0 0 2.3 0l2.9-1.67c.72-.42 1.15-1.16 1.15-2 .02-.84-.41-1.59-1.14-2.01Z"
+                                fill="currentColor"></path>
+                        </svg>
+                    </div>
+                    <div class="chapter">
+                        <div class="chapter_title">
+                            <p>Chapter 1</p>
+                        </div>
+                    </div>
+                    <div class="chapter">
+                        <div class="chapter_title">
+                            <p>Chapter 2</p>
+                        </div>
+                    </div>
+                    <div class="chapter">
+                        <div class="chapter_title">
+                            <p>Chapter 3</p>
+                        </div>
+                    </div>
+                    <div class="chapter">
+                        <div class="chapter_title">
+                            <p>Chapter 4</p>
+                        </div>
+                    </div>
+                    <div class="chapter">
+                        <div class="chapter_title">
+                            <p>Chapter 5</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <span class="foottext"><a href="/tos">Terms of Service</a></span>
+        <span class="foottext"><a href="/dmca">DMCA</a></span>
+        <span class="foottext"><a href="/contact">Contact</a></span>
+        <span class="foottext"><a href="/discord">Discord</a></span>
+        <span class="foottext"><a href="https://ko-fi.com/anify" target="_blank">Donate</a></span>
+    </div>
+</body>
+
+</html>

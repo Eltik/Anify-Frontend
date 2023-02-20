@@ -29,7 +29,7 @@ function showOptions() {
 function switchProvider(index) {
     const providerList = document.querySelectorAll(".providerlist");
 
-    providerList[providerIndex].classList.add("hidden");
+    providerList[providerIndex]?.classList.add("hidden");
     if (index != undefined) {
         providerIndex = index;
     } else {
@@ -40,62 +40,49 @@ function switchProvider(index) {
         }
     }
 
-    document.querySelector(".providers_selector .value-placeholder").textContent = providerList[providerIndex].querySelector(".chaptersheader").textContent;
-    providerList[providerIndex].classList.remove("hidden");
+    document.querySelector(".providers_selector .value-placeholder").textContent = providerList[providerIndex]?.getAttribute("data-provider");
+    providerList[providerIndex]?.classList.remove("hidden");
 }
 
 async function load(id, type) {
     let content = null;
-    let themes = null;
-    let covers = null;
+
+    let tnails = [];
+    console.log(info);
+
+    const parser = new DOMParser();
+    const parsed = parser.parseFromString(info.description, "text/html").body.textContent;
+    document.querySelector(".mangadescription").textContent = parsed;
 
     if (type === "ANIME") {
         const req = await fetch(api_server + "/episodes", { method: "POST", body: JSON.stringify({ id: id }), headers: { "Content-Type": "application/json" }});
         const json = await req.json();
-        content = json;
-        document.querySelector(".chaptersheader span").textContent = "Episodes";
 
-        const themeReq = await fetch(api_server + "/themes", { method: "POST", body: JSON.stringify({ id: id }), headers: { "Content-Type": "application/json" }});
-        const themeJson = await themeReq.json();
-        if (themeJson.length > 0) {
-            themes = themeJson;
+        console.log("Received episode response.");
+        content = json;
+
+        const tnailReq = await fetch(api_server + "/episode_covers", { method: "POST", body: JSON.stringify({ id: id }), headers: { "Content-Type": "application/json" }}).catch((err) => {
+            return null;
+        });
+        if (tnailReq != null) {
+            tnails = await tnailReq.json();
         }
     } else if (type === "MANGA") {
         const req = await fetch(api_server + "/chapters", { method: "POST", body: JSON.stringify({ id: id }), headers: { "Content-Type": "application/json" }});
         const json = await req.json();
+        console.log("Received chapters response.");
         content = json;
-        document.querySelector(".chaptersheader span").textContent = "Chapters";
-
-        const coversReq = await fetch(api_server + "/covers", { method: "POST", body: JSON.stringify({ id: id }), headers: { "Content-Type": "application/json" }});
-        const coversJson = await coversReq.json();
-        if (coversJson.length > 0) {
-            covers = coversJson;
-        }
     }
 
     if (content != null) {
-        const chaptersList = document.querySelector(".chapterslist");
-        if (content.length > 0) {
-            const button = document.createElement("button")
-            button.type = "button";
-            button.className = "button";
-            button.id = "switchProvider";
-            button.onclick = () => {
-                switchProvider()
-            }
-            button.textContent = "Switch Provider";
-            document.querySelector(".chapters").insertBefore(button, chaptersList);
-        }
+        const chaptersList = document.querySelector(".chapters_content");
 
-        document.querySelector(".providers_selector .value-placeholder").textContent = content[0].provider;
+        document.querySelector(".providers_selector .value-placeholder").textContent = content[0]?.provider;
 
         for (let i = 0; i < content.length; i++) {
             const provider = document.createElement("div");
             provider.className = "providerlist";
-            const header = document.createElement("div");
-            header.className = "chaptersheader";
-            const headerSpan = document.createElement("span");
-            headerSpan.textContent = content[i].provider;
+            provider.setAttribute("data-provider", content[i].provider);
 
             const providerAppend = document.createElement("div");
             providerAppend.innerHTML = `
@@ -107,15 +94,12 @@ async function load(id, type) {
             `
             document.querySelector(".providers_selector .options .option-group").append(providerAppend);
 
-            header.append(headerSpan);
-            provider.appendChild(header);
-
             if (i != 0) {
                 provider.classList.add("hidden");
             }
 
             const providerChapters = document.createElement("div");
-            providerChapters.className = "providerchapters";
+            providerChapters.className = "chapterslist";
 
             if (content[i].episodes && content[i].episodes.length > 0) {
                 for (let j = 0; j < content[i].episodes.length; j++) {
@@ -129,11 +113,53 @@ async function load(id, type) {
                     chapter.href = readingId;
                     chapter.className = "chapter_wrapper";
                     
-                    const chapterText = document.createElement("div");
-                    chapterText.className = "chapter";
-                    chapterText.textContent = item.title;
-                    chapterText.id = "chapter-" + i;
-                    chapter.appendChild(chapterText);
+                    const episodeWrapper = document.createElement("div");
+                    episodeWrapper.className = "episode_wrapper";
+
+                    const episode = document.createElement("div");
+                    episode.className = "episode";
+                    episode.id = "chapter-" + i;
+
+                    let episodeThumbnail = null;
+                    for (let k = 0; k < tnails.length; k++) {
+                        if (k === j) {
+                            episodeThumbnail = tnails[k].thumbnail;
+                        }
+                    }
+                    episodeThumbnail = episodeThumbnail ?? info.coverImage.alt ?? info.coverImage.extraLarge;
+
+                    const episodeImg = document.createElement("img");
+                    episodeImg.src = episodeThumbnail;
+                    episodeImg.className = "episode_image";
+
+                    const episodeBlur = document.createElement("div");
+                    episodeBlur.className = "banner";
+
+                    episode.append(episodeImg);
+
+                    const episodePlay = document.createElement("svg");
+                    episodePlay.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+                    episodePlay.setAttribute("viewBox", "0 0 24 24");
+                    episodePlay.setAttribute("fill", "none");
+                    episodePlay.className = "play_icon";
+                    episodePlay.innerHTML = `
+                        <path opacity=".4"
+                            d="M11.969 22c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10Z"
+                            fill="currentColor"></path>
+                        <path
+                            d="m14.97 10.231-2.9-1.67c-.72-.42-1.59-.42-2.31 0s-1.15 1.16-1.15 2v3.35c0 .83.43 1.58 1.15 2a2.285 2.285 0 0 0 2.3 0l2.9-1.67c.72-.42 1.15-1.16 1.15-2 .01-.84-.42-1.58-1.14-2Z"
+                            fill="currentColor"></path>
+                    `;
+                    episode.append(episodePlay);
+
+                    const episodeDescription = document.createElement("div");
+                    episodeDescription.className = "episode_info";
+                    episodeDescription.textContent = `${item.title}`;
+
+                    episodeWrapper.append(episode);
+
+                    chapter.appendChild(episodeWrapper);
+                    chapter.append(episodeDescription);
                     providerChapters.appendChild(chapter);
                 }
                 provider.appendChild(providerChapters);
@@ -149,10 +175,20 @@ async function load(id, type) {
                     const readingId = `/read/${id}/${content[i].provider}/${encrypt(item.id ? item.id : item.url)}`;
                     chapter.href = readingId;
                     chapter.className = "chapter_wrapper";
+                    chapter.setAttribute("data-chapter", true);
                     
                     const chapterText = document.createElement("div");
                     chapterText.className = "chapter";
-                    chapterText.textContent = item.title;
+
+                    const chapterTitle = document.createElement("div");
+                    chapterTitle.className = "chapter_title";
+
+                    const p = document.createElement("p");
+                    p.textContent = item.title;
+
+                    chapterTitle.appendChild(p);
+                    chapterText.appendChild(chapterTitle);
+
                     chapterText.id = "chapter-" + i;
                     chapter.appendChild(chapterText);
                     providerChapters.appendChild(chapter);
@@ -162,94 +198,34 @@ async function load(id, type) {
                 maxProviders++;
             }
         }
-        if (maxProviders === 1) {
-            document.getElementById("switchProvider").remove();
-            document.querySelector(".providerlist .chaptersheader").remove();
-        }
     }
 
-    const swiper = new Swiper('.swiper', {
-        direction: 'horizontal',
-        
-        pagination: {
-            el: '.swiper-pagination',
-        },
-        
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
+    const relationsReq = await fetch(api_server + "/relations", { method: "POST", body: JSON.stringify({ id: id }), headers: { "Content-Type": "application/json" }});
+    const relations = await relationsReq.json();
+
+    const relationDOM = document.querySelector(".relations");
+    relations.map((relation) => {
+        const dom = document.createElement("div");
+        dom.className = "relation";
+
+        const wrapper = document.createElement("a");
+        wrapper.className = "relation_wrapper";
+        wrapper.href = `/info/${relation.data.id}`;
+
+        if (relation.type === "MANGA") {
+            const span = document.createElement("span");
+            span.className = "relation_text";
+            span.textContent = "Manga";
+            wrapper.append(span);
+        } else if (relation.type === "ANIME") {
+            const span = document.createElement("span");
+            span.textContent = "Anime";
+            span.className = "relation_text";
+            wrapper.append(span);
         }
-    });
 
-    if (themes != null) {
-        document.querySelector(".themesheader span").textContent = "Themes";
-        const themesList = document.querySelector(".themeslist .swiper-wrapper");
-        for (let i = 0; i < themes.length; i++) {
-            const theme = themes[i];
-            const slide = document.createElement("div");
-            slide.className = "swiper-slide";
+        dom.append(wrapper);
 
-            const themeItem = document.createElement("div");
-            themeItem.className = "theme";
-
-            const themeItemTitle = document.createElement("div");
-            themeItemTitle.className = "theme-title";
-            themeItemTitle.textContent = theme.type;
-            themeItem.appendChild(themeItemTitle);
-
-            const video = document.createElement("video");
-            video.src = theme.url[0];
-            video.controls = true;
-            video.className = "theme-video";
-            themeItem.appendChild(video);
-
-            slide.appendChild(themeItem);
-
-            //themesList.appendChild(slide);
-
-            swiper.appendSlide(slide);
-        }
-    }
-
-    if (covers != null) {
-        document.querySelector(".themesheader span").textContent = "Covers";
-        const themesList = document.querySelector(".themeslist .swiper-wrapper");
-
-        const swiper = new Swiper('.swiper', {
-            direction: 'horizontal',
-            
-            pagination: {
-                el: '.swiper-pagination',
-            },
-            
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            }
-        });
-        
-        for (let i = 0; i < covers.length; i++) {
-            const theme = covers[i];
-            const slide = document.createElement("div");
-            slide.className = "swiper-slide";
-
-            const themeItem = document.createElement("div");
-            themeItem.className = "theme";
-
-            const themeItemTitle = document.createElement("div");
-            themeItemTitle.className = "theme-title";
-            themeItemTitle.textContent = "Vol. " + theme.volume;
-            themeItem.appendChild(themeItemTitle);
-
-            const cover = document.createElement("img");
-            cover.src = theme.url;
-            cover.className = "theme-cover";
-            themeItem.appendChild(cover);
-
-            slide.appendChild(themeItem);
-
-            //themesList.appendChild(slide);
-            swiper.appendSlide(slide);
-        }
-    }
+        relationDOM.append(dom);
+    })
 }
