@@ -1,0 +1,370 @@
+/* PARALLAX */
+.main {
+    grid-area: main;
+    grid-column: 2;
+    grid-row: 4/5;
+
+    display: grid;
+    grid-template-columns: min(20%, 200px) 1fr;
+    gap: 1.5rem;
+    background-color: transparent;
+    grid-template-areas: "sidebar info";
+}
+
+/* Header */
+.header_wrap {
+    position: relative;
+    z-index: 0;
+    margin-top: 7vh;
+}
+
+.header {
+    background: rgb(var(--blue-200));
+    position: relative;
+    margin: 0 auto;
+    padding: 50px;
+}
+
+.header_wrapper {
+    display: grid;
+    grid-column-gap: 30px;
+    grid-template-columns: 215px auto;
+    margin: 0 auto;
+    min-width: 320px;
+    width: 100%;
+}
+
+/* BANNER AND GRADIENT */
+.bannerimage {
+    background-position: 50% 35%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 400px;
+    margin-top: -58px;
+}
+
+.gradient {
+    background: linear-gradient(180deg,rgba(6,13,34,0) 40%,rgba(6,13,34,.6));
+    height: 100%;
+    width: 100%;
+}
+
+.cover_wrapper {
+    margin-top: -125px;
+    position: relative;   
+}
+
+.cover_wrapper_inner {
+    position: static;
+}
+
+.cover {
+    border-radius: 2px;
+    box-shadow: 0 0 29px rgb(49 54 68 / 25%);
+    margin-top: 15px;
+    width: 100%;
+}
+
+.header_content {
+    display: inline-grid;
+    grid-template-rows: -webkit-min-content -webkit-min-content auto;
+    grid-template-rows: min-content min-content auto;
+    padding-top: 25px;
+}
+
+.mangatitle {
+    font-size: 3rem;
+    color: rgb(var(--grey-300));
+    text-shadow: var(--global-shadow);
+}
+
+.mangasubtitle {
+    color: rgb(var(--grey-200));
+    text-shadow: var(--global-shadow);
+}
+
+.mangadescription {
+    margin-top: 1rem;
+    color: rgb(var(--grey-100));
+    text-shadow: var(--global-shadow);
+    margin-bottom: 1rem;
+}
+
+.content {
+    display: grid;
+    grid-column-gap: 40px;
+    grid-template-columns: 208px auto;
+    margin-top: 30px;
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 90vw;
+}
+
+.sidebar {
+    margin-top: 0px;   
+}
+
+.genres {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 0px;
+    gap: 0.5rem;
+}
+
+.genre {
+    color: rgb(var(--grey-300));
+    line-height: 1rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: rgb(32, 30, 39);
+    border-radius: var(--radius-small);
+    box-shadow: 0 0 0.3rem black;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    transition: 0.2s all;
+    cursor: pointer;
+}
+
+.genre:hover {
+    color: rgb(var(--grey-200));
+}
+
+.chapters {
+    margin-top: 3%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+}
+
+.chaptersheader, .themesheader {
+    color: rgb(var(--grey-300));
+    font-size: 1.3rem;
+}
+
+.providerlist {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.providerchapters {
+    max-height: 100vh;
+    overflow-y: scroll;
+    background-color: rgb(var(--blue-100));
+    border-radius: 5px;
+}
+
+.chapter {
+    color: rgb(var(--grey-200));
+    padding: 20px 15px 20px 20px;
+    transition: 0.2s all;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.chapter:hover {
+    background-color: rgb(var(--blue-200));
+}
+
+.hidden {
+    display: none;
+}
+
+.relations {
+    margin-top: 15px;
+    padding: 0 1em;
+}
+
+.relation {
+    background: rgb(var(--blue-200));
+    border-radius: 3px;
+    display: block;
+    padding: 8px 12px;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.relation_wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.relation_text {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    text-transform: capitalize;
+    width: calc(100% - 20px);
+    transition: 0.2s all;
+}
+
+.icon {
+    position: relative;
+    font-size: 1rem;
+    transition: color .2s ease;
+    stroke: rgb(var(--dark-pink-400));
+}
+
+.relation_wrapper:hover .relation_text {
+    color: rgb(61,180,242);
+}
+
+.themeslist {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.theme-title {
+    color: rgb(var(--grey-300));
+    font-size: 1.3rem;
+}
+
+.theme-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.theme-cover {
+    width: 100%;
+    height: 100%;
+    min-width: 40vw;
+    min-height: 110vh;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.swiper {
+    width: 40vw;
+    height: 110vh;
+}
+
+@media screen and (max-width: 3000px) {
+    .bannerimage {
+        margin-top: -85px;
+    }
+
+    .cover_wrapper {
+        margin-top: -125px;
+    }
+
+    .header_wrapper {
+        min-height: 250px;
+    }
+}
+
+@media screen and (max-width: 2000px) {
+    .bannerimage {
+        margin-top: -58px;
+    }
+}
+
+@media screen and (max-width: 1600px) {
+    .bannerimage {
+        height: 300px;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .themeslist {
+        display: block;
+    }
+    .swiper {
+        width: 90vw;
+        height: 100%;
+    }
+
+    .header_wrapper {
+        grid-template-columns: 250px auto;
+    }
+
+    .bannerimage {
+        height: 400px;
+        margin-top: 0;
+    }
+
+    .cover_wrapper {
+        margin-top: -145px;
+    }
+
+    .cover_wrapper_inner {
+        margin-left: 30px;
+    }
+    .cover {
+        max-height: 500px;
+        margin-top: 0;
+    }
+    .relation {
+        padding: 16px 24px;
+    }
+
+    .relation_text, .icon {
+        font-size: 1.75rem;
+    }
+
+    .icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .header_wrap {
+        margin-top: 0;
+    }
+
+    .header_content {
+        grid-template-columns: 1fr;
+    }
+
+    .content {
+        display: block;
+        max-width: initial;
+    }
+
+    .mangatitle {
+        font-size: 4rem;
+    }
+
+    .mangasubtitle {
+        display: none;
+    }
+
+    .mangadescription {
+        font-size: 1.35rem;
+    }
+
+    .genre {
+        font-size: 2rem;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    .chapterslist {
+        margin-bottom: 50px;
+    }
+
+    .chaptersheader, .themesheader {
+        font-size: 3rem;
+    }
+
+    .chapter {
+        font-size: 2.3rem;
+        padding: 45px 15px 20px 45px;
+    }
+}

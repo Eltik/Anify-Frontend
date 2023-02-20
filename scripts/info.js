@@ -49,6 +49,9 @@ async function load(id, type) {
 
     let tnails = [];
     console.log(info);
+    if (info.id) {
+        info = info.data;
+    }
 
     const parser = new DOMParser();
     const parsed = parser.parseFromString(info.description, "text/html").body.textContent;
