@@ -126,7 +126,7 @@ async function load(id, type) {
                     let episodeThumbnail = null;
                     for (let k = 0; k < tnails.length; k++) {
                         if (k === j) {
-                            episodeThumbnail = tnails[k].thumbnail;
+                            episodeThumbnail = tnails[k].img;
                         }
                     }
                     episodeThumbnail = episodeThumbnail ?? info.coverImage.alt ?? info.coverImage.extraLarge;
@@ -220,12 +220,21 @@ async function load(id, type) {
             span.className = "relation_text";
             span.textContent = "Manga";
             wrapper.append(span);
-        } else if (relation.type === "ANIME") {
+        }
+        if (relation.type === "ANIME") {
             const span = document.createElement("span");
             span.textContent = "Anime";
             span.className = "relation_text";
             wrapper.append(span);
         }
+        if (relation.type === "NOVEL") {
+            const span = document.createElement("span");
+            span.textContent = "Novel";
+            span.className = "relation_text";
+            wrapper.href = "/novel/" + relation.data.id;
+            wrapper.append(span);
+        }
+        console.log(relation.type);
 
         dom.append(wrapper);
 
