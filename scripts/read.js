@@ -48,7 +48,7 @@ function load(id, provider, readId) {
             fetch(api_server + "/info", { method: "POST", body: JSON.stringify(infoArgs), headers: { "Content-Type": "application/json" }}).then(async(res) => {
                 const data = await res.json();
     
-                const manga = data.anilist;
+                const manga = data.data;
     
                 chapters.map((element, index) => {
                     if (element.id === readId) {
