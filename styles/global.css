@@ -852,10 +852,11 @@ a {
     width: 100%;
     font-family: Overpass,-apple-system,BlinkMacSystemFont,Segoe UI,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
 }
+
 .select {
     align-items: center;
     background: #232436;
-        border-radius: 15px;
+    border-radius: 15px;
     box-shadow: 0 14px 30px rgba(0,5,15,.1),0 4px 4px rgba(0,5,15,.04);
     cursor: pointer;
     display: grid;
@@ -864,7 +865,13 @@ a {
     grid-template-columns: auto 20px;
     letter-spacing: .03rem;
     padding: 13px 20px;
+    transition: 0.2s all;
 }
+
+.select:hover {
+    background: #2a2c3f;
+}
+
 .value-wrap {
     position: relative;
     max-height: 14px;
