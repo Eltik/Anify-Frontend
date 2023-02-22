@@ -27,6 +27,7 @@ const corsOptions = {
 
 app.set("view engine", "ejs");
 
+//app.use(compression);
 app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -40,21 +41,25 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use("/*", (req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+})
+app.use("/*", (req, res, next) => {
+    res.setHeader("Cache-Control", "public, max-age=604800, immutable");
+    next();
+})
+
 app.use('/scripts', express.static(join(__dirname, "./scripts")), (req, res) => {
     res.status(404).json("Not found").end();
 });
 app.use('/styles', express.static(join(__dirname, "./styles")), (req, res) => {
     res.status(404).json("Not found").end();
 });
-app.use('/images', express.static(join(__dirname, "./images")), (req, res) => {
-    res.status(404).json("Not found").end();
+app.use("/images*", async(req, res) => {
+    res.redirect(`https://raw.githubusercontent.com/Eltik/Anify-Frontend/main${req.baseUrl}`);
 });
-
-app.use("/*", (req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
-})
 
 // Routing
 app.get("/", (req, res) => {
