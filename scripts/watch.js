@@ -14,6 +14,11 @@ function load(id, provider, watchId) {
         }
 
         sources = data.sources;
+        sources.map((source) => {
+            if (source?.url?.includes("cloud") && source.isM3U8) {
+                source.url = "https://cors.consumet.stream/" + source.url;
+            }
+        })
         subtitles = data.subtitles;
         intro = data.intro;
 

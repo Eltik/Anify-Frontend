@@ -327,5 +327,6 @@ app.get("/*", (req, res) => {
 })
 
 app.listen(port, () => {
+    console.log(colors.gray("Backend: ") + colors.white(api));
     console.log('Frontend server started '.green + "on port ".gray + port + "".white + '.'.gray);
 });
