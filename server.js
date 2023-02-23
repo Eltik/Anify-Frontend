@@ -82,10 +82,6 @@ app.get("/novels*", (req, res) => {
     res.sendFile("./novels.html", { root: __dirname });
 })
 
-app.get("/test/*", (req, res) => {
-    res.sendFile("./test.html", { root: __dirname });
-})
-
 app.get("/info/:id", async(req, res) => {
     const id = req.params["id"];
     const { data } = await axios.post(api + "/info", { id: id }).catch((err) => {

@@ -124,6 +124,9 @@ async function load(id, type) {
                     episode.id = "chapter-" + i;
 
                     let episodeThumbnail = null;
+                    if (item.number) {
+                        tnails.reverse();
+                    }
                     for (let k = 0; k < tnails.length; k++) {
                         if (k === j) {
                             episodeThumbnail = tnails[k].img;

@@ -1,6 +1,13 @@
 function load(id, provider, watchId) {
     watchId = decrypt(watchId);
 
+    fetch(api_server + "/episode_covers", { method: "POST", body: JSON.stringify({ id: id }), headers: { "Content-Type": "application/json" }}).then(async(data) => {
+        const res = await data.json();
+        episodeCovers = res;
+    }).catch((err) => {
+        return null;
+    });
+
     const args = {
         id: id,
         provider: provider,
