@@ -16,7 +16,8 @@ function load(id, provider, watchId) {
         sources = data.sources;
         sources.map((source) => {
             if (source?.url?.includes("cloud") && source.isM3U8) {
-                source.url = "https://cors.consumet.stream/" + source.url;
+                // CORS proxy
+                source.url = `https://proxy.vnxservers.com/proxy/base/${source.url}`;
             }
         })
         subtitles = data.subtitles;
