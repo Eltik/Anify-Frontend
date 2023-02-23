@@ -306,7 +306,7 @@ vds-gesture {
     stroke-dashoffset: 50;
 }
 
-vds-media:not([can-play]) .media-buffering-icon, vds-media[waiting] .media-buffering-icon {
+media-player:not([can-play]) .media-buffering-icon, media-player[waiting] .media-buffering-icon {
     opacity: 1;
     animation: spin 1s linear infinite;
 }
@@ -343,16 +343,16 @@ vds-media:not([can-play]) .media-buffering-icon, vds-media[waiting] .media-buffe
     pointer-events: initial;
 }
 
-vds-media[hide-ui] .ui, vds-media[user-idle] .ui, vds-media:not([can-play]) .ui {
+media-player[hide-ui] .ui, media-player[user-idle] .ui, media-player:not([can-play]) .ui {
     opacity: 0;
     visibility: hidden;
 }
 
-vds-media[hide-ui] .media-controls-container, vds-media[user-idle] .media-controls-container, vds-media:not([can-play]) .media-controls-container {
+media-player[hide-ui] .media-controls-container, media-player[user-idle] .media-controls-container, media-player:not([can-play]) .media-controls-container {
     background: none;
 }
 
-vds-media[hide-ui] .subtitles, vds-media[user-idle] .subtitles, vds-media:not([can-play]) .subtitles {
+media-player[hide-ui] .subtitles, media-player[user-idle] .subtitles, media-player:not([can-play]) .subtitles {
     opacity: 1;
     visibility: initial;
     transform: translateY(-40px);
@@ -545,7 +545,7 @@ vds-media[hide-ui] .subtitles, vds-media[user-idle] .subtitles, vds-media:not([c
 }
 
 /* Play/Pause Button */
-vds-play-button {
+media-play-button {
     position: relative;
     width: 30px;
     height: 30px;
@@ -554,7 +554,7 @@ vds-play-button {
     color: white;
 }
 
-vds-play-button > svg {
+media-play-button > svg {
     position: absolute;
     top: 0;
     left: 0;
@@ -564,16 +564,16 @@ vds-play-button > svg {
     transition: opacity ease 150ms;
 }
 
-vds-media[paused] .media-pause-icon {
+media-player[paused] .media-pause-icon {
     opacity: 0;
 }
 
-vds-media:not([paused]) .media-play-icon {
+media-player:not([paused]) .media-play-icon {
     opacity: 0;
 }
 
 /* Mute Button */
-vds-mute-button {
+media-mute-button {
     position: relative;
     width: 35px;
     height: 35px;
@@ -582,7 +582,7 @@ vds-mute-button {
     color: white;
 }
 
-vds-mute-button > svg {
+media-mute-button > svg {
     position: absolute;
     top: 0;
     left: 0;
@@ -592,16 +592,16 @@ vds-mute-button > svg {
     transition: opacity ease 150ms;
 }
 
-vds-media:not([muted]) .media-mute-icon {
+media-player:not([muted]) .media-mute-icon {
     opacity: 0;
 }
 
-vds-media[muted] .media-unmute-icon {
+media-player[muted] .media-unmute-icon {
     opacity: 0;
 }
 
 /* Full Screen Button */
-vds-fullscreen-button {
+media-fullscreen-button {
     position: relative;
     width: 35px;
     height: 35px;
@@ -611,7 +611,7 @@ vds-fullscreen-button {
     align-self: right;
 }
 
-vds-fullscreen-button > svg {
+media-fullscreen-button > svg {
     position: absolute;
     top: 0;
     left: 0;
@@ -621,117 +621,77 @@ vds-fullscreen-button > svg {
     transition: opacity ease 150ms;
 }
 
-vds-media[fullscreen] .media-enter-fs-icon {
+media-player[fullscreen] .media-enter-fs-icon {
     opacity: 0;
 }
 
-vds-media:not([fullscreen]) .media-exit-fs-icon {
+media-player:not([fullscreen]) .media-exit-fs-icon {
     opacity: 0;
 }
 
 /* Time Slider */
 .slider {
     position: absolute;
-    width: 80%;
+    width: 70%;
     margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    z-index: 30;
 }
 
-vds-time-slider {
+media-slider [part~="track"] {
+    transition: all .3s ease;
+    border-radius: 10px;
+}
+
+media-time-slider [part~="track"] {
+    transition: all .3s ease;
+    border-radius: 10px;
+}
+
+media-time-slider [part="thumb"] {
+    transition: all .3s ease;
+    border-radius: 50%;
+    background-color: rgb(var(--dark-pink-400));
+}
+
+media-time-slider {
     display: flex;
     align-items: center;
     width: 100%;
-    height: var(--height);
-    margin: 0 calc(var(--thumb-width) / 2);
+    height: var(--media-slider-height);
+    margin: 0 calc(var(--media-slider-thumb-size) / 2);
     cursor: pointer;
     transition: all .3s ease;
-    border-radius: var(--track-height);
+    border-radius: var(--media-slider-track-height);
 }
 
-vds-time-slider:not(:hover) {
-    --track-height: 8px;
-    --height: 8px;
+media-time-slider:not(:hover) {
+    --media-slider-height: 18px;
+    --media-slider-thumb-size: 14px;
+    --media-slider-focused-thumb-size: calc(var(--thumb-size) * 1.1);
+    --media-slider-track-height: 10px;
+    --media-slider-focused-track-height: calc(var(--track-height) * 1.25);
 }
 
-.slider-track {
-    background-color: rgb(var(--grey-100));
-    width: 100%;
-    height: var(--track-height);
-    position: absolute;
-    top: 50%;
-    left: 0;
-    z-index: 0;
-    transform: translateY(-50%);
-    transition: all .3s ease;
-    border-radius: var(--track-height);
+media-time-slider:hover {
+    --media-slider-height: 18px;
+    --media-slider-thumb-size: 14px;
+    --media-slider-track-height: 12px;
 }
 
-.slider-track.fill {
-    background-color: rgb(var(--dark-pink-400));
-    transform-origin: left center;
-    transform: translateY(-50%) scaleX(var(--vds-fill-rate));
-    will-change: transform;
-    z-index: 1;
-}
-
-.slider-thumb-container {
-    position: absolute;
-    top: 0;
-    left: var(--vds-fill-percent);
-    width: var(--thumb-width);
-    height: 100%;
-    transform: translateX(-50%);
-    z-index: 2;
-    will-change: left;
-}
-
-vds-time-slider[dragging] .slider-thumb-container {
+media-time-slider[dragging] .slider-thumb-container {
     left: var(--vds-pointer-percent);
 }
 
-.slider-thumb {
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: var(--thumb-width);
-    height: var(--thumb-width);
-    border-radius: 9999px;
-    background-color: rgb(var(--white));
-    transform: translateY(-50%);
-}
-
-/* Preview Time */
-.media-time-container {
-    --width: 42px;
-    --width-half: calc(var(--width) / 2);
-    --top: -24px;
-    --opacity-duration: 200ms;
-
-    --left-clamp: max(var(--width-half), var(--vds-pointer-percent));
-    --right-clamp: calc(100% - var(--width-half));
-    --left: min(var(--left-clamp), var(--right-clamp));
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    top: var(--top);
-    left: var(--left);
-    width: var(--width);
-    opacity: 0;
-    transition: opacity ease-out var(--opacity-duration);
-    transform: translateX(-50%);
-    will-change: left;
-    border-radius: 2px;
-    z-index: 101;
-}
-
-vds-time-slider[pointing] .media-time-container {
+media-time-slider[pointing] .media-time-container {
     opacity: 1;
     transition: opacity ease-in var(--opacity-duration);
 }
 
-vds-slider-value-text {
+media-slider-value-text {
     font-size: 15px;
     padding: 4px 15px;
     border-radius: var(--radius);
@@ -740,18 +700,30 @@ vds-slider-value-text {
     font-family: "Comfortaa", sans-serif;
     font-weight: 600;
     z-index: 101;
+    margin-bottom: 5vh;
 }
 
 /* Settings */
+media-toggle-button {
+    position: relative;
+    width: 35px;
+    height: 35px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    align-self: center;
+    margin-top: 2vh;
+}
+
 .media-settings-icon {
     width: 35px;
     height: 35px;
 }
-vds-toggle-button[pressed] .pressed {
+media-toggle-button[pressed] .pressed {
     display: none;
 }
 
-vds-toggle-button:not([pressed]) .not-pressed {
+media-toggle-button:not([pressed]) .not-pressed {
     display: none;
 }
 
@@ -778,56 +750,8 @@ vds-toggle-button:not([pressed]) .not-pressed {
     }
 }
 
-@media screen and (max-width: 1120px) {
-    .slider {
-        width: 75%;
-    }
-}
-
-@media screen and (max-width: 855px) {
-    .slider {
-        width: 73%;
-    }
-}
-
-@media screen and (max-width: 775px) {
-    .slider {
-        width: 70%;
-    }
-}
-
-@media screen and (max-width: 665px) {
-    .slider {
-        width: 65%;
-    }
-}
-
-@media screen and (max-width: 555px) {
-    .slider {
-        width: 60%;
-    }
-}
-
-@media screen and (max-width: 500px) {
-    .slider {
-        width: 55%;
-    }
-}
-
-@media screen and (max-width: 430px) {
-    .slider {
-        width: 50%;
-    }
-}
-
-@media screen and (max-width: 375px) {
-    .slider {
-        width: 45%;
-    }
-}
-
-@media screen and (max-width: 350px) {
-    .slider {
-        width: 40%;
-    }
+@media screen and (max-width: 1000px) {
+    media-toggle-button {
+        margin-top: 0;
+    }    
 }

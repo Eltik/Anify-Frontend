@@ -604,6 +604,7 @@ async function loadPlayer() {
         chapters += `<div class="chapter-item-wrapper">` + a + `</div>`;
     })
 
+    /*
     const videoAppend = document.createElement("vds-hls");
     videoAppend.innerHTML = `
     <vds-hls poster="${info.data.bannerImage ? info.data.bannerImage : "https://mcdn.wallpapersafari.com/medium/4/95/HSYiKZ.jpg"}">
@@ -613,11 +614,11 @@ async function loadPlayer() {
         })}
     </vds-hls>
     `;
-
     document.querySelector(".videoplayer vds-aspect-ratio").append(videoAppend);
+    */
+    document.querySelector("media-player.videoplayer").src = allSources[allSources.length - 1].url ? allSources[allSources.length - 1].url : allSources[allSources.length - 1].file;
 
-    const mediaHeaderAppend = document.createElement("div");
-    mediaHeaderAppend.innerHTML = `
+    document.querySelector("div.media-header").innerHTML = `
     <div class="media-header-left ui">
         <div class="back-button" onclick="window.location.replace('/info/' + ${id})">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" class="transition-all decoration-neutral-150 ease-linear"><path stroke="inherit" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3" d="M15 19.92L8.48 13.4c-.77-.77-.77-2.03 0-2.8L15 4.08"></path></svg>
@@ -639,8 +640,7 @@ async function loadPlayer() {
             </div>
         </div>
     </div>
-    `
-    document.querySelector("div.media-header").append(mediaHeaderAppend);
+    `;
 
     setTimeout(() => {
         /* Menu-Related */
@@ -785,7 +785,7 @@ async function loadPlayer() {
             }
         ], menuCon);
 
-        /* Subtitle Related */DMenu
+        /* Subtitle Related */
         // The subtitle index. Checks all subtitles for which one is English.
         let currentSubtitle = 0;
         for (let i = 0; i < subs.length; i++) {
@@ -801,8 +801,8 @@ async function loadPlayer() {
         }
 
         // You need to fetch the video, then add event listeners.
-        const provider = document.querySelector("vds-hls");
-        const video = document.querySelector("vds-hls video");
+        const provider = document.querySelector("media-player");
+        const video = document.querySelector("media-player");
 
         // Media functions, such as seeking via arrow keys and playing/pausing
         function mediaKeys(event) {
@@ -834,24 +834,17 @@ async function loadPlayer() {
                     //video.changeVolume(video.volume + 0.1)
                 } else if (event.key === "ArrowDown") {
                     //video.changeVolume(video.volume - 0.1)
-                }else if (event.key === "ArrowRight") {
-                    //video.seek(video.currentTime + 15)
+                } else if (event.key === "ArrowRight") {
                     video.currentTime = video.currentTime + 15;
                 } else if (event.key === "ArrowLeft") {
-                    //video.seek(video.currentTime - 15)
                     video.currentTime = video.currentTime - 15;
                 }
             }
         }
         document.addEventListener("keydown", mediaKeys);
 
-        provider.addEventListener("vds-play", (event) => {
-            const playRequestEvent = event.requestEvent;
-            console.log("Now playing.");
-        })
-
         // Video timeupdate.
-        video.addEventListener('timeupdate', (event) => {
+        video.addEventListener('time-update', (event) => {
             if (!sub) {
                 return;
             }
@@ -952,10 +945,10 @@ function changeQuality(url) {
         url = url.replace("master.m3u8", "")
     }
     console.log("Changing quality to " + url)
-    const video = document.querySelector("vds-hls video");
+    const video = document.querySelector("media-player");
 
     const currentTime = video.currentTime;
-    video.src = "https://cors.proxy.consumet.org/" + url;
+    video.src = url;
     video.currentTime = currentTime;
 
     setTimeout(() => {
