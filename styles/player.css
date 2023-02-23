@@ -632,7 +632,7 @@ media-player:not([fullscreen]) .media-exit-fs-icon {
 /* Time Slider */
 .slider {
     position: absolute;
-    width: 70%;
+    width: 75%;
     margin: 0 auto;
     display: flex;
     flex-direction: row;
@@ -750,8 +750,177 @@ media-toggle-button:not([pressed]) .not-pressed {
     }
 }
 
+@media screen and (max-width: 1200px) {
+    .slider {
+        width: 70%;
+    }
+}
+
 @media screen and (max-width: 1000px) {
+    .slider {
+        width: 68%;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .slider {
+        width: 65%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .slider {
+        width: 63%;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .slider {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 680px) {
+    .slider {
+        width: 57%;
+    }
+}
+
+@media screen and (max-width: 630px) {
+    .slider {
+        width: 53%;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .slider {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 535px) {
+    .slider {
+        width: 47%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .slider {
+        width: 44%;
+    }
+}
+
+@media screen and (max-width: 460px) {
+    .slider {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .slider {
+        width: 36%;
+    }
+}
+
+@media screen and (min-height: 800px) {
+    .slider {
+        width: 50%;
+    }
+
+    media-time-slider:not(:hover) {
+        --media-slider-height: 36px;
+        --media-slider-thumb-size: 14px;
+        --media-slider-focused-thumb-size: calc(var(--thumb-size) * 1.1);
+        --media-slider-track-height: 20px;
+        --media-slider-focused-track-height: calc(var(--track-height) * 1.25);
+    }
+    
+    media-time-slider:hover {
+        --media-slider-height: 36px;
+        --media-slider-thumb-size: 14px;
+        --media-slider-track-height: 24px;
+    }
+
     media-toggle-button {
+        width: 80px;
+        height: 80px;
         margin-top: 0;
-    }    
+    }
+
+    .media-settings-icon {
+        width: 70px;
+        height: 70px;
+    }
+
+    media-fullscreen-button {
+        width: 80px;
+        height: 80px;
+    }
+
+    media-play-button {
+        width: 80px;
+        height: 80px;
+    }
+
+    media-mute-button {
+        width: 80px;
+        height: 80px;
+    }
+
+    media-volume-slider {
+        width: 80px;
+        height: 80px;
+    }
+
+    .back-button {
+        width: 80px;
+        height: 80px;
+    }
+
+    .back-button svg {
+        width: 80px;
+        height: 80px;
+    }
+
+    .media-title {
+        font-size: 50px;
+    }
+
+    .chapters-panel-button {
+        width: 80px;
+        height: 80px;
+    }
+
+    .chapters-panel-button svg {
+        width: 80px;
+        height: 80px;
+    }
+
+    .chapters-panel-content {
+        top: 105px;
+    }
+
+    .chapters-panel-content-header-title {
+        font-size: 50px;
+    }
+
+    .chapter-item {
+        height: 75px;
+    }
+
+    .chapter-item-header {
+        font-size: 30px;
+    }
+
+    .chapter-item-title h1 {
+        font-size: 30px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        margin: 0;
+        line-height: 4rem;
+    }
 }
