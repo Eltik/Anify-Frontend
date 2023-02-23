@@ -22,7 +22,7 @@ function load(id, provider, watchId) {
 
         sources = data.sources;
         sources.map((source) => {
-            if (source?.url?.includes("cloud") && source.isM3U8) {
+            if (source.isM3U8) {
                 // CORS proxy
                 source.url = `https://proxy.vnxservers.com/proxy/base/${source.url}`;
             }
