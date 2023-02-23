@@ -157,6 +157,9 @@ async function load(id, type) {
                             fill="currentColor"></path>
                     `;
                     episode.append(episodePlay);
+                    if (item.isFiller) {
+                        episodeWrapper.setAttribute("data-filler", true);
+                    }
 
                     const episodeDescription = document.createElement("div");
                     episodeDescription.className = "episode_info";
@@ -210,37 +213,38 @@ async function load(id, type) {
     const relations = await relationsReq.json();
 
     const relationDOM = document.querySelector(".relations");
-    relations.map((relation) => {
-        const dom = document.createElement("div");
-        dom.className = "relation";
-
-        const wrapper = document.createElement("a");
-        wrapper.className = "relation_wrapper";
-        wrapper.href = `/info/${relation.data.id}`;
-
-        if (relation.type === "MANGA") {
-            const span = document.createElement("span");
-            span.className = "relation_text";
-            span.textContent = "Manga";
-            wrapper.append(span);
-        }
-        if (relation.type === "ANIME") {
-            const span = document.createElement("span");
-            span.textContent = "Anime";
-            span.className = "relation_text";
-            wrapper.append(span);
-        }
-        if (relation.type === "NOVEL") {
-            const span = document.createElement("span");
-            span.textContent = "Novel";
-            span.className = "relation_text";
-            wrapper.href = "/novel/" + relation.data.id;
-            wrapper.append(span);
-        }
-        console.log(relation.type);
-
-        dom.append(wrapper);
-
-        relationDOM.append(dom);
-    })
+    if (relations && relations.length > 0) {
+        relations.map((relation) => {
+            const dom = document.createElement("div");
+            dom.className = "relation";
+    
+            const wrapper = document.createElement("a");
+            wrapper.className = "relation_wrapper";
+            wrapper.href = `/info/${relation.data.id}`;
+    
+            if (relation.type === "MANGA") {
+                const span = document.createElement("span");
+                span.className = "relation_text";
+                span.textContent = "Manga";
+                wrapper.append(span);
+            }
+            if (relation.type === "ANIME") {
+                const span = document.createElement("span");
+                span.textContent = "Anime";
+                span.className = "relation_text";
+                wrapper.append(span);
+            }
+            if (relation.type === "NOVEL") {
+                const span = document.createElement("span");
+                span.textContent = "Novel";
+                span.className = "relation_text";
+                wrapper.href = "/novel/" + relation.data.id;
+                wrapper.append(span);
+            }
+    
+            dom.append(wrapper);
+    
+            relationDOM.append(dom);
+        })
+    }
 }

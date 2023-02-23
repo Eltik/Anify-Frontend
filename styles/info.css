@@ -315,6 +315,14 @@
     z-index: inherit;
 }
 
+.episode_wrapper[data-filler] {
+    background-color: rgba(194, 207, 137, 0.7);
+}
+
+.episode_wrapper[data-filler] .episode_image {
+    filter: brightness(0.3);
+}
+
 .episode_wrapper:hover {
     transform: scale(1.025);
     opacity: 0.7;
