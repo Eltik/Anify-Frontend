@@ -604,18 +604,6 @@ async function loadPlayer() {
         chapters += `<div class="chapter-item-wrapper">` + a + `</div>`;
     })
 
-    /*
-    const videoAppend = document.createElement("vds-hls");
-    videoAppend.innerHTML = `
-    <vds-hls poster="${info.data.bannerImage ? info.data.bannerImage : "https://mcdn.wallpapersafari.com/medium/4/95/HSYiKZ.jpg"}">
-        <video class="main_video" preload="none" src="${allSources[allSources.length - 1].url ? allSources[allSources.length - 1].url : allSources[allSources.length - 1].file}"></video>
-        ${subtitles.map((element, index) => {
-            return `<track src="${"/subtitles?url=" + (element.url)}" label="${element.lang}" kind="captions"></track>`;
-        })}
-    </vds-hls>
-    `;
-    document.querySelector(".videoplayer vds-aspect-ratio").append(videoAppend);
-    */
     document.querySelector("media-player.videoplayer").src = allSources[allSources.length - 1].url ? allSources[allSources.length - 1].url : allSources[allSources.length - 1].file;
 
     document.querySelector("div.media-header").innerHTML = `
