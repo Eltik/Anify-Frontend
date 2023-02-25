@@ -68,7 +68,7 @@ async function displayTrending(data) {
                 resolve();
                 return;
             }
-            const show = data[i].data;
+            const show = data[i];
 
             let tmdbId = null;
             for (let j = 0; j < data[i].connectors.length; j++) {
@@ -78,8 +78,8 @@ async function displayTrending(data) {
                 }
             }
 
-            const id = data[i].id;
-            const title = show.title.english ? show.title.english : show.title.romaji;
+            const id = show.id;
+            const title = show.title.english ?? show.title.romaji;
             const romaji = show.title.romaji;
             const native = show.title.native;
             let description = show.description && show.description.length > 300 ? show.description.substring(0, 300) + "..." : (show.description && show.description.length > 0 ? show.description : "No description");
@@ -137,7 +137,7 @@ async function displayRecentEpisodes(data, listData) {
     const promises = [];
     for (let i = 0; i < data.length; i++) {
         const promise = new Promise(async(resolve, reject) => {
-            const show = data[i].data;
+            const show = data[i];
 
             const id = show.id;
 
@@ -153,7 +153,7 @@ async function displayRecentEpisodes(data, listData) {
                 }
             }
             
-            const title = show.title.english ? show.title.english : show.title.romaji;
+            const title = show.title.english ?? show.title.romaji;
             let description = show.description && show.description.length > 250 ? show.description.substring(0, 250) + "..." : (show.description && show.description.length > 0 ? show.description : "No description");
 
             const episodeNum = data[i].episodeNumber;
@@ -226,7 +226,7 @@ async function displayWatching(list) {
     const promises = [];
     for (let i = 0; i < watching.length; i++) {
         const promise = new Promise(async(resolve, reject) => {
-            const show = watching[i].data;
+            const show = watching[i];
             const id = show.id;
 
             const list = {
@@ -304,7 +304,7 @@ async function displaySchedule(data, listData) {
     const popularDOM = document.querySelector(".schedule_items .schedule_grid");
     for (let i = 0; i < data.length; i++) {
         const promise = new Promise(async(resolve, reject) => {
-            const show = data[i].data;
+            const show = data[i];
             const id = show.id;
 
             const dateAiring = timeSince(data[i].date);
@@ -321,7 +321,7 @@ async function displaySchedule(data, listData) {
                 }
             }
 
-            const title = show.title.english ? show.title.english : show.title.romaji;
+            const title = show.title.english ?? show.title.romaji;
             let description = show.description && show.description.length > 250 ? show.description.substring(0, 250) + "..." : (show.description && show.description.length > 0 ? show.description : "No description");
             
             const cover = show.coverImage.alt ?? show.coverImage.extraLarge;
@@ -411,7 +411,7 @@ async function handleSearch(data, listData) {
     const popularDOM = document.querySelector(".search_items .search_grid");
     for (let i = 0; i < data.length; i++) {
         const promise = new Promise(async(resolve, reject) => {
-            const show = data[i].data;
+            const show = data[i];
             const id = show.id;
 
             const list = {

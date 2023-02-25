@@ -612,7 +612,7 @@ async function loadPlayer() {
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" class="transition-all decoration-neutral-150 ease-linear"><path stroke="inherit" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3" d="M15 19.92L8.48 13.4c-.77-.77-.77-2.03 0-2.8L15 4.08"></path></svg>
         </div>
     </div>
-    <div class="media-title ui">${info.data.title.english ? info.data.title.english : info.data.title.romaji}</div>
+    <div class="media-title ui">${info.title.english ? info.title.english : info.title.romaji}</div>
     <div class="media-header-right ui">
         <div class="chapters-panel">
             <div class="chapters-panel-button" onclick="toggleChapters()">
