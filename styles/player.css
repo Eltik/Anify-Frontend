@@ -343,6 +343,10 @@ media-player:not([can-play]) .media-buffering-icon, media-player[waiting] .media
     pointer-events: initial;
 }
 
+media-player[hide-ui] {
+    cursor: none;
+}
+
 media-player[hide-ui] .ui, media-player[user-idle] .ui, media-player:not([can-play]) .ui {
     opacity: 0;
     visibility: hidden;
