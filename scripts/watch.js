@@ -45,6 +45,31 @@ function load(id, provider, watchId) {
             const data = await res.json();
             episodes = data;
 
+            let episodeNumber = -1;
+            for (let i = 0; i < episodes.length; i++) {
+                const provider = episodes[i];
+                for (let j = 0; j < provider.episodes.length; j++) {
+                    const episode = provider.episodes[j];
+                    if (episode?.id === watchId || episode?.url === watchId) {
+                        episodeNumber = episode.number ?? i;
+                        break;
+                    }
+                }
+            }
+            if (episodeNumber != -1 && intro.end === 0) {
+                const req = await fetch(api_server + "/skip_times", { method: "POST", body: JSON.stringify({ id: id, episodeNumber: episodeNumber }), headers: { "Content-Type": "application/json" }}).catch((err) => {
+                    handleError(err);
+                });
+                const res = await req.json();
+                for (let i = 0; i < res.length; i++) {
+                    if (res[i].skipType === "op") {
+                        intro.start = res[i].interval.startTime;
+                        intro.end = res[i].interval.endTime;
+                    }
+                }
+            }
+            console.log(intro);
+
             const infoArgs = {
                 id: id
             }
