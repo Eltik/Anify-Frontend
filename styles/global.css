@@ -16,11 +16,11 @@
     --grey-200: 171, 171, 171; /* sub-subtitle, darker text */
     --grey-300: 220, 220, 220; /* subtitles */
     --grey-anilist-light: rgb(159, 173, 189);
-        /* anilist gray */
-        --grey-anilist: 186, 197, 215;
-        /* anilist gray */
-        --grey-anilist-dark: 127, 134, 159;
-        /* anilist gray */
+    /* anilist gray */
+    --grey-anilist: 186, 197, 215;
+    /* anilist gray */
+    --grey-anilist-dark: 127, 134, 159;
+    /* anilist gray */
 
     --blue-100: 13, 14, 20; /* background color */
     --blue-200: 24, 25, 37; /* navigation bar background, boxes */
