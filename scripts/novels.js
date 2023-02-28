@@ -25,7 +25,7 @@ function handleSearch(data) {
     const promises = [];
     for (let i = 0; i < data.length; i++) {
         const promise = new Promise(async(resolve, reject) => {
-            const show = data[i].data;
+            const show = data[i];
             const id = show.id;
 
             const title = show.title.english ? show.title.english : show.title.romaji;

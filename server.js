@@ -198,7 +198,7 @@ app.get("/novel/:id", async(req, res) => {
         return;
     }
 
-    const info = data.data;
+    const info = data;
     const title = info.title.english || info.title.romaji || info.title.native;
     const description = info.description.replace(/<br>/g, "");
     const cover = info.coverImage.large;
