@@ -115,9 +115,6 @@ async function displayTrending(data) {
                             <div class="result_slideshow_title">${title}</div>
                             <div class="result_slideshow_subtitle">${romaji}, ${native}</div>
                             <div class="result_slideshow_description">${description}</div>
-                            <div class="result_slideshow_genres">
-                                ${genresText}
-                            </div>
                         </div>
                     </div>
                 </a>
