@@ -306,6 +306,10 @@ vds-gesture {
     stroke-dashoffset: 50;
 }
 
+.thumb {
+    display: none;
+}
+
 media-player:not([can-play]) .media-buffering-icon, media-player[waiting] .media-buffering-icon {
     opacity: 1;
     animation: spin 1s linear infinite;

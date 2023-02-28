@@ -833,9 +833,27 @@ async function loadPlayer() {
 
         // Video timeupdate.
         video.addEventListener('time-update', (event) => {
+
+            const time = video.currentTime;
+
+            // Skip anime opening
+            if (skipOp) {
+                if (time > opStart && time < opEnd) {
+                    console.log("Skipping OP");
+                    // Seek to the end of the opening
+                    video.currentTime = opEnd;
+                }
+            }
+
             if (!sub) {
                 return;
             }
+
+            const tree = sub.tree;
+            const cues = tree.cues;
+
+            let hasSub = false;
+
             // Get the subtitle container
             const subtitleDOM = document.querySelector(".subtitles");
 
@@ -844,22 +862,6 @@ async function loadPlayer() {
             }
             // Add styles based on the config
             subtitleDOM.style = `background-color: ${backgroundColor};font-family: "${fontFamily}";opacity:1;`;
-
-            const time = video.currentTime;
-
-            const tree = sub.tree;
-            const cues = tree.cues;
-
-            let hasSub = false;
-
-            // Skip anime opening
-            if (skipOp) {
-                if (time > opStart && time < opEnd) {
-                    // Seek to the end of the opening
-                    video.currentTime = opEnd;
-                }
-            }
-
             // Loop through all subtitle cues
             for (let i = 0; i < cues.length; i++) {
                 const cue = cues[i];

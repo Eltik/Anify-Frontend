@@ -24,11 +24,7 @@ function load(id, provider, watchId) {
         sources.map((source) => {
             if (source.isM3U8) {
                 // CORS proxy
-                if (!source.url.includes("filemoon.to") && !source.url.includes("moon-storage")) {
-                    source.url = `https://proxy.vnxservers.com/proxy/base/${source.url}`;
-                } else {
-                    source.url = `https://proxy.vnxservers.com/proxy/m3u8/${encodeURIComponent(source.url)}/${encodeURIComponent(JSON.stringify({ Referer: "https://9anime.pl" }))}/.m3u8`;
-                }
+                source.url = `https://proxy.vnxservers.com/${source.url}`;
             }
         })
         subtitles = data.subtitles;
@@ -68,7 +64,6 @@ function load(id, provider, watchId) {
                     }
                 }
             }
-            console.log(intro);
 
             const infoArgs = {
                 id: id
