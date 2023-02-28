@@ -23,8 +23,7 @@
     overflow: hidden;
 }
 
-.menuHeading,
-.menuItem {
+.menuHeading, .menuItem {
     top: 0;
     width: 100%;
     color: white;
@@ -834,6 +833,39 @@ media-toggle-button:not([pressed]) .not-pressed {
 }
 
 @media screen and (min-height: 800px) {
+    .menuCon {
+        width: 385px;
+        right: 5vw;
+    }
+
+    .toggle {
+        height: 45px;
+        min-width: 65px;
+    }
+
+    .toggle::before {
+        height: 25px;
+        width: 25px;
+    }
+
+    .toggle.active::before {
+        left: calc(100% - 40px);
+    }
+
+    .textBox {
+        font-size: 4vw;
+    }
+
+    .menuHeading, .menuItem {
+        font-size: 5vw;
+        padding: 30px;
+    }
+    
+    .menuItemIcon {
+        width: 3.5vw;
+        height: 3.5vw;
+    }
+
     .slider {
         width: 50%;
     }

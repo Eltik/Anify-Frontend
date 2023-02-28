@@ -522,8 +522,7 @@ a {
     align-items: center;
     gap: 0.5rem;
     width: 100%;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 0 15px;
 }
 
 .result_slideshow_airing_title {

@@ -7,6 +7,8 @@ let chapterMenu = false;
 
 let DMenu;
 
+let x = window.matchMedia("(min-height: 800px)");
+
 function createElement(x) {
     let temp;
     if ("element" in x) {
@@ -25,7 +27,6 @@ function createElement(x) {
 
 
     for (value in x.style) {
-
         temp.style[value] = x.style[value];
     }
 
@@ -107,6 +108,9 @@ class Scene {
 
         if (this.element.classList.contains("active")) {
             this.DDMinstance.menuCon.style.height = this.element.querySelector(".scene").offsetHeight + "px";
+            if (x.matches) {
+                this.DDMinstance.menuCon.style.height = (this.element.querySelector(".scene").offsetHeight * 2) + "px";
+            }
         }
     }
 
@@ -163,7 +167,6 @@ class dropDownMenu {
 
     open(id) {
         if (id in this.scenes) {
-
             if (!this.history.length || (this.history.length && this.history[this.history.length - 1] != id)) {
                 this.history.push(id);
             }
@@ -200,7 +203,6 @@ class dropDownMenu {
 
 
     makeItem(item, isHeading = false, sceneID) {
-
         item.selectedValue = this.selectedValues[item.open];
 
 
