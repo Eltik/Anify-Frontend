@@ -357,7 +357,7 @@ async function displaySchedule(data, listData) {
                                 ${genresText}
                             </div>
                             <div class="result_slideshow_airing">
-                                Next Ep. in <span class="result_slideshow_airing_highlight">${dateAiring}</span>
+                                <span class="result_slideshow_airing_title">Next Ep.</span> <span class="result_slideshow_airing_highlight">${dateAiring}</span>
                             </div>
                         </div>
                     </div>

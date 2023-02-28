@@ -37,17 +37,6 @@
     display: none;
 }
 
-.result_slideshow_airing_highlight {
-    background-color: rgb(var(--dark-pink-400), 0.7);
-    color: rgb(var(--white));
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.5rem;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1rem;
-}
-
 /* For animeJS */
 .result_item {
     opacity: 0;

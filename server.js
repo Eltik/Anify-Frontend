@@ -318,6 +318,10 @@ app.get("/token", (req, res) => {
     res.send({ token: token }).end();
 })
 
+app.get("/test", (req, res) => {
+    res.sendFile("./test.html", { root: __dirname });
+})
+
 app.get("/*", (req, res) => {
     res.send("404.").end();
 })
