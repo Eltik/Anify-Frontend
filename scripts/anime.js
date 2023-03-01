@@ -151,6 +151,7 @@ async function displayRecentEpisodes(data, listData) {
             }
             
             const title = show.title.english ?? show.title.romaji;
+            const native = show.title.native;
             let description = show.description && show.description.length > 250 ? show.description.substring(0, 250) + "..." : (show.description && show.description.length > 0 ? show.description : "No description");
 
             const episodeNum = data[i].episodeNumber;
@@ -165,7 +166,7 @@ async function displayRecentEpisodes(data, listData) {
             let genresText = "";
             genres.map((genre, index) => {
                 if (index < 3) {
-                    genresText += `<span class="result_slideshow_genre">${genre}</span>`;
+                    genresText += `<span class="result_slideshow_genre result_item_genre">${genre}</span>`;
                 }
             });
     
@@ -179,10 +180,14 @@ async function displayRecentEpisodes(data, listData) {
                         ${list.name ? `<div class="result_item_status ${list.name === "Completed" ? "status_green" : list.name === "Watching" ? "status_blue" : list.name === "Dropped" ? "status_red" : "status_orange"}"></div>` : ""}
                         <img src="${bannerImage}" alt="${title}" class="bannerImage">
                         <div class="result_item_gradient"></div>
+                        <div class="result_item_episode">
+                            <div class="result_item_episode_num">${episodeNum}</div>
+                        </div>
                         <div class="result_item_text">
                             <div class="result_item_title">${title}</div>
-                            <div class="result_slideshow_genres">
-                                ${genresText} <div class="result_slideshow_airing"> - <span class="result_slideshow_airing_highlight">Ep. ${episodeNum}</span></div>
+                            <div class="result_item_subtitle">${native}</div>
+                            <div class="result_slideshow_genres result_item_genres">
+                                ${genresText}</div>
                             </div>
                         </div>
                     </div>
