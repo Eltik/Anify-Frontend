@@ -140,6 +140,7 @@ function displayPopular(data, listData) {
         }
 
         const title = manga.title.english ? manga.title.english : manga.title.romaji;
+        const native = manga.title.native;
         let description = manga.description.length > 250 ? manga.description.substring(0, 250) + "..." : manga.description;
         
         if (x.matches) {
@@ -168,6 +169,7 @@ function displayPopular(data, listData) {
                     <div class="result_item_gradient"></div>
                     <div class="result_item_text">
                         <div class="result_item_title">${title}</div>
+                        <div class="result_item_subtitle">${native}</div>
                         <div class="result_slideshow_genres">
                             ${genresText}
                         </div>
