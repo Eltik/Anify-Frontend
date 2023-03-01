@@ -324,7 +324,7 @@ a {
 
 .slideshow_grid {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto;
     gap: 15px;
     margin: 0 auto;
     overflow-y: hidden;
@@ -1046,8 +1046,8 @@ a {
         grid-template-columns: auto auto;
     }
     .result_item_content {
-        min-height: 30vh;
-        width: 40vw;
+        min-height: 40vh;
+        width: 50vw;
     }
 }
 
@@ -1060,7 +1060,7 @@ a {
     }
     .result_item_content {
         min-height: 30vh;
-        width: 50vw;
+        width: 40vw;
     }
 }
 
