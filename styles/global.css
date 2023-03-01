@@ -551,7 +551,6 @@ a {
 .result_item {
     padding: 15px;
     transition: 0.2s all;
-    border-radius: 20px;
 }
 
 .result_item:hover .result_item_content {
@@ -565,7 +564,7 @@ a {
 }
 
 .result_item_content {
-    border-radius: var(--radius);
+    border-radius: 20px;
     height: 100%;
     width: 100%;
     position: relative;
@@ -630,6 +629,7 @@ a {
 
 .result_item_genres {
     max-width: 20vw;
+    margin-top: 15px;
 }
 
 .result_item_genre {
@@ -644,7 +644,6 @@ a {
 .result_item_text {
     display: flex;
     flex-direction: column;
-    gap: 15px;
     padding: 0 1em;
     z-index: 10;
     max-width: 75%;
