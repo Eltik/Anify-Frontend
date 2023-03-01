@@ -867,7 +867,7 @@ media-toggle-button:not([pressed]) .not-pressed {
     }
 
     .slider {
-        width: 50%;
+        width: 50%;2
     }
 
     media-slider-value-text {
