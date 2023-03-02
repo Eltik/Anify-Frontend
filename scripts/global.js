@@ -3,6 +3,28 @@ async function init() {
     const data = await fetch("/api", { headers: { "Content-Type": "application/json" }});
     const json = await data.json();
     api_server = json.api;
+
+    const noAds = await noAds();
+    if (noAds) {
+        const scripts = document.querySelectorAll("script");
+        for (let i = 0; i < scripts.length; i++) {
+            if (scripts[i].src === "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9041883227292814") {
+                scripts[i].remove();
+            }
+        }
+    }
+}
+
+async function noAds() {
+    return new Promise((resolve, reject) => {
+        fetch(api_server + "/no-ads", { method: "GET", headers: { "Content-Type": "application/json" }}).then(async(res) => {
+            const data = await res.json();
+            resolve(data?.noAds);
+        }).catch((err) => {
+            handleError(err);
+            reject(err);
+        });
+    })
 }
 
 var Base64 = {
