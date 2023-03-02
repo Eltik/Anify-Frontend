@@ -304,8 +304,8 @@ app.get("/auth", (req, res) => {
     if (!token) {
         res.status(400).json({ error: "No token provided." }).end();
     }
-    res.cookie("token", token, { maxAge: 1000 * 60 * 60 * 24 * 7, httpOnly: true });
-    res.cookie("no-ads", true);
+    res.cookie("token", token, { maxAge: 1000 * 60 * 60 * 24 * 7 });
+    res.cookie("no-ads", true, { maxAge: 1000 * 60 * 60 * 24 * 7 });
     res.redirect("/");
 })
 
@@ -326,7 +326,7 @@ app.get("/token", (req, res) => {
 app.get("/no-ads", (req, res) => {
     const noAds = req.cookies["no-ads"];
     if (!noAds) {
-        req.cookie("no-ads", false);
+        req.cookie("no-ads", false, { maxAge: 1000 * 60 * 60 * 24 * 7 });
     }
     res.send({ noAds: noAds }).end();
 })

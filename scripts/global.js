@@ -4,8 +4,8 @@ async function init() {
     const json = await data.json();
     api_server = json.api;
 
-    const noAds = await noAds();
-    if (noAds) {
+    const check = await noAds();
+    if (check) {
         const scripts = document.querySelectorAll("script");
         for (let i = 0; i < scripts.length; i++) {
             if (scripts[i].src === "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9041883227292814") {
