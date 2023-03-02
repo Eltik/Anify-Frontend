@@ -66,6 +66,10 @@ app.get("/", (req, res) => {
     res.sendFile("./index.html", { root: __dirname });
 })
 
+app.get("/ads.txt", (req, res) => {
+    res.sendFile("./ads.txt", { root: __dirname });
+})
+
 app.get("/api*", (req, res) => {
     res.json({ api: api }).status(200).end();
 })
