@@ -6,12 +6,15 @@ async function init() {
 
     const check = await noAds();
     if (check) {
+        console.log("No ads!");
         const scripts = document.querySelectorAll("script");
         for (let i = 0; i < scripts.length; i++) {
             if (scripts[i].src === "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9041883227292814") {
                 scripts[i].remove();
             }
         }
+    } else {
+        console.log("Ads are enabled!");
     }
 }
 
