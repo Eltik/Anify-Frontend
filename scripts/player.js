@@ -555,7 +555,7 @@ async function loadPlayer() {
     /**
      * Get Sources and Subtitles
     */
-        sources.map((element, index) => {
+    sources.map((element, index) => {
         allSources.push({
             name: element.quality,
             url: element.url,
@@ -606,7 +606,7 @@ async function loadPlayer() {
         chapters += `<div class="chapter-item-wrapper">` + a + `</div>`;
     })
 
-    document.querySelector("media-player.videoplayer").src = allSources[allSources.length - 1].url ? allSources[allSources.length - 1].url : allSources[allSources.length - 1].file;
+    document.querySelector("media-player.videoplayer").src = allSources[allSources.length - 1].url ? allSources[allSources.length - 1].url : allSources[allSources.length - 1].file;    
 
     document.querySelector("div.media-header").innerHTML = `
     <div class="media-header-left ui">

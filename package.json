@@ -1,4 +1,12 @@
 {
+  "name": "anify.js",
+  "description": "Advanced web scraper for Japanese media.",
+  "version": "2.1.1",
+  "main": "./server.js",
+  "scripts": {
+      "start": "node ./server.js",
+      "start:pm2": "pm2 start \"npm start\" --name Anify-Frontend"
+  },
   "dependencies": {
     "axios": "^0.27.2",
     "body-parser": "^1.20.1",

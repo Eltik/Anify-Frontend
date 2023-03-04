@@ -53,16 +53,22 @@ function load(id, provider, watchId) {
                 }
             }
             if (episodeNumber != -1 && intro.end === 0) {
-                const req = await fetch(api_server + "/skip_times", { method: "POST", body: JSON.stringify({ id: id, episodeNumber: episodeNumber }), headers: { "Content-Type": "application/json" }}).catch((err) => {
-                    handleError(err);
-                });
-                const res = await req.json();
-                for (let i = 0; i < res.length; i++) {
-                    if (res[i].skipType === "op") {
-                        intro.start = res[i].interval.startTime;
-                        intro.end = res[i].interval.endTime;
+                fetch(api_server + "/skip_times", { method: "POST", body: JSON.stringify({ id: id, episodeNumber: episodeNumber }), headers: { "Content-Type": "application/json" }}).then(async(data) => {
+                    const res = await data.json();
+                    if (res.statusCode === 500) {
+                        console.log("Unable to fetch skip times.");
+                        return;
                     }
-                }
+                    for (let i = 0; i < res.length; i++) {
+                        if (res[i].skipType === "op") {
+                            intro.start = res[i].interval.startTime;
+                            intro.end = res[i].interval.endTime;
+                        }
+                    }
+                }).catch((err) => {
+                    handleError(err);
+                    console.log("Unable to fetch skip times.");
+                });
             }
 
             const infoArgs = {

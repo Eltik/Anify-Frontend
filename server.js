@@ -46,6 +46,7 @@ app.use("/*", (req, res, next) => {
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     next();
 })
+
 app.use("/*", (req, res, next) => {
     res.setHeader("Cache-Control", "public, max-age=604800, immutable");
     next();
