@@ -226,6 +226,31 @@
     grid-area: chapters;
 }
 
+.pagination {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10vw, 1fr));
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 15px;
+}
+
+.pagination_item {
+    padding: 15px;
+    border-radius: 15px;
+    background-color: #232436;
+    color: #9FADBD;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: 0.2s all;
+    cursor: pointer;
+}
+
+.pagination_item:hover {
+    background-color: #2F3A4F;
+    color: #9FADBD;
+}
+
 .chapterslist {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(10vw, 1fr));
@@ -367,6 +392,10 @@
 
 .chapter:active {
     background-color:rgb(27, 23, 45);
+}
+
+.hidden {
+    display: none;
 }
 
 @media screen and (max-width: 3000px) {

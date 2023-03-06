@@ -28,8 +28,11 @@ function showOptions() {
 
 function switchProvider(index) {
     const providerList = document.querySelectorAll(".providerlist");
+    const paginationList = document.querySelectorAll(".pagination");
 
     providerList[providerIndex]?.classList.add("hidden");
+    paginationList[providerIndex]?.classList.add("hidden");
+
     if (index != undefined) {
         providerIndex = index;
     } else {
@@ -42,6 +45,7 @@ function switchProvider(index) {
 
     document.querySelector(".providers_selector .value-placeholder").textContent = providerList[providerIndex]?.getAttribute("data-provider");
     providerList[providerIndex]?.classList.remove("hidden");
+    paginationList[providerIndex]?.classList.remove("hidden");
 }
 
 async function load(id, type) {
@@ -97,14 +101,43 @@ async function load(id, type) {
             `
             document.querySelector(".providers_selector .options .option-group").append(providerAppend);
 
+            const paginationDOM = document.createElement("div");
+            paginationDOM.className = "pagination";
+
+            if (content[i].episodes.length > 20) {
+                for (let j = 0; j < content[i].episodes.length; j += 10) {
+                    const pagination = document.createElement("div");
+                    pagination.className = "pagination_item";
+                    pagination.textContent = j + 1 + "-" + (j + 10);
+                    pagination.onclick = () => {
+                        const chapters = document.querySelectorAll(".providerlist")[providerIndex].querySelectorAll(".chapter_wrapper");
+                        for (let k = 0; k < chapters.length; k++) {
+                            if (k >= j && k < j + 10) {
+                                chapters[k].classList.remove("hidden");
+                            } else {
+                                chapters[k].classList.add("hidden");
+                            }
+                        }
+                    }
+                    paginationDOM.append(pagination);
+                }
+            }
+            document.querySelector(".chapters_content").append(paginationDOM);
+
             if (i != 0) {
                 provider.classList.add("hidden");
+                paginationDOM.classList.add("hidden");
             }
 
             const providerChapters = document.createElement("div");
             providerChapters.className = "chapterslist";
 
             if (content[i].episodes && content[i].episodes.length > 0) {
+                if (content[i].episodes[0].number != undefined) {
+                    content[i].episodes.sort((a, b) => {
+                        return a.number - b.number;
+                    });
+                }
                 for (let j = 0; j < content[i].episodes.length; j++) {
                     const item = content[i].episodes[j];
         
@@ -115,6 +148,10 @@ async function load(id, type) {
                     const readingId = `/watch/${id}/${content[i].provider}/${encrypt(item.id)}`;
                     chapter.href = readingId;
                     chapter.className = "chapter_wrapper";
+
+                    if (j >= 10) {
+                        chapter.classList.add("hidden");
+                    }
                     
                     const episodeWrapper = document.createElement("div");
                     episodeWrapper.className = "episode_wrapper";
