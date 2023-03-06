@@ -160,6 +160,8 @@
 .relations {
     margin-top: 15px;
     padding: 0 1em;
+    max-height: 20vh;
+    overflow-y: auto;
 }
 
 .relation {
@@ -233,6 +235,8 @@
     align-items: center;
     gap: 0.5rem;
     margin-top: 15px;
+    overflow-y: auto;
+    max-height: 20vh;
 }
 
 .pagination_item {
