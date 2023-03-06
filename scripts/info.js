@@ -244,6 +244,10 @@ async function load(id, type) {
                     chapter.href = readingId;
                     chapter.className = "chapter_wrapper";
                     chapter.setAttribute("data-chapter", true);
+
+                    if (j >= 10) {
+                        chapter.classList.add("hidden");
+                    }
                     
                     const chapterText = document.createElement("div");
                     chapterText.className = "chapter";
