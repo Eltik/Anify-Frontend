@@ -104,22 +104,43 @@ async function load(id, type) {
             const paginationDOM = document.createElement("div");
             paginationDOM.className = "pagination";
 
-            if (content[i].episodes.length > 20) {
-                for (let j = 0; j < content[i].episodes.length; j += 10) {
-                    const pagination = document.createElement("div");
-                    pagination.className = "pagination_item";
-                    pagination.textContent = j + 1 + "-" + (j + 10);
-                    pagination.onclick = () => {
-                        const chapters = document.querySelectorAll(".providerlist")[providerIndex].querySelectorAll(".chapter_wrapper");
-                        for (let k = 0; k < chapters.length; k++) {
-                            if (k >= j && k < j + 10) {
-                                chapters[k].classList.remove("hidden");
-                            } else {
-                                chapters[k].classList.add("hidden");
+            if (content[i].episodes) {
+                if (content[i].episodes.length > 20) {
+                    for (let j = 0; j < content[i].episodes.length; j += 10) {
+                        const pagination = document.createElement("div");
+                        pagination.className = "pagination_item";
+                        pagination.textContent = j + 1 + "-" + (j + 10);
+                        pagination.onclick = () => {
+                            const chapters = document.querySelectorAll(".providerlist")[providerIndex].querySelectorAll(".chapter_wrapper");
+                            for (let k = 0; k < chapters.length; k++) {
+                                if (k >= j && k < j + 10) {
+                                    chapters[k].classList.remove("hidden");
+                                } else {
+                                    chapters[k].classList.add("hidden");
+                                }
                             }
                         }
+                        paginationDOM.append(pagination);
                     }
-                    paginationDOM.append(pagination);
+                }
+            } else if (content[i].chapters) {
+                if (content[i].chapters.length > 20) {
+                    for (let j = 0; j < content[i].chapters.length; j += 10) {
+                        const pagination = document.createElement("div");
+                        pagination.className = "pagination_item";
+                        pagination.textContent = j + 1 + "-" + (j + 10);
+                        pagination.onclick = () => {
+                            const chapters = document.querySelectorAll(".providerlist")[providerIndex].querySelectorAll(".chapter_wrapper");
+                            for (let k = 0; k < chapters.length; k++) {
+                                if (k >= j && k < j + 10) {
+                                    chapters[k].classList.remove("hidden");
+                                } else {
+                                    chapters[k].classList.add("hidden");
+                                }
+                            }
+                        }
+                        paginationDOM.append(pagination);
+                    }
                 }
             }
             document.querySelector(".chapters_content").append(paginationDOM);
