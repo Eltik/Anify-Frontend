@@ -124,6 +124,7 @@ async function load(id, type) {
                     }
                 }
             } else if (content[i].chapters) {
+                content[i].chapters.reverse();
                 if (content[i].chapters.length > 20) {
                     for (let j = 0; j < content[i].chapters.length; j += 10) {
                         const pagination = document.createElement("div");
