@@ -24,7 +24,7 @@ function load(id, provider, watchId) {
         sources.map((source) => {
             if (source.isM3U8) {
                 // CORS proxy
-                source.url = `https://proxy.vnxservers.com/${source.url}`;
+                source.url = `https://cors.eltik.net/${source.url}`;
             }
         })
         subtitles = data.subtitles;
