@@ -736,7 +736,6 @@ media-toggle-button:not([data-pressed]) .not-pressed {
 media-time {
     font-size: 20px;
     color: rgb(var(--white));
-    background-color: rgb(var(--blue-300));
     font-family: "Comfortaa", sans-serif;
     font-weight: 600;
     z-index: 101;
@@ -837,7 +836,7 @@ media-time {
     }
 }
 
-@media screen and (min-height: 800px) {
+@media screen and (min-height: 800px) and (max-width: 1200px) {
     .menuCon {
         width: 385px;
         right: 5vw;

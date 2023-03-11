@@ -609,8 +609,16 @@ async function loadPlayer() {
         chapters += `<div class="chapter-item-wrapper">` + a + `</div>`;
     })
     console.log("Loaded chapters.");
+
+    let toUse = allSources[allSources.length - 1].url ? allSources[allSources.length - 1].url : allSources[allSources.length - 1].file;
+    for (let i = 0; i < allSources.length; i++) {
+        if (allSources[i].name && allSources[i].name === "auto") {
+            toUse = allSources[i].url ? allSources[i].url : allSources[i].file;
+            break;
+        }
+    }
     
-    document.querySelector("media-player.videoplayer").src = { "src": (allSources[allSources.length - 1].url ? allSources[allSources.length - 1].url : allSources[allSources.length - 1].file), "type": "application/x-mpegurl" };
+    document.querySelector("media-player.videoplayer").src = { "src": (toUse), "type": "application/x-mpegurl" };
     console.log("Loaded video. Using " + allSources[allSources.length - 1].name + " quality.");
 
     document.querySelector("div.media-header").innerHTML = `
@@ -945,7 +953,7 @@ function changeQuality(url) {
     const video = document.querySelector("media-player");
 
     const currentTime = video.currentTime;
-    video.src = url;
+    video.src = { "src": url, "type": "application/x-mpegurl" };
     video.currentTime = currentTime;
 
     setTimeout(() => {
