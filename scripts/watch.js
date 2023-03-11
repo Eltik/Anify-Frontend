@@ -22,9 +22,14 @@ function load(id, provider, watchId) {
 
         sources = data.sources;
         sources.map((source) => {
-            if (source.isM3U8) {
-                // CORS proxy
-                source.url = `https://cors.eltik.net/${source.url}`;
+            if (source.isM3U8 && source.url.includes("vizcloud")) {
+                source.url = `https://m3u8.eltik.net/m3u8_proxy?url=${encodeURIComponent(source.url)}&headers=${encodeURIComponent(JSON.stringify({ "Referer": "https://9anime.pl" }))}`;
+                console.log(source.url);
+            } else {
+                if (source.isM3U8) {
+                    // CORS proxy
+                    source.url = `https://cors.eltik.net/${source.url}`;
+                }
             }
         })
         subtitles = data.subtitles;
@@ -78,17 +83,15 @@ function load(id, provider, watchId) {
                 const data = await res.json();
                 info = data;
     
-                const script = document.createElement("script");
-                script.src = "../../../scripts/player.js";
                 const styles = document.createElement("link");
                 styles.rel = "stylesheet";
                 styles.href = "../../../styles/player.css";
-                document.querySelector("body").append(script);
                 document.querySelector("head").append(styles);
                 
                 setTimeout(() => {
                     console.log("Loading player...");
                     loadPlayer();
+                    console.log("Loaded player.");
                 }, 1200);
             }).catch((err) => {
                 handleError(err);

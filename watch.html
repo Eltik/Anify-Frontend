@@ -29,6 +29,7 @@
         <script type="module" src="https://cdn.jsdelivr.net/npm/vidstack/dist/cdn/prod.js"></script>
         <script src="../../../scripts/global.min.js"></script>
         <script src="../../../scripts/watch.min.js"></script>
+        <script src="../../../scripts/player.js"></script>
         <script src="../../../scripts/libraries/cryptojs.min.js"></script>
         <style>
             video {
@@ -65,7 +66,7 @@
 
     <body>
         <div class="player">
-            <media-player class="videoplayer" aspect-ratio="16/9">
+            <media-player class="videoplayer" aspect-ratio="16/9" loading="custom">
                 <media-outlet></media-outlet>
                 <div class="media-buffering-container">
                     <svg class="media-buffering-icon" fill="none" viewBox="0 0 120 120" aria-hidden="true">

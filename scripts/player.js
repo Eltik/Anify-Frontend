@@ -515,8 +515,8 @@ class dropDownMenu {
 
 /* Player Settings */
 let skipOp = true;
-let opStart = intro.start ? intro.start : 0;
-let opEnd = intro.end ? intro.end : 0;
+let opStart = 0;
+let opEnd = 0;
 
 /* Subtitles */
 let isAnimated = false;
@@ -529,7 +529,7 @@ let removeSub = true;
 let isFocused = false;
 
 const body = document.querySelector("body");
-const player = document.querySelector(".player");
+let player = document.querySelector(".player");
 
 const allSources = [];
 const subs = [];
@@ -552,6 +552,8 @@ function toggleChapters() {
 }
 
 async function loadPlayer() {
+    opStart = intro.start ? intro.start : 0;
+    opEnd = intro.end ? intro.end : 0;
     /**
      * Get Sources and Subtitles
     */
@@ -588,6 +590,7 @@ async function loadPlayer() {
     }
 
     await Promise.all(promises);
+    console.log("Fetched subs.");
 
     let chapters = "";
     
@@ -605,8 +608,10 @@ async function loadPlayer() {
         });
         chapters += `<div class="chapter-item-wrapper">` + a + `</div>`;
     })
-
-    document.querySelector("media-player.videoplayer").src = allSources[allSources.length - 1].url ? allSources[allSources.length - 1].url : allSources[allSources.length - 1].file;    
+    console.log("Loaded chapters.");
+    
+    document.querySelector("media-player.videoplayer").src = { "src": (allSources[allSources.length - 1].url ? allSources[allSources.length - 1].url : allSources[allSources.length - 1].file), "type": "application/x-mpegurl" };
+    console.log("Loaded video. Using " + allSources[allSources.length - 1].name + " quality.");
 
     document.querySelector("div.media-header").innerHTML = `
     <div class="media-header-left ui">
